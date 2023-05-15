@@ -1,0 +1,61 @@
+.footer {
+    margin-top: 5rem;
+    user-select: none;
+
+}
+
+.div {
+    background-color: aqua;
+    height: 10rem;
+}
+
+ul {
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 3rem;
+}
+
+li {
+    font-size: 1.1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+    color: gray;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+li:hover {
+    color: rgb(82, 82, 82);
+}
+
+p {
+    font-size: 1.1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+    color: gray;
+}
+
+span {
+    font-weight: 500;
+    font-size: 1.2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+    color: rgb(110, 110, 110);
+}
+
+.subscriber-inp {
+    padding: 1.1rem;
+    font-size: 1rem;
+    color: rgb(81, 81, 81);
+    letter-spacing: 1px;
+}
+
+.description-p {
+    font-size: 1.1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+    color: gray;
+    line-height: 2rem;
+}

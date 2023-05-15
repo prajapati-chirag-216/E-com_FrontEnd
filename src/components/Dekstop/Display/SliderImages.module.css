@@ -1,0 +1,12 @@
+.motion-img {
+    object-fit: cover;
+    width: 100vw;
+    height: fit-content;
+    flex: 1;
+}
+
+.motion-div {
+    position: absolute;
+    top: 30rem;
+    left: 10rem;
+}

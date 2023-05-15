@@ -1,0 +1,72 @@
+.card {
+    background-color: aliceblue;
+    box-shadow: 0 2px 10px rgba(34, 34, 34, 0.534);
+    border-radius: 3px;
+}
+
+.success {
+    background-color: rgb(72, 182, 35);
+}
+
+.invalid {
+    background-color: rgb(255, 129, 95);
+}
+
+.modal {
+    position: fixed;
+    top: 12vh;
+    margin-left: 2.5rem;
+    width: 35vw;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.content {
+    padding: 0.8rem 1rem;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    text-transform: uppercase;
+    color: aliceblue;
+    display: flex;
+    gap: 1rem;
+    font-size: 1.2rem;
+
+}
+
+.content>span {
+    align-self: center;
+}
+
+.hideMe {
+    animation: cssAnimation 4s ease-in-out forwards;
+}
+
+@keyframes cssAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+}
+
+@media (min-width: 768px) {
+    .modal {
+        left: calc(50% - 20rem);
+        width: 35rem;
+    }
+}

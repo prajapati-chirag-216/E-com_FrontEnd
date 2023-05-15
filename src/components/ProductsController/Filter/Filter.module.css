@@ -1,0 +1,6 @@
+.filters {
+    align-self: flex-end;
+    color: rgb(75, 75, 75);
+    cursor: pointer;
+    transition: all 100ms;
+}

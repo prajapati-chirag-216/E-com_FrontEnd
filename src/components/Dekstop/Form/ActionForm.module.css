@@ -1,0 +1,38 @@
+.action-div {
+    padding: 3rem;
+    padding-bottom: 5rem;
+}
+
+.action-form>a {
+    width: fit-content;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+}
+
+.action-form>a:hover {
+    text-decoration: underline;
+}
+
+.action-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.action-form>a {
+    text-decoration: none;
+}
+
+.action-form>a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width:600px) {
+    .form-div {
+        padding: 2rem 1rem;
+    }
+}
