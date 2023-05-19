@@ -131,6 +131,16 @@ export async function deleteDisplayImage(id) {
   }
 }
 
+export const fetchCategory = async (id) => {
+  try {
+    const response = await axios.get(`${BACKAND_DOMAIN}/fetchCategory/${id}`);
+    const data = response.data;
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const fetchCategories = async () => {
   try {
     const response = await axios.get(`${BACKAND_DOMAIN}/fetchCategories`);
@@ -145,7 +155,17 @@ export const fetchProduct = async (id) => {
   try {
     const response = await axios.get(`${BACKAND_DOMAIN}/getproduct/${id}`);
     const data = response.data;
-console.log(data,'efw')
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+export const fetchProductDetails = async (id) => {
+  try {
+    const response = await axios.get(
+      `${BACKAND_DOMAIN}/getproductDetails/${id}`
+    );
+    const data = response.data;
     return data;
   } catch (err) {
     throw err;

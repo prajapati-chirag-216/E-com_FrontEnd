@@ -1,34 +1,28 @@
 import React from "react";
 import { Card, Grid, CardContent, Button, Typography } from "@mui/material";
 import classes from "./Cards.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   setCatagoryId,
   setCatagoryName,
 } from "../../../store/catagories/catagories.action";
-import { selectCartItems } from "../../../store/cart/cart.selector";
 import { setAddItemToCart } from "../../../store/cart/cart.action";
 import { setProductDetails } from "../../../store/product/product.action";
 
 const Cards = (props) => {
-  console.log(props.data);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const cartItems = useSelector(selectCartItems);
 
   const changeitemIdHandler = (product) => {
     if (props.isProduct) {
-      dispatch(setAddItemToCart(cartItems, product));
+      dispatch(setAddItemToCart(product));
     } else {
       dispatch(setCatagoryId(product._id));
       dispatch(setCatagoryName(product.name));
-      navigate(props.location);
     }
+    window.open(`${props.location}/${product._id}`);
   };
   const navigateHandler = (productData) => {
     if (props.isProduct) {
-      navigate(props.location);
       dispatch(setProductDetails(productData));
     }
   };
@@ -90,7 +84,12 @@ const Cards = (props) => {
                 {item.name}
               </Typography>
 
-              {/* <a href={props.location} target="_blank" rel="noreferrer"> */}
+              {/* <a
+                href={`${props.location}/${item._id}`}
+                target="_blank"
+                rel="noreferrer"
+                style={{ backgroundColor: "red" }}
+              > */}
               <Button
                 onClick={changeitemIdHandler.bind(null, item)}
                 sx={{

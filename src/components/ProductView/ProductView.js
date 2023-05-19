@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Button, TextField, Rating, Divider, Typography } from "@mui/material";
 import "../ProductView/ProductView.styles.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProductDetails } from "../../store/product/product.selector";
 import { setAddItemToCart } from "../../store/cart/cart.action";
-import { selectCartItems } from "../../store/cart/cart.selector";
+import { fetchProductDetails } from "../../utils/api";
+import { Await, useLoaderData } from "react-router-dom";
 
 const ProductView = () => {
   const productDetails = useSelector(selectProductDetails);
-  const [mainImgUrl, setmainImgUrl] = useState(productDetails.image[0]);
+  const [mainImgUrl, setmainImgUrl] = useState(null);
   const [isFormOpen, setisFormOpen] = useState(false);
   const [starRating, setStartRating] = useState(0);
-  const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
 
   const formShowHandler = () => {
@@ -22,19 +22,30 @@ const ProductView = () => {
     setmainImgUrl(src);
   };
   const addProductHandler = (productData) => {
-    dispatch(setAddItemToCart(cartItems, productData));
+    dispatch(setAddItemToCart(productData));
   };
+  const loaderData = useLoaderData();
+  useEffect(() => {
+    setmainImgUrl(loaderData.image[0]);
+  }, []);
   return (
     <div className="container">
       <div className="UpperViewContainer">
         <div className="sideIconContainer">
-          {productDetails.image.map((image) => {
-            return (
-              <button onClick={imageChangeHandler.bind(null, image)}>
-                <img src={image} alt="" />
-              </button>
-            );
-          })}
+          <Suspense>
+            <Await resolve={loaderData}>
+              {(productDetails) =>
+                productDetails.image.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={imageChangeHandler.bind(null, image)}
+                  >
+                    <img src={image} alt="" />
+                  </button>
+                ))
+              }
+            </Await>
+          </Suspense>
         </div>
 
         <div className="mainImageContainer">
@@ -42,36 +53,64 @@ const ProductView = () => {
         </div>
 
         <div className="rightUpperViewContainer">
-          <div className="priceInfoContainer">
-            <Typography
-              variant="h4"
-              sx={{ letterSpacing: "4px", textTransform: "uppercase" }}
-            >
-              {productDetails.name}
-            </Typography>
-            <Typography variant="h6">$ {productDetails.price}</Typography>
-            <Button
-              sx={{
-                background: "black",
-                "&:hover": { background: "black" },
-                borderRadius: 0,
-                width: "30rem",
-                height: "4rem",
+          <Suspense>
+            <Await resolve={loaderData}>
+              {(productDetails) => {
+                return (
+                  <div className="priceInfoContainer">
+                    <Typography
+                      variant="h4"
+                      sx={{ letterSpacing: "4px", textTransform: "uppercase" }}
+                    >
+                      {productDetails.name}
+                    </Typography>
+                    <Typography variant="h6">
+                      $ {productDetails.price}
+                    </Typography>
+                    <Button
+                      sx={{
+                        background: "black",
+                        "&:hover": { background: "black" },
+                        borderRadius: 0,
+                        width: "30rem",
+                        height: "4rem",
+                        letterSpacing: "3px",
+                        fontSize: "1.1rem",
+                      }}
+                      onClick={addProductHandler.bind(null, productDetails)}
+                      variant="contained"
+                    >
+                      Add To Cart
+                    </Button>
+                  </div>
+                );
               }}
-              onClick={addProductHandler.bind(null, productDetails)}
-              variant="contained"
-            >
-              Add To Cart
-            </Button>
-          </div>
+            </Await>
+          </Suspense>
           <Divider variant="middle" />
           <div className="itemInfoContainer">
-            <Typography variant="h6" sx={{ fontSize: "1.2rem" }}>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "1.2rem", letterSpacing: "1px" }}
+            >
               Description
             </Typography>
-            <Typography variant="h6" sx={{ fontSize: "0.9rem" }}>
-              {productDetails.description}
-            </Typography>
+            <Suspense>
+              <Await resolve={loaderData}>
+                {(productDetails) => (
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontSize: "1rem",
+                      letterSpacing: "1px",
+                      wordSpacing: "2px",
+                    }}
+                  >
+                    {productDetails.description}
+                  </Typography>
+                )}
+              </Await>
+            </Suspense>
           </div>
           <Divider variant="middle" />
         </div>
@@ -143,5 +182,18 @@ const ProductView = () => {
     </div>
   );
 };
+
+export async function loader() {
+  let response;
+  const url = window.location.href;
+  const urlArray = url.split("/");
+  const id = urlArray[urlArray.length - 1];
+  try {
+    response = await fetchProductDetails(id);
+  } catch (err) {
+    throw err;
+  }
+  return response;
+}
 
 export default ProductView;

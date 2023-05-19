@@ -2,14 +2,14 @@ import { CART_ACTION_TYPES } from "./cart.types";
 
 export const CART_INITIAL_STATE = {
   isCartOpen: false,
-  cartItems: [],
+  cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
 };
 
 export const cartReducer = (state = CART_INITIAL_STATE, action) => {
   const { type, payload } = action;
-  console.log(payload);
   switch (type) {
     case CART_ACTION_TYPES.SET_CART_ITEMS:
+      localStorage.setItem("cartItems", JSON.stringify(payload));
       return {
         ...state,
         cartItems: payload,

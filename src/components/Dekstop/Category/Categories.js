@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import Cards from "../Cards/Cards";
 import { fetchCategories } from "../../../utils/api";
 import { Await, useLoaderData } from "react-router-dom";
@@ -56,9 +56,7 @@ const Categories = () => {
       </Box>
       <Suspense>
         <Await resolve={loaderData}>
-          {(categories) => (
-            <Cards location="/product" data={categories} />
-          )}
+          {(categories) => <Cards location="/product" data={categories} />}
         </Await>
       </Suspense>
     </Box>

@@ -21,8 +21,8 @@ import "./App.css";
 import ProductsController from "./pages/Products/ProductsController";
 import ViewProductsController from "./pages/ProdutsView/ProductsViewController";
 import { loader as categoryLoader } from "./components/Dekstop/Category/Categories";
-import {loader as productLoader} from './components/ProductsController/Items/Items'
-
+import { loader as productLoader } from "./components/ProductsController/Items/Items";
+import { loader as productViewLoader } from "./components/ProductView/ProductView";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Wrapper />} errorElement={<Error />}>
@@ -32,6 +32,7 @@ const router = createBrowserRouter(
         element={<ForgotPassword />}
         action={forgotPasswordAction}
       />
+      ``
       <Route
         path="/resetPassword/:id"
         element={<ResetPassword />}
@@ -45,10 +46,18 @@ const router = createBrowserRouter(
         <Route path="/success" element={<Success />} />
       </Route>
       <Route element={<Layout />}>
-        <Route index element={<Navigate to="/admin" />} />
-        <Route path="/admin" element={<Dashboard />} loader={categoryLoader} />
-        <Route path="/product" element={<ProductsController />} loader={productLoader} />
-        <Route path="/viewproduct" element={<ViewProductsController />} />
+        <Route index element={<Navigate to="/home" />} />
+        <Route path="/home" element={<Dashboard />} loader={categoryLoader} />
+        <Route
+          path="/product/:id"
+          element={<ProductsController />}
+          loader={productLoader}
+        />
+        <Route
+          path="/viewproduct/:id"
+          element={<ViewProductsController />}
+          loader={productViewLoader}
+        />
       </Route>
     </Route>
   )

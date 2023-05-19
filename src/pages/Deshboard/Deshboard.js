@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Categories from "../../components/Dekstop/Category/Categories";
 import Display from "../../components/Dekstop/Display/Display";
 import CartSlider from "../../components/Cart/CartSlider/CartSlider";
@@ -8,10 +8,8 @@ import { setIsCartOpen } from "../../store/cart/cart.action";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import { uiActions } from "../../mystore/ui-slice";
 
-
 const Deshboard = () => {
-  const cartState = useSelector(selectIsCartOpen)
-  console.log(cartState,'oo')
+  const cartState = useSelector(selectIsCartOpen);
   const dispatch = useDispatch();
   const closeCartHandler = () => dispatch(setIsCartOpen(false));
   return (

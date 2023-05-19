@@ -13,14 +13,13 @@ import {
 
 const CartItem = (props) => {
   const { name, quntity, image, price } = props.product;
-  console.log(quntity);
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const inputRef = useRef();
   const [itemQuantity, setItemQuantity] = useState(quntity);
 
   const increaseQuantityHandler = () => {
-    dispatch(setAddItemToCart(cartItems, props.product));
+    dispatch(setAddItemToCart(props.product));
   };
   const decreaseQuantityHandler = () => {
     dispatch(setRemoveItemFromCart(cartItems, props.product));

@@ -6,7 +6,6 @@ export const PRODUCT_INITIAL_STATE = {
 
 export const productReducer = (state = PRODUCT_INITIAL_STATE, action) => {
   const { type, payload } = action;
-  console.log(payload);
   switch (type) {
     case PRODUCT_ACTION_TYPES.SET_PRODUCT_DETAILS:
       return {
