@@ -10,6 +10,7 @@ import { Fragment } from "react";
 import Layout from "./components/Dekstop/UI/Layout";
 import SignIn from "./pages/SignIn";
 import { action as signinAction } from "./components/Dekstop/Form/SigninForm";
+import {action as reviewAction} from './components/ProductView/ProductView'
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import { action as resetPasswordAction } from "./components/Dekstop/Form/ResetPasswordForm";
@@ -57,6 +58,7 @@ const router = createBrowserRouter(
         <Route
           path="/viewproduct/:id"
           element={<ViewProductsController />}
+          action={reviewAction}
           loader={productViewLoader}
         />
       </Route>

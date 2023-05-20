@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 const BACKAND_DOMAIN = "http://localhost:8000";
 
 export async function loginUser(userData) {
@@ -171,3 +172,34 @@ export const fetchProductDetails = async (id) => {
     throw err;
   }
 };
+
+
+export const postReview = async (id,reviewObj) =>{
+
+  let response;
+
+try{
+  response = await axios.post(
+  `${BACKAND_DOMAIN}/productreview/${id}`, 
+  reviewObj
+)
+}
+catch(err){
+     throw err;
+}
+
+ return response;
+}
+
+export const fetchProductReviews = async(id) =>{
+
+     
+  try{
+      const response = await axios.get(`${BACKAND_DOMAIN}/getproductReviews/${id}`);
+      return response.data;
+  }catch(err){
+
+    throw err
+  }
+   
+}
