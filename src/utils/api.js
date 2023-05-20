@@ -97,14 +97,11 @@ export async function addDisplayImage(image) {
 }
 export async function fetchDisplayImage() {
   try {
-    const response = await axios.post(
-      `${BACKAND_DOMAIN}/user/fetchDisplayImage`,
-      {},
-      {
-        withCredentials: true,
-      }
+    const response = await axios.get(
+      `${BACKAND_DOMAIN}/admin/fetchDisplayImage`
     );
     const data = response.data;
+    console.log("dara ", data);
     if (response.statusText !== "OK") {
       throw new Error({ message: data.message || "Unable to Login." });
     }
@@ -115,7 +112,7 @@ export async function fetchDisplayImage() {
 }
 export async function deleteDisplayImage(id) {
   try {
-    const response = await axios.post(
+    const response = await axios.delete(
       `${BACKAND_DOMAIN}/user/deleteDisplayImage/${id}`,
       {},
       {
@@ -146,7 +143,6 @@ export const fetchCategories = async () => {
   try {
     const response = await axios.get(`${BACKAND_DOMAIN}/fetchCategories`);
     const data = response.data;
-
     return data;
   } catch (err) {
     throw err;

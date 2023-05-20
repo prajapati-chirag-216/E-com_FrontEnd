@@ -19,12 +19,13 @@ const Cards = (props) => {
       dispatch(setCatagoryId(product._id));
       dispatch(setCatagoryName(product.name));
     }
-    window.open(`${props.location}/${product._id}`);
   };
   const navigateHandler = (productData) => {
     if (props.isProduct) {
       dispatch(setProductDetails(productData));
     }
+    console.log("come");
+    window.open(`${props.location}/${productData._id}`);
   };
 
   return (
@@ -102,6 +103,7 @@ const Cards = (props) => {
                   transition: "all 500ms",
                   textTransform: "uppercase",
                   letterSpacing: "3px",
+                  zIndex: 10,
                   "&:hover": {
                     backgroundColor: "black",
                   },

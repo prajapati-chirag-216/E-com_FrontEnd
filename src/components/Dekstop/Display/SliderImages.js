@@ -8,16 +8,18 @@ const transition = { type: "twin", duration: 1 };
 const SliderImages = (props) => {
   return (
     <Fragment>
-      <motion.img
-        key={props.index}
-        initial={{ opacity: 0, x: 1000 }}
-        transition={transition}
-        exit={{ opacity: 0, x: -100 }}
-        animate={{ opacity: 1, x: 0 }}
-        src={props.img}
-        alt=""
-        className={classes["motion-img"]}
-      />
+      <div className={classes["img-container"]}>
+        <motion.img
+          key={props.index}
+          initial={{ opacity: 0, x: 1000 }}
+          transition={transition}
+          exit={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          src={props.img}
+          alt=""
+          className={classes["motion-img"]}
+        />
+      </div>
       <motion.div
         key={props.text}
         initial={{ opacity: 0, y: 100 }}
@@ -38,8 +40,8 @@ const SliderImages = (props) => {
         </Typography>
         <Button
           sx={{
-            width: "15rem",
-            padding: "0.9rem",
+            width: "max-content",
+            padding: "1rem",
             letterSpacing: "2px",
             fontWeight: "bold",
             fontSize: "1.5rem",
