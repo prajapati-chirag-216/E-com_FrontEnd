@@ -1,32 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import display_1 from "../../../assets/display_1.jpg";
 import display_2 from "../../../assets/display_2.jpg";
 import display_3 from "../../../assets/display_3.jpg";
 import SliderImages from "./SliderImages";
-
-const IMAGES = [
-  { img: display_1, text: "the best one is here", label: "t-shirts" },
-  {
-    img: display_2,
-    text: "still waitig... your wait is over.",
-    label: "women",
-  },
-  { img: display_3, text: "check this out." },
-];
+import { fetchDisplayImage } from "../../../utils/api";
 
 const Display = () => {
   const [index, setIndex] = useState(0);
+  const [images, setImages] = useState([]);
 
-  const changeIndexHandler = (val) => {
-    setIndex(val);
-  };
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % IMAGES.length);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [index]);
+    (async () => {
+      try {
+        const res = await fetchDisplayImage();
+        setImages(res.data);
+      } catch (err) {
+        throw err;
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (images.length > 0) {
+      const timer = setTimeout(() => {
+        setIndex((prevIndex) => (prevIndex + 1) % images.length);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [index, images]);
 
   return (
     <Box
@@ -37,14 +39,24 @@ const Display = () => {
         overflow: "hidden",
       }}
     >
-      <SliderImages
-        img={IMAGES[index].img}
-        index={index}
-        text={IMAGES[index].text}
-        label={IMAGES[index].label}
-      />
+      {images.length !== 0 && (
+        <SliderImages
+          img={images[index].image}
+          index={index}
+          text={images[index].text}
+          label={images[index].label}
+        />
+      )}
     </Box>
   );
 };
-
+export async function loader() {
+  let res;
+  try {
+    res = await fetchDisplayImage();
+  } catch (err) {
+    throw err;
+  }
+  return res;
+}
 export default Display;
