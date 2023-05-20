@@ -25,7 +25,7 @@ import { ShoppingCart } from "@mui/icons-material";
 import Drawer from "../Drawer/Drawer";
 import Tabs from "./Tabs";
 import CartDropdown from "../../Cart/CartSlider/CartSlider";
-import { selectIsCartOpen } from "../../../store/cart/cart.selector";
+import { selectIsCartOpen, selectNewCartCount } from "../../../store/cart/cart.selector";
 import { setIsCartOpen } from "../../../store/cart/cart.action";
 
 const Search = styled("div")(({ theme }) => ({
@@ -73,6 +73,8 @@ const MainNavigation = () => {
   const cartState = useSelector(selectIsCartOpen);
 
   const dispatch = useDispatch();
+  const itemCount = useSelector(selectNewCartCount)
+  console.log(itemCount)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -247,7 +249,12 @@ const MainNavigation = () => {
               onClick={openCartHandler}
               color="inherit"
             >
-              <ShoppingCart fontSize="large" />
+              <div>
+              <h6 style={{margin:'0px',height:'22px',color:'#cf8282'}}>  {itemCount}</h6>
+              <ShoppingCart fontSize="large" margin-bottom='1rem' />
+
+              </div>
+
             </IconButton>
             <IconButton
               size="large"

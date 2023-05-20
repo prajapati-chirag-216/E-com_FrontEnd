@@ -33,6 +33,22 @@ const ProductView = () => {
 
   },[actionData])
 
+
+  useEffect(()=>{
+
+
+    if(submitMessage){
+
+
+
+        setTimeout(()=>{
+          setsubmiMessage(false)
+
+        },3000)
+    }
+
+  },[submitMessage])
+
   const formShowHandler = () => {
     setisFormOpen(true);
   };
@@ -41,6 +57,10 @@ const ProductView = () => {
     setmainImgUrl(src);
   };
   const addProductHandler = (productData) => {
+
+     const sound = new Audio('/click_sound.mp3')
+    sound.play()
+
     dispatch(setAddItemToCart(productData));
   };
   const loaderData = useLoaderData();
@@ -96,6 +116,7 @@ const ProductView = () => {
                         height: "4rem",
                         letterSpacing: "3px",
                         fontSize: "1.1rem",
+                        "&:active":{transform:'scale(0.9)'}
                       }}
                       onClick={addProductHandler.bind(null, productDetails)}
                       variant="contained"
@@ -137,6 +158,62 @@ const ProductView = () => {
       </div>
       <hr className="devider" />
       <div className="lowerViewContainer">
+            <div className="reviewListContainer"> 
+                   
+              <h2>REVIEWS</h2>        
+              <Suspense>         
+               <Await resolve={loaderData.productReviews}>             
+                  {
+                    
+                   (reviews)  => {       
+                    if(reviews.length === 0)
+                       return <Typography sx={{color:'rgb(56 52 52 / 68%)',
+                                               letterSpacing:'2px',
+                                               fontSize:'25px',
+                                               textTransform:'upperCase',
+                                               display:'flex',
+                                               justifyContent:'center',
+                                               marginTop:'3rem'
+                                               }}>
+                              Be The First To Give Review!
+                              </Typography>
+                    else
+                    return(
+                    reviews.map((review,index) =>(
+            
+                    <div className="reviewDivContainer">
+                    <Rating
+                      name='rating'
+                      value={review.rating}
+                      sx={{ color: "black" }}
+                    />
+                     <Typography
+                      sx={{ color: "black",fontSize:'20px' ,letterSpacing:'2px'}}
+                     
+                     >
+                      {review.title.toUpperCase()}
+                     </Typography>
+            
+                    <Typography
+                      sx={{ color: "black",fontSize:'20px' }}
+                    >
+                      {review.description}
+                    </Typography>
+            
+                    <Typography
+                    sx={{fontSize:'20px' }}
+                    >
+                      {`${review.name} on ${moment(review.createdAt).format('MMM DD, YYYY')}`}
+                    </Typography>
+                    </div>
+                   ))  )  }        
+                  }
+            
+               </Await>
+              </Suspense>  
+            
+             </div>
+            <Divider variant="middle"/>
         {!isFormOpen &&  !submitMessage && (
           <Button
             onClick={formShowHandler}
@@ -216,67 +293,6 @@ const ProductView = () => {
           </div>
         )}
 
-    <div className="reviewListContainer"> 
-     
-
-      <h2>REVIEWS</h2>
-
-      <Suspense>
-      
-       <Await resolve={loaderData.productReviews}>
-
-          
-             
-          {
-            
-           (reviews)  => {       
-            if(reviews.length === 0)
-               return <Typography sx={{color:'rgb(56 52 52 / 68%)',
-                                       letterSpacing:'2px',
-                                       fontSize:'25px',
-                                       textTransform:'upperCase',
-                                       display:'flex',
-                                       justifyContent:'center',
-                                       marginTop:'3rem'
-                                       }}>
-                      Be The First To Give Review!
-                      </Typography>
-            else
-            return(
-            reviews.map((review,index) =>(
-
-            <div className="reviewDivContainer">
-            <Rating
-              name='rating'
-              value={review.rating}
-              sx={{ color: "black" }}
-            />
-             <Typography
-              sx={{ color: "black",fontSize:'20px' ,letterSpacing:'2px'}}
-             
-             >
-              {review.title.toUpperCase()}
-             </Typography>
-
-            <Typography
-              sx={{ color: "black",fontSize:'20px' }}
-            >
-              {review.description}
-            </Typography>
-
-            <Typography
-            sx={{fontSize:'20px' }}
-            >
-              {`${review.name} on ${moment(review.createdAt).format('MMM DD, YYYY')}`}
-            </Typography>
-            </div>
-           ))  )  }        
-          }
-
-       </Await>
-      </Suspense>  
-    
-     </div>
       </div>
     </div>
   );
