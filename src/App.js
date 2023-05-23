@@ -25,6 +25,7 @@ import ViewProductsController from "./pages/ProdutsView/ProductsViewController";
 import { loader as categoryLoader } from "./components/Dekstop/Category/Categories";
 import { loader as productLoader } from "./components/ProductsController/Items/Items";
 import { loader as productViewLoader } from "./components/ProductView/ProductView";
+import CheckOut from "./components/CheckOut/checkout.component";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Wrapper />} errorElement={<Error />}>
@@ -61,6 +62,7 @@ const router = createBrowserRouter(
           action={reviewAction}
           loader={productViewLoader}
         />
+        <Route path='/checkout' element={<CheckOut/>}/>
       </Route>
     </Route>
   )

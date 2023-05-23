@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom";
 import CartItem from "../CartItem/CartItem";
 import classes from "./CartSlider.module.css";
 import { Button, Divider, Typography } from "@mui/material";
@@ -9,6 +10,17 @@ import { selectCartItems } from "../../../store/cart/cart.selector";
 
 const CartSlider = (props) => {
   const cartItems = useSelector(selectCartItems);
+  const navigate = useNavigate();
+
+const checkOuthandler = () =>{
+
+
+window.open('/checkout','_blank')
+  navigate('/checkout')
+     
+}
+
+
   return (
     <div
       className={`${classes["cart-dropdown-container"]}
@@ -72,6 +84,7 @@ const CartSlider = (props) => {
             },
             borderRadius: "0rem",
           }}
+          onClick={checkOuthandler}
         >
           Go to CheckOut
         </Button>
