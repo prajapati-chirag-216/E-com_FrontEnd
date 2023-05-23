@@ -36,7 +36,9 @@ const CartItem = (props) => {
 
   return (
     <div className={classes["cart-item-container"]}>
-      <img src={image[0]} alt={`${name}`} />
+      <div className={classes["img-container"]}>
+        <img src={image[0]} alt={`${name}`} />
+      </div>
       <div className={classes["item-details"]}>
         <div className={classes["item-description"]}>
           <Typography
@@ -58,9 +60,9 @@ const CartItem = (props) => {
         </div>
         <div className={classes["controll-div"]}>
           <div className={classes["input-div"]}>
-            <AddIcon
+            <RemoveIcon
               sx={{ cursor: "pointer", color: "rgb(58, 58, 58)" }}
-              onClick={increaseQuantityHandler}
+              onClick={decreaseQuantityHandler}
             />
             <input
               ref={inputRef}
@@ -69,9 +71,9 @@ const CartItem = (props) => {
               type="number"
               min="0"
             />
-            <RemoveIcon
+            <AddIcon
               sx={{ cursor: "pointer", color: "rgb(58, 58, 58)" }}
-              onClick={decreaseQuantityHandler}
+              onClick={increaseQuantityHandler}
             />
           </div>
           <div className={classes["remove-btn"]}>

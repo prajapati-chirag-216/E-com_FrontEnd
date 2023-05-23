@@ -31,8 +31,6 @@
 
     .mainImageContainer {
       width: 75rem;
-      // height: 50rem;
-      background-color: red;
       box-shadow: 1px 2px 10px rgba(181, 181, 181, 0.682);
 
       img {
@@ -49,8 +47,6 @@
       gap: 2rem;
       padding-top: 2rem;
       max-width: 50rem;
-      // width: 100rem;
-      // justify-content: center;
       .priceInfoContainer {
         display: flex;
         flex-direction: column;
@@ -61,75 +57,5 @@
   .devider {
     border-color: rgba(238, 231, 231, 0.264);
     width: 85%;
-  }
-
-  .lowerViewContainer {
-    display: flex;
-    padding: 3rem;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 1rem;
-
-  
-    .successMessageConatiner{
-      display: flex;
-      justify-content: center;
-      font-size: 25px;
-      letter-spacing: 2px;
-      color: green;
-      background-color: #a4dfa4;
-      width: 45rem;
-      align-items: center;
-      height: 5rem;
-
-    }
-
-    .reviewContainer {
-
-      Form{
-        display: flex;
-        width: 40rem;
-        flex-direction: column;
-        row-gap: 2rem;
-      }
-    }
-
-
-    .reviewListContainer{
-
-      width: 80rem;
-       display: flex;
-       justify-content: center;
-       flex-direction: column;
-       margin-top: 8rem;
-       margin-bottom: 4rem;
-   
-
-       h2{
-
-          display: flex;
-          justify-content: center;
-          letter-spacing: 2px;
-          color:rgb(56 52 52 / 68%); 
-      
-       }
-
-
-       .reviewDivContainer{
- 
-           display: flex;
-           flex-direction: column;
-           justify-content: flex-start;
-           row-gap: 1rem;
-           padding: 2rem;
-           width: 100%;
-        
-         
-       }
-
-
-
-    }
   }
 }
