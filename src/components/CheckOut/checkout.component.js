@@ -39,10 +39,11 @@ const CheckOut = () => {
       {cartItems.map((item, index) => {
         return (
           <div className="checkOutItemContainer">
-            <div className="img-container">
-              <img src={item.image[0]} />
-            </div>
-            <h6 className="title">{item.name}</h6>
+            <img src={item.image[0]} />
+
+            <h6 style={{ textTransform: "uppercase", letterSpacing: "1px" }}>
+              {item.name}
+            </h6>
 
             <h4>{`${item.price}$`}</h4>
 

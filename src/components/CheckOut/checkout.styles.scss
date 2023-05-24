@@ -9,7 +9,6 @@
 
   .checkOutItemContainer {
     display: flex;
-    // justify-content: space-around;
     column-gap: 10rem;
     padding: 1rem;
     width: 80%;
@@ -18,15 +17,10 @@
     font-size: 2rem;
     color: rgb(56 52 52 / 68%);
     box-shadow: 1px 1px 4px rgba(56, 52, 52, 0.68);
-    .img-container {
-      height: 12rem;
-    }
+
     img {
-      object-fit: fill;
-    }
-    .title {
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      width: 15%;
+      height: 30%;
     }
 
     .itemQuntityContainer {
