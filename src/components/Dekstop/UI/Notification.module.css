@@ -5,11 +5,19 @@
 }
 
 .success {
-    background-color: rgb(72, 182, 35);
+    background-color: #DFF2BF;
 }
 
 .invalid {
-    background-color: rgb(255, 129, 95);
+    background-color: #FFBABA;
+}
+
+.success-msg {
+    color: #270;
+}
+
+.invalid-msg {
+    color: #D8000C;
 }
 
 .modal {
@@ -19,6 +27,8 @@
     width: 35vw;
     z-index: 100;
     overflow: hidden;
+    display: flex;
+    padding: 0.2rem;
 }
 
 .content {

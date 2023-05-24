@@ -101,7 +101,7 @@ const SigninForm = () => {
             value={emailState.value}
             onChange={emailChangeHandler}
             onBlur={validateEmailHandler}
-            // autoComplete="off"
+            autoComplete="off"
             error={emailIsValid === false ? true : false}
           />
           <TextField
@@ -130,7 +130,9 @@ const SigninForm = () => {
           >
             SignIn
           </Button>
-          <NavLink to="/forgotPassword">Forgot Password?</NavLink>
+          <NavLink to="/forgotPassword" className={classes.link}>
+            Forgot Password?
+          </NavLink>
         </Form>
       </div>
     </Fragment>

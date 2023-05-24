@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import classes from "./Notification.module.css";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+// import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 
 const ModalOverlay = (props) => (
   <div
@@ -11,10 +12,20 @@ const ModalOverlay = (props) => (
     }`}
   >
     <div className={classes.content}>
-      <span>
-        {props.status === "invalid" ? <ErrorOutlineIcon /> : <TaskAltIcon />}
+      {props.status === "invalid" ? (
+        <CancelRoundedIcon sx={{ fill: "rgb(233, 100, 100)" }} />
+      ) : (
+        <TaskAltIcon />
+      )}
+      <span
+        className={
+          props.status === "invalid"
+            ? classes["invalid-msg"]
+            : classes["success-msg"]
+        }
+      >
+        {props.message}
       </span>
-      <span>{props.message}</span>
     </div>
   </div>
 );

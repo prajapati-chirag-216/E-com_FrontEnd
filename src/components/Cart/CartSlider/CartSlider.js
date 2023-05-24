@@ -12,14 +12,10 @@ const CartSlider = (props) => {
   const cartItems = useSelector(selectCartItems);
   const navigate = useNavigate();
 
-const checkOuthandler = () =>{
-
-
-window.open('/checkout','_blank')
-  navigate('/checkout')
-     
-}
-
+  const checkOuthandler = () => {
+    window.open("/checkout", "_blank");
+    navigate("/checkout");
+  };
 
   return (
     <div

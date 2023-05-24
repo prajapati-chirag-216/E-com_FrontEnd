@@ -70,7 +70,7 @@ const ForgotPasswordForm = () => {
             value={emailState.value}
             onChange={emailChangeHandler}
             onBlur={validateEmailHandler}
-            // autoComplete="off"
+            autoComplete="off"
             error={emailIsValid === false ? true : false}
           />
           <Button

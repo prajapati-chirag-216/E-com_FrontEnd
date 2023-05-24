@@ -10,6 +10,7 @@ import { Fragment } from "react";
 import Layout from "./components/Dekstop/UI/Layout";
 import SignIn from "./pages/SignIn";
 import { action as signinAction } from "./components/Dekstop/Form/SigninForm";
+import { action as signupAction } from "./components/Dekstop/Form/SignupForm";
 import { action as reviewAction } from "./components/ProductView/Review";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
@@ -26,16 +27,18 @@ import { loader as categoryLoader } from "./components/Dekstop/Category/Categori
 import { loader as productLoader } from "./components/ProductsController/Items/Items";
 import { loader as productViewLoader } from "./components/ProductView/ProductView";
 import CheckOut from "./components/CheckOut/checkout.component";
+import Signup from "./pages/Deshboard/Signup";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Wrapper />} errorElement={<Error />}>
+      <Route path="/signup" element={<Signup />} action={signupAction} />
       <Route path="/login" element={<SignIn />} action={signinAction} />
       <Route
         path="/forgotPassword"
         element={<ForgotPassword />}
         action={forgotPasswordAction}
       />
-      ``
       <Route
         path="/resetPassword/:id"
         element={<ResetPassword />}
@@ -62,7 +65,7 @@ const router = createBrowserRouter(
           action={reviewAction}
           loader={productViewLoader}
         />
-        <Route path='/checkout' element={<CheckOut/>}/>
+        <Route path="/checkout" element={<CheckOut />} />
       </Route>
     </Route>
   )

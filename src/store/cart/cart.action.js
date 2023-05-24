@@ -20,7 +20,7 @@ const removeCartItem = (cartItems, itemToBeRemoved) => {
     const updatedCartItems = cartItems.filter(
       (item) => item._id != itemToBeRemoved._id
     );
-    localStorage.setItem("cartItems", updatedCartItems);
+    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     return updatedCartItems;
   }
 
@@ -29,7 +29,16 @@ const removeCartItem = (cartItems, itemToBeRemoved) => {
       ? { ...item, quntity: item.quntity - 1 }
       : item;
   });
-  localStorage.setItem("cartItems", updatedCartItems);
+  localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+  return updatedCartItems;
+};
+const changeItemQuantity = (cartItems, itemToBeChanged, quantity) => {
+  const updatedCartItems = cartItems.map((item) => {
+    return item._id == itemToBeChanged._id
+      ? { ...item, quntity: +quantity }
+      : item;
+  });
+  localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
   return updatedCartItems;
 };
 
@@ -53,6 +62,14 @@ export const setAddItemToCart = (productToAdd) => {
 
 export const setRemoveItemFromCart = (cartItems, productToRemove) => {
   const newCartItems = removeCartItem(cartItems, productToRemove);
+  return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
+};
+export const setChangeItemQuantityFromCart = (
+  cartItems,
+  productToRemove,
+  quantity
+) => {
+  const newCartItems = changeItemQuantity(cartItems, productToRemove, quantity);
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 

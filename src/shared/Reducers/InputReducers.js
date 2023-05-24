@@ -1,3 +1,12 @@
+export const nameReducer = (state, action) => {
+  if (action.type === "USER_INPUT") {
+    return { value: action.val, isValid: action.val.length > 5 };
+  }
+  if (action.type === "INPUT_BLUR") {
+    return { value: state.value, isValid: state.value.length > 5 };
+  }
+  return { value: "", isValid: null };
+};
 export const emailReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
     return { value: action.val, isValid: action.val.includes("@") };
@@ -24,6 +33,19 @@ export const passwordReducer = (state, action) => {
         state.value.trim().length >= 6 &&
         !state.value.trim().toLowerCase().includes("password"),
     };
+  }
+  return { value: "", isValid: null };
+};
+
+export const phoneNoReducer = (state, action) => {
+  if (action.type === "USER_INPUT") {
+    if (action.val.length === 11) {
+      return { value: state.value, isValid: true };
+    }
+    return { value: action.val, isValid: action.val.length === 10 };
+  }
+  if (action.type === "INPUT_BLUR") {
+    return { value: state.value, isValid: state.value.length === 10 };
   }
   return { value: "", isValid: null };
 };

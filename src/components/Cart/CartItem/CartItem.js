@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems } from "../../../store/cart/cart.selector";
 import {
   setAddItemToCart,
+  setChangeItemQuantityFromCart,
   setClearItemFromCart,
   setRemoveItemFromCart,
 } from "../../../store/cart/cart.action";
@@ -31,7 +32,7 @@ const CartItem = (props) => {
   const addQuantityHandler = () => {
     const val = +inputRef.current.value;
     if (val < 0) return;
-    setItemQuantity(val);
+    dispatch(setChangeItemQuantityFromCart(cartItems, props.product, val));
   };
 
   return (

@@ -18,17 +18,18 @@
 .action-form {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.8rem;
     justify-content: space-between;
     user-select: none;
 }
 
-.action-form>a {
-    text-decoration: none;
+.link:hover {
+    text-decoration: underline;
 }
 
-.action-form>a:hover {
-    text-decoration: underline;
+.link {
+    text-decoration: none;
+    letter-spacing: 1px;
 }
 
 @media (max-width:600px) {

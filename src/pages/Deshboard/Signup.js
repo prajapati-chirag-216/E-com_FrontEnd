@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
-import SigninForm from "../components/Dekstop/Form/SigninForm";
+import SignupForm from "../../components/Dekstop/Form/SignupForm";
 import { Container } from "@mui/system";
 // import { useSelector } from "react-redux";
-// import Notification from "../components/Dekstop/UI/Notification";
-const SignIn = () => {
+import Notification from "../../components/Dekstop/UI/Notification";
+const Signup = () => {
   // const notification = useSelector((state) => state.ui.notification);
   return (
     <Fragment>
@@ -14,10 +14,10 @@ const SignIn = () => {
         maxWidth="sm"
         sx={{ marginTop: "8rem", boxShadow: "2px 2px 8px" }}
       >
-        <SigninForm />
+        <SignupForm />
       </Container>
     </Fragment>
   );
 };
 
-export default SignIn;
+export default Signup;
