@@ -46,7 +46,9 @@ const CheckOut = () => {
                 return (
                     <div className="checkOutItemContainer">
 
+                       <div className="imageContainer">
                         <img src={item.image[0]} />
+                        </div>
 
                         <h6 style={{ textTransform: 'uppercase', letterSpacing: '1px' }}>{item.name}</h6>
 

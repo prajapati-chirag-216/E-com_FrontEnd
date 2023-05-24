@@ -13,7 +13,7 @@
 
 
         display: flex;
-        column-gap: 10rem;
+        column-gap: 6rem;
         padding: 1rem;
         width: 80%;
         height: auto;
@@ -22,11 +22,18 @@
         color: rgb(56 52 52 / 68%);
         box-shadow: 1px 1px 4px rgba(56, 52, 52, 0.68);
 
-        img{
+.imageContainer{
 
-            width: 15%;
-            height: 30%;
-        }
+    // width: 10rem;
+    height: 10rem;
+    
+    img{
+        
+        object-fit: fill;
+    }
+
+
+}
 
         .itemQuntityContainer{
 
