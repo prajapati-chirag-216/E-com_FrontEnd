@@ -99,65 +99,74 @@ const Cards = (props) => {
                 alt=""
               />
 
-            <CardContent
-              sx={{
-                position: "absolute",
-                right: "2rem",
-                bottom: "1rem",
-                display: "flex",
-                flexDirection: "column",
-                gap: "2rem",
-              }}
-            >
-              <Typography
-                align="right"
+              <CardContent
                 sx={{
-                  letterSpacing: "3px",
-                  color: "white",
-                  textTransform: "uppercase",
-                  fontSize: "2rem",
+                  position: "absolute",
+                  right: "2rem",
+                  bottom: "1rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "2rem",
                 }}
               >
-                {item.name}
-              </Typography>
+                <Typography
+                  align="right"
+                  sx={{
+                    letterSpacing: "3px",
+                    color: "white",
+                    textTransform: "uppercase",
+                    fontSize: "2rem",
+                  }}
+                >
+                  {item.name}
+                </Typography>
 
-              {/* <a
+                {/* <a
                 href={`${props.location}/${item._id}`}
                 target="_blank"
                 rel="noreferrer"
                 style={{ backgroundColor: "red" }}
               > */}
-              <Button
-                onClick={(event) => {
-                  if (props.isProduct) {
-                    event.stopPropagation();
-                  }
-                  changeitemIdHandler(item);
-                }}
-                sx={{
-                  color: "white",
-                  width: "15rem",
-                  alignSelf: "flex-end",
-                  fontSize: "1.2rem",
-                  padding: "0.8rem 2rem",
-                  backgroundColor: "black",
-                  transition: "all 500ms",
-                  textTransform: "uppercase",
-                  letterSpacing: "3px",
-                  zIndex: 10,
-                  "&:hover": {
+                <Button
+                  onClick={(event) => {
+                    if (props.isProduct) {
+                      event.stopPropagation();
+                    }
+                    changeitemIdHandler(item);
+                  }}
+                  sx={{
+                    color: "white",
+                    width: "15rem",
+                    alignSelf: "flex-end",
+                    fontSize: "1.2rem",
+                    padding: "0.8rem 2rem",
                     backgroundColor: "black",
-                  },
-                  borderRadius: "0rem",
-                }}
-              >
-                {props.isProduct ? "Add To Cart" : "Shop Now"}
-              </Button>
-              {/* </a> */}
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
+                    transition: "all 500ms",
+                    textTransform: "uppercase",
+                    letterSpacing: "3px",
+                    zIndex: 10,
+                    "&:hover": {
+                      backgroundColor: "black",
+                    },
+                    borderRadius: "0rem",
+                  }}
+                >
+                  {props.isProduct ? "Add To Cart" : "Shop Now"}
+                </Button>
+                {/* </a> */}
+              </CardContent>
+            </Card>
+          </Grid>
+        ))
+      ) : (
+        <h1
+          style={{
+            letterSpacing: "3px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >{`No Search Result for ${searchByNameString}`}</h1>
+      )}
     </Grid>
   );
 };

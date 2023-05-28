@@ -204,7 +204,7 @@ export const fetchFilteredProducts = async (id, name) => {
   console.log(id, name);
   try {
     const response = await axios.get(
-      `${ADMIN_BACKAND_DOMAIN}/getfilteredproducts/${id}/${name}`
+      `${BACKAND_DOMAIN}/getfilteredproducts/${id}/${name}`
     );
     return response.data;
   } catch (err) {

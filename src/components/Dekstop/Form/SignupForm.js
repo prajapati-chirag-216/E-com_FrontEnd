@@ -18,11 +18,12 @@ import {
   passwordReducer,
   phoneNoReducer,
 } from "../../../shared/Reducers/InputReducers";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Notification from "../UI/Notification";
 import { signupUser } from "../../../utils/api";
+import { setLoginUser } from "../../../store/ui/ui.action";
 const SignupForm = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -102,6 +103,7 @@ const SignupForm = () => {
   useEffect(() => {
     if (actionData && actionData.success) {
       // dispatch(authActions.login());
+      dispatch(setLoginUser());
       return navigate("/home", { replace: true });
     }
     if (actionData && !actionData.emailIsValid) {

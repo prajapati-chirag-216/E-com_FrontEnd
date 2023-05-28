@@ -10,3 +10,6 @@ export const setLoginUser = () => {
 export const setLogoutUser = () => {
   return createAction(ui_types.SET_LOGOUT_USER);
 };
+export const setSearchField = (string) => {
+  return createAction(ui_types.SET_SEARCHFIELD, string);
+};
