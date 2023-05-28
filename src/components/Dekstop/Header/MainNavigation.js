@@ -27,6 +27,7 @@ import Tabs from "./Tabs";
 import CartDropdown from "../../Cart/CartSlider/CartSlider";
 import { selectIsCartOpen, selectNewCartCount } from "../../../store/cart/cart.selector";
 import { setIsCartOpen } from "../../../store/cart/cart.action";
+import { setSearchField } from "../../../store/ui/ui.action";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -208,7 +209,7 @@ const MainNavigation = () => {
       >
         <Toolbar>
           {matches && <Drawer />}
-          <Search>
+          <Search onChange={(event)=> dispatch(setSearchField(event.target.value))}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

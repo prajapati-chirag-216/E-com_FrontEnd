@@ -8,6 +8,23 @@ export const setIsLoggedIn = (boolean) =>{
 
 
 export const setIsLoading = (boolean) =>{
+    console.log(boolean)
     return createAction(ui_types.SET_ISLOADING,boolean)
 }
 
+
+export const setSearchField = (string) =>{
+    return createAction(ui_types.SET_SEARCHFIELD,string)
+}
+
+
+export const setProductData = (data) =>{
+    return createAction(ui_types.SET_PRODUCT_DATA,data)
+
+}
+
+
+export const setProductDataState  = (boolean) =>{
+
+    return createAction(ui_types.SET_PRODUCT_DATA_STATE,boolean)
+}
