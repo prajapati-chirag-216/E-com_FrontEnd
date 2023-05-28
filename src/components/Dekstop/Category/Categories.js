@@ -56,7 +56,7 @@ const Categories = () => {
       </Box>
       <Suspense>
         <Await resolve={loaderData}>
-          {(categories) => <Cards location="/product" data={categories} />}
+          {(categories) => <Cards  location="/product" data={categories} />}
         </Await>
       </Suspense>
     </Box>

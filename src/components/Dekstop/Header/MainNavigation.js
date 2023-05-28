@@ -34,6 +34,7 @@ import { selectCartItems } from "../../../store/cart/cart.selector";
 import { useNavigate } from "react-router-dom";
 import { selectIsLoggedIn } from "../../../store/ui/ui.selector";
 import { setLogoutUser } from "../../../store/ui/ui.action";
+import { setSearchField } from "../../../store/ui/ui.action";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -213,7 +214,9 @@ const MainNavigation = () => {
       >
         <Toolbar>
           {matches && <Drawer />}
-          <Search>
+          <Search
+            onChange={(event) => dispatch(setSearchField(event.target.value))}
+          >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

@@ -186,3 +186,28 @@ export const addCartItems = async (items) => {
     throw err;
   }
 };
+
+export const fetchDataByName = async (name, data) => {
+  const filterdName = name.split(" ").join("").toLowerCase();
+  console.log(data);
+
+  const filteredData = data.filter((item) => {
+    const itemName = item.name.split(" ").join("").toLowerCase();
+
+    return itemName.includes(filterdName);
+  });
+
+  return filteredData;
+};
+
+export const fetchFilteredProducts = async (id, name) => {
+  console.log(id, name);
+  try {
+    const response = await axios.get(
+      `${ADMIN_BACKAND_DOMAIN}/getfilteredproducts/${id}/${name}`
+    );
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+};

@@ -3,32 +3,37 @@ import { Form, useActionData, useLocation } from "react-router-dom";
 import { Button, TextField, Rating, Divider, Typography } from "@mui/material";
 import { postReview, fetchProductReviews } from "../../utils/api";
 import moment from "moment";
+import {store} from '../../store/store'
 import LoadingSpinner from "../Dekstop/UI/LoadingSpinner";
+import {setIsLoading} from '../../store/ui/ui.action'
+import {selectIsLoading} from '../../store/ui/ui.selector'
 import classes from "./Review.module.css";
+import { useDispatch, useSelector } from "react-redux";
 
 const Review = () => {
   const [isFormOpen, setisFormOpen] = useState(false);
   const [starRating, setStartRating] = useState(0);
   const [submitMessage, setsubmiMessage] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const path = location.pathname.split("/");
   const id = path[path.length - 1];
   const actionData = useActionData();
+  const isLoading = useSelector(selectIsLoading);
+  const dispatch = useDispatch();
   const formShowHandler = () => {
     setisFormOpen(true);
   };
   useEffect(() => {
     let res;
-    setIsLoading(true);
+    // setIsLoading(true);
     const fetch = async () => {
       res = await fetchProductReviews(id);
       setReviews(res);
     };
     fetch()
       .then((res) => {
-        setIsLoading(false);
+        dispatch(setIsLoading(false));
       })
       .catch((err) => {
         throw err;
@@ -182,7 +187,9 @@ const Review = () => {
 };
 
 export async function action({ request }) {
+  
   let response;
+  store.dispatch(setIsLoading(true))
   const url = window.location.href;
   const urlArray = url.split("/");
   const id = urlArray[urlArray.length - 1];

@@ -2,8 +2,11 @@ import { cookieParser } from "../../utils/function";
 import { ui_types } from "./ui.types";
 
 const UI_INITIAL_STATE = {
-  isLoading: false,
+  isLoading: true,
   isLoggedIn: cookieParser()["userAuth"] === "true",
+  searchField: "",
+  productData: [],
+  productDataState: false,
 };
 
 export const uiReducer = (state = UI_INITIAL_STATE, action) => {
@@ -26,6 +29,21 @@ export const uiReducer = (state = UI_INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: payload,
+      };
+    case ui_types.SET_SEARCHFIELD:
+      return {
+        ...state,
+        searchField: payload,
+      };
+    case ui_types.SET_PRODUCT_DATA:
+      return {
+        ...state,
+        productData: payload,
+      };
+    case ui_types.SET_PRODUCT_DATA_STATE:
+      return {
+        ...state,
+        productDataState: payload,
       };
     default:
       return state;
