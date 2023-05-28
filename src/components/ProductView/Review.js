@@ -203,7 +203,6 @@ export async function action({ request }) {
     }
     throw err;
   }
-  console.log(response);
   return response;
 }
 

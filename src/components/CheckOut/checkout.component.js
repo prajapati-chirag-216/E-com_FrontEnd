@@ -18,11 +18,9 @@ const CheckOut = () => {
   const cartItems = useSelector(selectCartItems);
 
   const totalPrice = useSelector(selectNewCartTotal);
-  console.log(totalPrice);
   const dispatch = useDispatch();
 
   const increaseItemhandler = (product) => {
-    console.log(product);
     dispatch(setAddItemToCart(product));
   };
 

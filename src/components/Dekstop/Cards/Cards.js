@@ -24,7 +24,6 @@ const Cards = (props) => {
     if (props.isProduct) {
       dispatch(setProductDetails(productData));
     }
-    console.log("come");
     window.open(`${props.location}/${productData._id}`);
   };
 
@@ -84,15 +83,13 @@ const Cards = (props) => {
               >
                 {item.name}
               </Typography>
-
-              {/* <a
-                href={`${props.location}/${item._id}`}
-                target="_blank"
-                rel="noreferrer"
-                style={{ backgroundColor: "red" }}
-              > */}
               <Button
-                onClick={changeitemIdHandler.bind(null, item)}
+                onClick={(event) => {
+                  if (props.isProduct) {
+                    event.stopPropagation();
+                  }
+                  changeitemIdHandler(item);
+                }}
                 sx={{
                   color: "white",
                   width: "15rem",
@@ -112,7 +109,6 @@ const Cards = (props) => {
               >
                 {props.isProduct ? "Add To Cart" : "Shop Now"}
               </Button>
-              {/* </a> */}
             </CardContent>
           </Card>
         </Grid>

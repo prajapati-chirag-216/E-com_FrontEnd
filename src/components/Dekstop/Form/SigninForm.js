@@ -9,7 +9,8 @@ import {
 import { loginUser } from "../../../utils/api";
 import { useDispatch } from "react-redux";
 import Notification from "../UI/Notification";
-import { authActions } from "../../../mystore/auth-slice";
+import { setUpdateCart } from "../../../store/cart/cart.action";
+import { setLoginUser } from "../../../store/ui/ui.action";
 const SigninForm = () => {
   const dispatch = useDispatch();
 
@@ -59,7 +60,8 @@ const SigninForm = () => {
   const actionData = useActionData();
   useEffect(() => {
     if (actionData && actionData.success) {
-      dispatch(authActions.login());
+      dispatch(setUpdateCart(actionData.cartItems));
+      dispatch(setLoginUser());
       return navigate("/", { replace: true });
     }
     if (actionData && actionData.response.status === 502) {

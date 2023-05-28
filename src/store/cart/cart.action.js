@@ -2,17 +2,27 @@ import { CART_ACTION_TYPES } from "./cart.types";
 import { createAction } from "../../utils/Reducer/reducer.helper";
 
 const addCartItem = (cartItems, product) => {
-  const itemExist = cartItems.find((item) => {
+  const index = cartItems.findIndex((item) => {
     return item._id === product._id;
   });
-  if (itemExist) {
-    return cartItems.map((item) => {
-      return item._id === product._id
-        ? { ...item, quntity: item.quntity + 1 }
-        : item;
-    });
+  if (index != -1) {
+    cartItems[index].quntity += 1;
+    return cartItems;
   }
   return [...cartItems, { ...product, quntity: 1 }];
+};
+const updateCart = (cartItems, products) => {
+  products.map((product) => {
+    const index = cartItems.findIndex((item) => {
+      return item._id === product.product._id;
+    });
+    if (index != -1) {
+      cartItems[index].quntity += product.quantity;
+    } else {
+      cartItems.push({ ...product.product, quntity: product.quantity });
+    }
+  });
+  return cartItems;
 };
 
 const removeCartItem = (cartItems, itemToBeRemoved) => {
@@ -49,6 +59,11 @@ const clearCartItem = (cartItems, itemToBeCleared) => {
   localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
   return updatedCartItems;
 };
+export const setClearCart = () => {
+  // localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+  localStorage.removeItem("cartItems");
+  return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, []);
+};
 
 export const setIsCartOpen = (boolean) => {
   return createAction(CART_ACTION_TYPES.SET_CART_ISOPEN, boolean);
@@ -57,6 +72,16 @@ export const setIsCartOpen = (boolean) => {
 export const setAddItemToCart = (productToAdd) => {
   const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   const newCartItems = addCartItem(cartItems, productToAdd);
+  return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
+};
+export const setUpdateCart = (itemsToAdd) => {
+  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  let newCartItems;
+  if (itemsToAdd.length !== 0) {
+    newCartItems = updateCart(cartItems, itemsToAdd);
+  } else {
+    newCartItems = cartItems;
+  }
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 

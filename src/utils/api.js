@@ -1,27 +1,11 @@
 import axios from "axios";
 
-const ADMIN_BACKAND_DOMAIN = "http://localhost:8000";
-const ECOM_BACKAND_DOMAIN = "http://localhost:4000";
+const BACKAND_DOMAIN = "http://localhost:8000";
 
 export async function signupUser(userData) {
   try {
-    const response = await axios.post(`${ECOM_BACKAND_DOMAIN}/signup`, {
-      ...userData,
-    });
-    const data = response.data;
-    if (response.statusText !== "OK") {
-      throw new Error({ message: data.message || "Unable to Login." });
-    }
-    return data;
-  } catch (err) {
-    console.log("err  rr ", err);
-    throw err;
-  }
-}
-export async function loginUser(userData) {
-  try {
     const response = await axios.post(
-      `${ECOM_BACKAND_DOMAIN}/login`,
+      `${BACKAND_DOMAIN}/user/signup`,
       {
         ...userData,
       },
@@ -33,7 +17,26 @@ export async function loginUser(userData) {
     if (response.statusText !== "OK") {
       throw new Error({ message: data.message || "Unable to Login." });
     }
-    console.log("data ", data);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
+export async function loginUser(userData) {
+  try {
+    const response = await axios.post(
+      `${BACKAND_DOMAIN}/user/login`,
+      {
+        ...userData,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    const data = response.data;
+    if (response.statusText !== "OK") {
+      throw new Error({ message: data.message || "Unable to Login." });
+    }
     return data;
   } catch (err) {
     throw err;
@@ -42,7 +45,7 @@ export async function loginUser(userData) {
 export async function logoutUser() {
   try {
     const response = await axios.post(
-      `${ECOM_BACKAND_DOMAIN}/logout`,
+      `${BACKAND_DOMAIN}/user/logout`,
       {},
       {
         withCredentials: true,
@@ -59,7 +62,7 @@ export async function logoutUser() {
 }
 export async function forgotPassword(userData) {
   try {
-    const response = await axios.post(`${ECOM_BACKAND_DOMAIN}/forgotPassword`, {
+    const response = await axios.post(`${BACKAND_DOMAIN}/user/forgotPassword`, {
       ...userData,
     });
     const data = response.data;
@@ -74,7 +77,7 @@ export async function forgotPassword(userData) {
 export async function resetPassword(userData) {
   try {
     const response = await axios.post(
-      `${ECOM_BACKAND_DOMAIN}/resetPassword/${userData.id}`,
+      `${BACKAND_DOMAIN}/user/resetPassword/${userData.id}`,
       {
         password: userData.password,
       }
@@ -91,10 +94,9 @@ export async function resetPassword(userData) {
 export async function fetchDisplayImage() {
   try {
     const response = await axios.get(
-      `${ADMIN_BACKAND_DOMAIN}/admin/fetchDisplayImage`
+      `${BACKAND_DOMAIN}/admin/fetchDisplayImage`
     );
     const data = response.data;
-    console.log("dara ", data);
     if (response.statusText !== "OK") {
       throw new Error({ message: data.message || "Unable to Login." });
     }
@@ -105,9 +107,7 @@ export async function fetchDisplayImage() {
 }
 export const fetchCategory = async (id) => {
   try {
-    const response = await axios.get(
-      `${ADMIN_BACKAND_DOMAIN}/fetchCategory/${id}`
-    );
+    const response = await axios.get(`${BACKAND_DOMAIN}/fetchCategory/${id}`);
     const data = response.data;
     return data;
   } catch (err) {
@@ -117,7 +117,7 @@ export const fetchCategory = async (id) => {
 
 export const fetchCategories = async () => {
   try {
-    const response = await axios.get(`${ADMIN_BACKAND_DOMAIN}/fetchCategories`);
+    const response = await axios.get(`${BACKAND_DOMAIN}/fetchCategories`);
     const data = response.data;
     return data;
   } catch (err) {
@@ -126,9 +126,7 @@ export const fetchCategories = async () => {
 };
 export const fetchProduct = async (id) => {
   try {
-    const response = await axios.get(
-      `${ADMIN_BACKAND_DOMAIN}/getproduct/${id}`
-    );
+    const response = await axios.get(`${BACKAND_DOMAIN}/getproduct/${id}`);
     const data = response.data;
     return data;
   } catch (err) {
@@ -138,10 +136,9 @@ export const fetchProduct = async (id) => {
 export const fetchProductDetails = async (id) => {
   try {
     const response = await axios.get(
-      `${ADMIN_BACKAND_DOMAIN}/getproductDetails/${id}`
+      `${BACKAND_DOMAIN}/getproductDetails/${id}`
     );
     const data = response.data;
-    console.log(data);
     return data;
   } catch (err) {
     throw err;
@@ -153,7 +150,7 @@ export const postReview = async (id, reviewObj) => {
 
   try {
     response = await axios.post(
-      `${ADMIN_BACKAND_DOMAIN}/productreview/${id}`,
+      `${BACKAND_DOMAIN}/productreview/${id}`,
       reviewObj
     );
   } catch (err) {
@@ -166,7 +163,23 @@ export const postReview = async (id, reviewObj) => {
 export const fetchProductReviews = async (id) => {
   try {
     const response = await axios.get(
-      `${ADMIN_BACKAND_DOMAIN}/getproductReviews/${id}`
+      `${BACKAND_DOMAIN}/getproductReviews/${id}`
+    );
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+};
+export const addCartItems = async (items) => {
+  try {
+    const response = await axios.post(
+      `${BACKAND_DOMAIN}/addCartItems`,
+      {
+        ...items,
+      },
+      {
+        withCredentials: true,
+      }
     );
     return response.data;
   } catch (err) {

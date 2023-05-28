@@ -17,7 +17,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { logoutUser } from "../../../utils/api";
+import { addCartItems, logoutUser } from "../../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../../mystore/ui-slice";
 import { authActions } from "../../../mystore/auth-slice";
@@ -25,8 +25,15 @@ import { ShoppingCart } from "@mui/icons-material";
 import Drawer from "../Drawer/Drawer";
 import Tabs from "./Tabs";
 import CartDropdown from "../../Cart/CartSlider/CartSlider";
-import { selectIsCartOpen, selectNewCartCount } from "../../../store/cart/cart.selector";
-import { setIsCartOpen } from "../../../store/cart/cart.action";
+import {
+  selectIsCartOpen,
+  selectNewCartCount,
+} from "../../../store/cart/cart.selector";
+import { setIsCartOpen, setClearCart } from "../../../store/cart/cart.action";
+import { selectCartItems } from "../../../store/cart/cart.selector";
+import { useNavigate } from "react-router-dom";
+import { selectIsLoggedIn } from "../../../store/ui/ui.selector";
+import { setLogoutUser } from "../../../store/ui/ui.action";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -71,10 +78,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const MainNavigation = () => {
   const matches = useMediaQuery("(max-width:900px)");
   const cartState = useSelector(selectIsCartOpen);
-
+  const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
-  const itemCount = useSelector(selectNewCartCount)
-  console.log(itemCount)
+  const itemCount = useSelector(selectNewCartCount);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -98,17 +106,14 @@ const MainNavigation = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
     try {
+      await addCartItems(cartItems);
       await logoutUser();
-      dispatch(
-        uiActions.setNotification({
-          status: true,
-          message: "LoggedOut Successfully.",
-        })
-      );
-      dispatch(authActions.logout());
     } catch (err) {
       throw err;
     }
+    dispatch(setLogoutUser());
+    dispatch(setClearCart());
+    navigate("/login");
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -137,7 +142,7 @@ const MainNavigation = () => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={logoutHandler}>logout</MenuItem>
+      {isLoggedIn && <MenuItem onClick={logoutHandler}>logout</MenuItem>}
     </Menu>
   );
 
@@ -250,11 +255,12 @@ const MainNavigation = () => {
               color="inherit"
             >
               <div>
-              <h6 style={{margin:'0px',height:'22px',color:'#cf8282'}}>  {itemCount}</h6>
-              <ShoppingCart fontSize="large" margin-bottom='1rem' />
-
+                <h6 style={{ margin: "0px", height: "22px", color: "#cf8282" }}>
+                  {" "}
+                  {itemCount}
+                </h6>
+                <ShoppingCart fontSize="large" margin-bottom="1rem" />
               </div>
-
             </IconButton>
             <IconButton
               size="large"

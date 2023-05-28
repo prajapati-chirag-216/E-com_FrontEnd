@@ -1,14 +1,11 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Cards from "../../Dekstop/Cards/Cards";
 import classes from "./Items.module.css";
 import { fetchProduct } from "../../../utils/api";
-import { store } from "../../../store/store";
-import { selectCatagoriId } from "../../../store/catagories/catagories.selector";
 import { Await, useLoaderData } from "react-router-dom";
 
 const Items = () => {
   const loaderDate = useLoaderData();
-
   return (
     <div className={classes["container-div"]}>
       <Suspense>
@@ -23,9 +20,9 @@ const Items = () => {
 };
 export async function loader() {
   let response;
-  const state = store.getState();
-
-  const catagoryId = selectCatagoriId(state);
+  const url = window.location.href;
+  const urlArray = url.split("/");
+  const catagoryId = urlArray[urlArray.length - 1];
   try {
     response = await fetchProduct(catagoryId);
   } catch (err) {

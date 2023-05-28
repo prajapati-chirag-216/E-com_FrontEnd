@@ -99,7 +99,6 @@ const SignupForm = () => {
   };
   const navigate = useNavigate();
   const actionData = useActionData();
-  console.log(actionData);
   useEffect(() => {
     if (actionData && actionData.success) {
       // dispatch(authActions.login());
@@ -245,7 +244,6 @@ export async function action({ request }) {
   try {
     response = await signupUser(userData);
   } catch (err) {
-    console.log("err ", err);
     if (
       err.response.data.code === 11000 &&
       err.response.data.keyPattern.email === 1
