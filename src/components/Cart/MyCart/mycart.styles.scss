@@ -85,12 +85,17 @@
           letter-spacing: 2px;
           font-weight: 400;
         }
-      }
-      .remove-btn:hover {
-        hr {
-          transform: translateX(-10rem);
+        &:hover {
+          hr {
+            transform: translateX(-10rem);
+          }
         }
       }
+      // .remove-btn:hover {
+      //   hr {
+      //     transform: translateX(-10rem);
+      //   }
+      // }
     }
     .totalPriceContainer {
       flex: 1;

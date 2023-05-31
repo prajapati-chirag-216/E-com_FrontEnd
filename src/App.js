@@ -26,8 +26,8 @@ import { loader as productLoader } from "./components/ProductsController/Items/I
 import { loader as productViewLoader } from "./components/ProductView/ProductView";
 import Signup from "./pages/Deshboard/Signup";
 import Checkout from "./pages/Checkout/Checkout";
-import "./App.css";
 import MyCart from "./components/Cart/MyCart/mycart.component";
+import "./App.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -69,7 +69,6 @@ const router = createBrowserRouter(
         />
         <Route path="/cart" element={<MyCart />} />
       </Route>
-      <Route path="/payment" element={<PaymentForm />} />
     </Route>
   )
 );

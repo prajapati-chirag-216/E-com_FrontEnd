@@ -5,6 +5,7 @@ import SimpleStepper from "../../components/Checkout/Stepper/SimpleStepper";
 import Information from "../../components/Checkout/Information/Information";
 import Ticket from "../../components/Checkout/Ticket/Ticket";
 import Shipping from "../../components/Checkout/Shipping/Shipping";
+import Payment from "../../components/Checkout/Paymet/Payment";
 const Checkout = () => {
   return (
     <Box
@@ -27,8 +28,9 @@ const Checkout = () => {
           one Center
         </Typography>
         <SimpleStepper />
-        <Information />
-        {/* <Shipping /> */}
+        {/* <Information /> */}
+        <Shipping />
+        {/* <Payment /> */}
       </div>
       <div className={classes["right-div"]}>
         <Ticket />

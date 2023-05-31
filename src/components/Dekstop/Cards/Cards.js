@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Card, Grid, CardContent, Button, Typography } from "@mui/material";
 import classes from "./Cards.module.css";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import {
-  selectSortByHighPrice,
-  selectSortByLowPrice,
-  selectSortByNewDate,
-  selectSortByOldDate,
-  selectSortByPopularity,
-} from "../../../store/filter/filter.selector";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   setCatagoryId,
   setCatagoryName,
