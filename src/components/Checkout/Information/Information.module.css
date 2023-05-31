@@ -1,0 +1,24 @@
+.title-div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: rgb(57, 56, 56);
+    align-items: baseline;
+    margin-bottom: 0.3rem;
+}
+
+.details-div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.multi_inp-div {
+    display: flex;
+    gap: 1rem
+}

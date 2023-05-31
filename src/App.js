@@ -6,7 +6,6 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { Fragment } from "react";
 import Layout from "./components/Dekstop/UI/Layout";
 import SignIn from "./pages/SignIn";
 import { action as signinAction } from "./components/Dekstop/Form/SigninForm";
@@ -20,14 +19,15 @@ import PrivateRoutes from "./routes/PrivateRoutes";
 import Error from "./pages/Error/Error";
 import Success from "./pages/Success/Success";
 import Wrapper from "./components/Dekstop/UI/Wrapper";
-import "./App.css";
 import ProductsController from "./pages/Products/ProductsController";
 import ViewProductsController from "./pages/ProdutsView/ProductsViewController";
 import { loader as categoryLoader } from "./components/Dekstop/Category/Categories";
 import { loader as productLoader } from "./components/ProductsController/Items/Items";
 import { loader as productViewLoader } from "./components/ProductView/ProductView";
-import CheckOut from "./components/CheckOut/checkout.component";
 import Signup from "./pages/Deshboard/Signup";
+import Checkout from "./pages/Checkout/Checkout";
+import "./App.css";
+import MyCart from "./components/Cart/MyCart/mycart.component";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -51,6 +51,8 @@ const router = createBrowserRouter(
       >
         <Route path="/success" element={<Success />} />
       </Route>
+      <Route path="/checkout" element={<Checkout />} />
+
       <Route element={<Layout />}>
         <Route index element={<Navigate to="/home" />} />
         <Route path="/home" element={<Dashboard />} loader={categoryLoader} />
@@ -65,7 +67,7 @@ const router = createBrowserRouter(
           action={reviewAction}
           loader={productViewLoader}
         />
-        <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/cart" element={<MyCart />} />
       </Route>
     </Route>
   )

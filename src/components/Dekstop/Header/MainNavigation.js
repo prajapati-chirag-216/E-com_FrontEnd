@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../../mystore/ui-slice";
 import { authActions } from "../../../mystore/auth-slice";
 import { ShoppingCart } from "@mui/icons-material";
-import Drawer from "../Drawer/Drawer";
+import Drawer from "../Category/Drawer/Drawer";
 import Tabs from "./Tabs";
 import CartDropdown from "../../Cart/CartSlider/CartSlider";
 import {

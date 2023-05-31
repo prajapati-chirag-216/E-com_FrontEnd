@@ -1,0 +1,19 @@
+.left-div {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5rem 5rem 0rem 16rem;
+    gap: 2rem;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.right-div {
+    flex: 3;
+    background-color: #e7e7e7cd;
+    padding: 5rem 16rem 0rem 5rem;
+    box-sizing: border-box;
+    border-left: 3px solid rgb(220, 220, 220);
+    user-select: none;
+}

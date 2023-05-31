@@ -17,7 +17,63 @@ import { setAddItemToCart } from "../../../store/cart/cart.action";
 import { setProductDetails } from "../../../store/product/product.action";
 import { selectSearchField } from "../../../store/ui/ui.selector";
 import { fetchDataByName } from "../../../utils/api";
-
+const style = {
+  card: {
+    minWidth: { xs: "20rem", sm: "20rem", md: "25rem" },
+    height: "40rem",
+    display: "flex",
+    flexDirection: "column",
+    border: "1px solid rgb(190, 190, 190)",
+    borderBottom: "none",
+    borderRadius: "0px",
+    transition: "all 300ms",
+    cursor: "pointer",
+    position: "relative",
+    overflow: "hidden",
+    userSelect: "none",
+    "&:hover > img": {
+      transform: "scale(1.15)",
+    },
+    "&::before": {
+      content: "''",
+      position: "absolute",
+      top: "50%", // Adjust this value to control the spread of the shadow
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: "linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent)", // Shadow gradient
+      pointerEvents: "none",
+      zIndex: 1,
+    },
+    "&::after": {
+      content: "''",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(80, 80, 80, 0.15)", // Light gray with 0.3 opacity
+      pointerEvents: "none", // Allow clicking through the overlay
+      zIndex: 2,
+    },
+  },
+  button: {
+    color: "white",
+    width: "15rem",
+    alignSelf: "flex-end",
+    fontSize: "1.2rem",
+    padding: "0.8rem 2rem",
+    backgroundColor: "black",
+    transition: "all 500ms",
+    textTransform: "uppercase",
+    letterSpacing: "3px",
+    zIndex: 10,
+    "&:hover": {
+      backgroundColor: "black",
+    },
+    borderRadius: "0rem",
+  },
+};
 const Cards = (props) => {
   const dispatch = useDispatch();
 
@@ -74,25 +130,7 @@ const Cards = (props) => {
       {filteredData.length !== 0 ? (
         filteredData.map((item) => (
           <Grid item xs={12} sm={6} md={6} lg={4} key={item._id}>
-            <Card
-              onClick={navigateHandler.bind(null, item)}
-              sx={{
-                minWidth: { xs: "20rem", sm: "20rem", md: "25rem" },
-                height: "40rem",
-                display: "flex",
-                flexDirection: "column",
-                border: "1px solid darkgray",
-                borderRadius: "0px",
-                transition: "all 300ms",
-                cursor: "pointer",
-                position: "relative",
-                overflow: "hidden",
-                userSelect: "none",
-                "&:hover > img": {
-                  transform: "scale(1.15)",
-                },
-              }}
-            >
+            <Card onClick={navigateHandler.bind(null, item)} sx={style.card}>
               <img
                 className={classes["item-img"]}
                 src={props.isProduct ? item.image[0] : item.image}
@@ -107,6 +145,7 @@ const Cards = (props) => {
                   display: "flex",
                   flexDirection: "column",
                   gap: "2rem",
+                  zIndex: 10,
                 }}
               >
                 <Typography
@@ -120,13 +159,6 @@ const Cards = (props) => {
                 >
                   {item.name}
                 </Typography>
-
-                {/* <a
-                href={`${props.location}/${item._id}`}
-                target="_blank"
-                rel="noreferrer"
-                style={{ backgroundColor: "red" }}
-              > */}
                 <Button
                   onClick={(event) => {
                     if (props.isProduct) {
@@ -134,38 +166,43 @@ const Cards = (props) => {
                     }
                     changeitemIdHandler(item);
                   }}
-                  sx={{
-                    color: "white",
-                    width: "15rem",
-                    alignSelf: "flex-end",
-                    fontSize: "1.2rem",
-                    padding: "0.8rem 2rem",
-                    backgroundColor: "black",
-                    transition: "all 500ms",
-                    textTransform: "uppercase",
-                    letterSpacing: "3px",
-                    zIndex: 10,
-                    "&:hover": {
-                      backgroundColor: "black",
-                    },
-                    borderRadius: "0rem",
-                  }}
+                  sx={style.button}
                 >
                   {props.isProduct ? "Add To Cart" : "Shop Now"}
                 </Button>
-                {/* </a> */}
               </CardContent>
             </Card>
+            {console.log(item)}
+            {props.isProduct && (
+              <div className={classes["item_details-div"]}>
+                <Typography
+                  sx={{
+                    fontSize: "1rem",
+                    letterSpacing: "3px",
+                    textTransform: "uppercase",
+                    color: "rgb(80,80,80)",
+                    width: "fit-content",
+                    textAlign: "center",
+                  }}
+                >
+                  {item.description.split(".")[0]}
+                </Typography>
+                <Typography sx={{ fontSize: "1.2rem", letterSpacing: "1px" }}>
+                  $ {item.price}
+                </Typography>
+              </div>
+            )}
           </Grid>
         ))
       ) : (
-        <h1
-          style={{
+        <Typography
+          sx={{
+            fontSize: "1.5rem",
             letterSpacing: "3px",
-            display: "flex",
-            alignItems: "center",
+            margin: "10rem auto",
+            color: "darkgray",
           }}
-        >{`No Search Result for ${searchByNameString}`}</h1>
+        >{`No Search Result for ${searchByNameString}`}</Typography>
       )}
     </Grid>
   );
