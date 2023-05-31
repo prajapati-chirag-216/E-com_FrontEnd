@@ -26,8 +26,8 @@ import ViewProductsController from "./pages/ProdutsView/ProductsViewController";
 import { loader as categoryLoader } from "./components/Dekstop/Category/Categories";
 import { loader as productLoader } from "./components/ProductsController/Items/Items";
 import { loader as productViewLoader } from "./components/ProductView/ProductView";
-import CheckOut from "./components/CheckOut/checkout.component";
 import Signup from "./pages/Deshboard/Signup";
+import PaymentForm from "./components/payment-form/payment-from.component";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -65,8 +65,8 @@ const router = createBrowserRouter(
           action={reviewAction}
           loader={productViewLoader}
         />
-        <Route path="/checkout" element={<CheckOut />} />
       </Route>
+      <Route path='/payment' element={<PaymentForm/>}/>
     </Route>
   )
 );
