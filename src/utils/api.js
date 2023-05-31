@@ -211,3 +211,18 @@ export const fetchFilteredProducts = async (id, name) => {
     throw err;
   }
 };
+
+
+export const getPaymentPage = async() =>{
+
+
+  try{
+    const result = await axios.post(`${BACKAND_DOMAIN}/create-checkout-session`)
+    
+     return result
+  }
+  catch(err){
+    throw err;
+  }
+
+}

@@ -12,10 +12,10 @@ const CartSlider = (props) => {
   const cartItems = useSelector(selectCartItems);
   const navigate = useNavigate();
 
-  const checkOuthandler = () => {
-    window.open("/checkout", "_blank");
-    navigate("/checkout");
-  };
+  // const checkOuthandler = () => {
+  //   window.open("/checkout", "_blank");
+  //   navigate("/checkout");
+  // };
 
   return (
     <div
@@ -80,7 +80,6 @@ const CartSlider = (props) => {
             },
             borderRadius: "0rem",
           }}
-          onClick={checkOuthandler}
         >
           Go to CheckOut
         </Button>

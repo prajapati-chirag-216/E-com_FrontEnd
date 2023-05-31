@@ -69,6 +69,7 @@ const router = createBrowserRouter(
         />
         <Route path="/cart" element={<MyCart />} />
       </Route>
+      <Route path="/payment" element={<PaymentForm />} />
     </Route>
   )
 );
