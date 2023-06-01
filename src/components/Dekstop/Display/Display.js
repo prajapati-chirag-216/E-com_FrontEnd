@@ -1,8 +1,5 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
-import display_1 from "../../../assets/display_1.jpg";
-import display_2 from "../../../assets/display_2.jpg";
-import display_3 from "../../../assets/display_3.jpg";
 import SliderImages from "./SliderImages";
 import { fetchDisplayImage } from "../../../utils/api";
 

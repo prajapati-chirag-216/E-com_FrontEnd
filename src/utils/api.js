@@ -22,6 +22,21 @@ export async function signupUser(userData) {
     throw err;
   }
 }
+
+export async function fetchUserProfile(userData) {
+  try {
+    const response = await axios.get(`${BACKAND_DOMAIN}/user/profile`, {
+      withCredentials: true,
+    });
+    const data = response.data;
+    if (response.statusText !== "OK") {
+      throw new Error({ message: data.message || "Unable to Login." });
+    }
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
 export async function loginUser(userData) {
   try {
     const response = await axios.post(
@@ -212,17 +227,14 @@ export const fetchFilteredProducts = async (id, name) => {
   }
 };
 
+export const getPaymentPage = async () => {
+  try {
+    const result = await axios.post(
+      `${BACKAND_DOMAIN}/create-checkout-session`
+    );
 
-export const getPaymentPage = async() =>{
-
-
-  try{
-    const result = await axios.post(`${BACKAND_DOMAIN}/create-checkout-session`)
-    
-     return result
-  }
-  catch(err){
+    return result;
+  } catch (err) {
     throw err;
   }
-
-}
+};

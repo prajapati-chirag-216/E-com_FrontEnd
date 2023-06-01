@@ -15,9 +15,13 @@ function CustomStepIcon(props) {
     />
   );
 }
-const SimpleStepper = () => {
+const SimpleStepper = (props) => {
   return (
-    <Stepper activeStep={1} alternativeLabel sx={{ width: "60%" }}>
+    <Stepper
+      activeStep={props.curruntPage}
+      alternativeLabel
+      sx={{ width: "60%" }}
+    >
       {steps.map((label) => (
         <Step key={label}>
           <StepLabel StepIconComponent={CustomStepIcon}>{label}</StepLabel>

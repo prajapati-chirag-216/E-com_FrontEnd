@@ -1,0 +1,38 @@
+.paymentCardContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc5c5;
+    border-radius: 1%;
+}
+
+.details-container {
+    border: 1px solid rgb(208, 208, 208);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem
+}
+
+.details-container>div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem
+}
+
+.titleContainer {
+    margin-top: 1rem;
+}
+
+.headerContainer {
+    padding: 1rem;
+    background-color: #f7f7f7;
+    display: flex;
+    gap: 4rem;
+}
+
+.headerIcons {
+    display: flex;
+}

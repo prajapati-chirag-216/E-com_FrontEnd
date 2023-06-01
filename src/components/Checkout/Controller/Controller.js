@@ -5,7 +5,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 const Controller = (props) => {
   return (
     <div className={classes["controll-div"]}>
-      <span>
+      <span onClick={props.onPreviousPage}>
         <ArrowBackIosIcon fontSize="small" /> Return to {props.returnTo}
       </span>
       <Button
@@ -19,6 +19,7 @@ const Controller = (props) => {
           },
           padding: "1rem",
         }}
+        onClick={props.onNextPage}
       >
         Continue to {props.continueTo}
       </Button>

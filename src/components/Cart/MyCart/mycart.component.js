@@ -70,7 +70,7 @@ const MyCart = () => {
       <Divider sx={{ width: "80%", marginBottom: "0.5rem" }} />
       {cartItems.map((item) => {
         return (
-          <div className="myCartItemContainer">
+          <div className="myCartItemContainer" key={item._id}>
             <div className="itemDetailsContainer">
               <img src={item.image[0]} />
               <div className="itemTextContainer">
@@ -111,7 +111,7 @@ const MyCart = () => {
                   style={{ cursor: "pointer" }}
                   onClick={decreaseItemhandler.bind(null, item)}
                 />
-                <input value={item.quntity} type="number" min="0" />
+                <input value={item.quntity} readOnly type="number" min="0" />
                 <AddIcon
                   style={{ cursor: "pointer" }}
                   onClick={increaseItemhandler.bind(null, item)}

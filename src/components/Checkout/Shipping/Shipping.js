@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Shipping.module.css";
 import { Divider, Typography, Box, Radio } from "@mui/material";
 import Controller from "../Controller/Controller";
+import UserCrendentials from "./UserCredentials/UserCrendentials";
 
-const Shipping = () => {
+const Shipping = (props) => {
+  const [selectedValue, setSelectedValue] = useState("A");
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
   return (
     <Box
       sx={{
@@ -15,60 +20,17 @@ const Shipping = () => {
       }}
     >
       <div className={classes["details-container"]}>
-        <div>
-          <Typography fontSize="1.1rem" letterSpacing="1px" flex="1">
-            Contact
-          </Typography>
-          <Typography
-            fontSize="1.1rem"
-            color="rgb(80,80,80)"
-            letterSpacing="1px"
-            flex="6"
-          >
-            1234@gmail.com
-          </Typography>
-          <Typography
-            flex="1"
-            align="right"
-            letterSpacing="1px"
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                color: "black",
-              },
-            }}
-          >
-            Change
-          </Typography>
-        </div>
+        <UserCrendentials
+          label="Contact"
+          value="1234@gmail.com"
+          onclick={props.onPageChange.bind(null, 0)}
+        />
         <Divider />
-
-        <div>
-          <Typography fontSize="1.1rem" letterSpacing="1px" flex="1">
-            Ship to
-          </Typography>
-          <Typography
-            fontSize="1.1rem"
-            color="rgb(80,80,80)"
-            letterSpacing="1px"
-            flex="6"
-          >
-            12345, 380013 ahmedabad GJ, India
-          </Typography>
-          <Typography
-            flex="1"
-            align="right"
-            letterSpacing="1px"
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                color: "black",
-              },
-            }}
-          >
-            Change
-          </Typography>
-        </div>
+        <UserCrendentials
+          label="Ship to"
+          value="12345, 380013 ahmedabad GJ, India"
+          onclick={props.onPageChange.bind(null, 0)}
+        />
       </div>
       <div className={classes["shipping_details-container"]}>
         <Typography
@@ -100,7 +62,11 @@ const Shipping = () => {
         </Typography>
         <div className={classes["details-container"]}>
           <div>
-            <Radio />
+            <Radio
+              checked={selectedValue === "A"}
+              onChange={handleChange}
+              value="A"
+            />
             <Typography
               fontSize="1.1rem"
               color="rgb(80,80,80)"
@@ -121,7 +87,11 @@ const Shipping = () => {
           <Divider />
 
           <div>
-            <Radio />
+            <Radio
+              checked={selectedValue === "B"}
+              onChange={handleChange}
+              value="B"
+            />
             <Typography
               fontSize="1.1rem"
               color="rgb(80,80,80)"
@@ -142,7 +112,12 @@ const Shipping = () => {
           </div>
         </div>
       </div>
-      <Controller returnTo="information" continueTo="payment" />
+      <Controller
+        returnTo="information"
+        continueTo="payment"
+        onNextPage={props.onPageChange.bind(null, 2)}
+        onPreviousPage={props.onPageChange.bind(null, 0)}
+      />
     </Box>
   );
 };

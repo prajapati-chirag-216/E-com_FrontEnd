@@ -166,7 +166,6 @@ const Cards = (props) => {
                 </Button>
               </CardContent>
             </Card>
-            {console.log(item)}
             {props.isProduct && (
               <div className={classes["item_details-div"]}>
                 <Typography

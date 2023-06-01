@@ -1,83 +1,94 @@
-import { Box, Button, Divider } from "@mui/material";
-import { useState } from "react";
+import React, { useState, useEffect, useReducer } from "react";
+import { Box, Button, Divider, TextField, Typography } from "@mui/material";
+import Controller from "../Controller/Controller";
+import InputAdornment from "@mui/material/InputAdornment";
+import classes from "./Payment.module.css";
+import UserCrendentials from "../Shipping/UserCredentials/UserCrendentials";
 import {
-  validateCardNumber,
-  validateExpiryDate,
-} from "../../../utils/function";
-import "./Payment.styles.scss";
+  cardNoReducer,
+  cvvReducer,
+  expiryDateReducer,
+  generalReducer,
+  nameReducer,
+} from "../../../shared/Reducers/InputReducers";
+import { Close } from "@mui/icons-material";
+const Payment = (props) => {
+  const styles = (feildIsValid) => {
+    return {
+      "& .MuiInputLabel-root.Mui-focused": {
+        color: feildIsValid === false ? "red" : "black",
+      },
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: feildIsValid === false ? "red" : "black",
+      },
+      "& .MuiInputLabel-root": {
+        color: feildIsValid === false ? "red" : "gray",
+        letterSpacing: "1px",
+      },
+    };
+  };
+  const [cardNoState, dispatchCardNo] = useReducer(cardNoReducer, {
+    value: "",
+    isValid: null,
+  });
+  const [holdarNameState, dispatchHoldarName] = useReducer(generalReducer, {
+    value: "",
+    isValid: null,
+  });
+  const [expiryDateState, dispatchExpiryDate] = useReducer(expiryDateReducer, {
+    value: "",
+    isValid: null,
+  });
+  const [cvvNoState, dispatchCvvNo] = useReducer(cvvReducer, {
+    value: "",
+    isValid: null,
+  });
+  const [formIsValid, setFormIsValid] = useState(false);
 
-const Payment = () => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvv, setCvv] = useState("");
-  const [holderName, setHolderName] = useState("");
+  const cardNoChangeHandler = (event) => {
+    dispatchCardNo({ type: "USER_INPUT", val: event.target.value });
+  };
+  const holdarNameChangeHandler = (event) => {
+    dispatchHoldarName({ type: "USER_INPUT", val: event.target.value });
+  };
+  const expiryDateChangeHandler = (event) => {
+    dispatchExpiryDate({ type: "USER_INPUT", val: event.target.value });
+  };
+  const cvvNoChangeHandler = (event) => {
+    dispatchCvvNo({ type: "USER_INPUT", val: event.target.value });
+  };
+  const validateCardNoHandler = () => dispatchCardNo({ type: "INPUT_BLUR" });
+  const validateHoldarNameHandler = () =>
+    dispatchHoldarName({ type: "INPUT_BLUR" });
+  const validateExpiryDateHandler = () =>
+    dispatchExpiryDate({ type: "INPUT_BLUR" });
+  const validateCvvNoHandler = () => dispatchCvvNo({ type: "INPUT_BLUR" });
+  const { isValid: cardNoIsValid } = cardNoState;
+  const { isValid: holdarNameIsValid } = holdarNameState;
+  const { isValid: expiryDateIsValid } = expiryDateState;
+  const { isValid: cvvNoIsValid } = cvvNoState;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFormIsValid(
+        cardNoIsValid && holdarNameIsValid && expiryDateIsValid && cvvNoIsValid
+      );
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [cardNoIsValid, holdarNameIsValid, expiryDateIsValid, cvvNoIsValid]);
 
-  const handleCardNumber = (value) => {
-    let cardNumber = value.replace(/\s/g, "").replace(/\D/g, "");
-
-    let formattedCardNumber = "";
-
-    for (let i = 0; i < cardNumber.length; i++) {
-      formattedCardNumber += cardNumber[i];
-      if ((i + 1) % 4 === 0 && i !== cardNumber.length - 1) {
-        formattedCardNumber += " ";
-      }
-    }
-
-    if (cardNumber.length > 12) {
-      cardNumber = cardNumber.slice(0, 11);
-      formattedCardNumber = formattedCardNumber.slice(0, 14);
-    }
-
-    validateCardNumber(formattedCardNumber);
-
-    const icon = document.getElementById("visaIcon");
-
-    if (formattedCardNumber.replace(/\s/g, "") === "424242424242") {
-      icon.style.visibility = "visible";
+  const validateFormHandler = async (event) => {
+    event.preventDefault();
+    if (!cardNoIsValid) {
+      document.getElementById("cardNo").focus();
+    } else if (!holdarNameIsValid) {
+      document.getElementById("holdarName").focus();
+    } else if (!expiryDateIsValid) {
+      document.getElementById("expiryDate").focus();
     } else {
-      icon.style.visibility = "hidden";
+      document.getElementById("cvvNo").focus();
     }
-
-    setCardNumber(formattedCardNumber);
-  };
-
-  const handleExpiryDate = (date) => {
-    let extractedDate = date.replace(/\s/g, "").replace(/\D/g, "");
-
-    let tempDate = "";
-
-    for (let i = 0; i < extractedDate.length; i++) {
-      tempDate += extractedDate[i];
-
-      if (tempDate.length == 2) {
-        tempDate += "/";
-      }
-    }
-
-    if (tempDate.length > 5) {
-      tempDate = tempDate.slice(0, 5);
-    }
-
-    validateExpiryDate(tempDate);
-
-    setExpiryDate(tempDate);
-  };
-
-  const handleCvv = (cvv) => {
-    let newCvv = cvv.replace(/\s/g, "").replace(/\D/g, "");
-
-    if (newCvv.length > 4) {
-      newCvv = newCvv.slice(0, 4);
-    }
-
-    setCvv(newCvv);
-  };
-
-  const handleHolderName = (name) => {
-    let newName = name.replace(/\d/g, "");
-
-    setHolderName(newName);
   };
 
   return (
@@ -85,141 +96,146 @@ const Payment = () => {
       sx={{
         width: "100%",
         display: "flex",
-        gap: "4rem",
+        gap: "1rem",
         flexDirection: "column",
         paddingBottom: "5rem",
-        background: "red",
       }}
     >
-      {/* <div className="paymentPageContainer" style={{ background: "red" }}> */}
-      <div className="paymentFormContainer">
-        <h1
-          style={{
-            display: "flex",
-            letterSpacing: "4px",
-            textTransform: "uppercase",
-            fontSize: "2rem",
-            justifyContent: "flex-start",
+      <div className={classes["details-container"]}>
+        <UserCrendentials
+          label="Contact"
+          value="1234@gmail.com"
+          onclick={props.onPageChange.bind(null, 0)}
+        />
+        <Divider />
+        <UserCrendentials
+          label="Ship to"
+          value="12345, 380013 ahmedabad GJ, India"
+          onclick={props.onPageChange.bind(null, 0)}
+        />
+        <Divider />
+        <UserCrendentials
+          label="Method"
+          value="Online Payment : Free Shipping"
+          onclick={props.onPageChange.bind(null, 0)}
+        />
+      </div>
+      <div className={classes["titleContainer"]}>
+        <Typography
+          sx={{
+            color: "rgb(57, 56, 56)",
+            fontSize: "1.4rem",
+            letterSpacing: "1px",
           }}
         >
           Payment
-        </h1>
+        </Typography>
+        <Typography>All transactions are secure and encrypted.</Typography>
+      </div>
+      <div className={classes["paymentCardContainer"]}>
+        <div className={classes["headerContainer"]}>
+          <Typography
+            sx={{
+              fontSize: "1.2rem",
+              color: "rgb(80,80,80)",
+              height: "fit-content",
+              alignSelf: "center",
+            }}
+          >
+            Credit Card/Debit Card
+          </Typography>
 
-        <div className="paymentCardContainer">
-          <div className="headerContainer">
-            <div>Credit Card/Debit Card</div>
-
-            <div className="headerIcons">
-              <img src="visa.svg" />
-              <img src="mastercard.svg" />
-              <img src="american-express.svg" />
-            </div>
-          </div>
-
-          <Divider />
-
-          <div className="cardInputContainer">
-            <div className="cardNumberContainer">
-              <label
-                style={{ fontSize: "20px", letterSpacing: "2px" }}
-                htmlFor="cardNumber"
-              >
-                Card Number
-              </label>
-              <div>
-                <input
-                  id="cardNumber"
-                  value={cardNumber}
-                  type="text"
-                  placeholder="1234 1234 1234"
-                  onChange={(event) => handleCardNumber(event.target.value)}
-                />
-                <span id="visaIcon">
-                  <img src="visa.svg" />
-                </span>
-              </div>
-
-              <h5
-                style={{
-                  color: "red",
-                  marginTop: "1rem",
-                  letterSpacing: "2px",
-                }}
-                id="cardNumberErrorText"
-              ></h5>
-            </div>
-
-            <div className="cardholderNameContainer">
-              <label
-                style={{ fontSize: "20px", letterSpacing: "2px" }}
-                htmlFor="holderName"
-              >
-                Card Holder Name
-              </label>
-              <input
-                value={holderName}
-                id="holdername"
-                type="text"
-                onChange={(event) => handleHolderName(event.target.value)}
-              />
-            </div>
-
-            <div className="cardDetailsContainer">
-              <div className="expiryDateContainer">
-                <label
-                  style={{ fontSize: "20px", letterSpacing: "2px" }}
-                  htmlFor="expiryDate"
-                >
-                  Expiry Date
-                </label>
-                <input
-                  id="expiryDate"
-                  value={expiryDate}
-                  type="text"
-                  placeholder="MM/YY"
-                  onChange={(event) => handleExpiryDate(event.target.value)}
-                />
-                <h5
-                  style={{ color: "red", margin: "0px", letterSpacing: "2px" }}
-                  id="exiparyDateErrorText"
-                ></h5>
-              </div>
-
-              <div className="cardCvvContainer">
-                <label
-                  htmlFor="cvv"
-                  style={{ fontSize: "20px", letterSpacing: "2px" }}
-                >
-                  CVV
-                </label>
-                <input
-                  value={cvv}
-                  id="cvv"
-                  type="text"
-                  placeholder="1234"
-                  onChange={(event) => handleCvv(event.target.value)}
-                />
-              </div>
-            </div>
+          <div className={classes["headerIcons"]}>
+            <img src="visa.svg" />
+            <img src="mastercard.svg" />
+            <img src="american-express.svg" />
           </div>
         </div>
-        <Button
+
+        <Divider />
+        <Box
           sx={{
-            background: "black",
-            "&:hover": { background: "black" },
-            borderRadius: 0,
-            width: "30rem",
-            height: "4rem",
-            letterSpacing: "3px",
-            fontSize: "1.1rem",
-            "&:active": { transform: "scale(0.9)" },
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            padding: "1.2rem",
           }}
-          variant="contained"
         >
-          Pay Now
-        </Button>
+          <TextField
+            variant="outlined"
+            label="Card Number"
+            id="cardNumber"
+            placeholder="1234 1234 1234"
+            type="text"
+            value={cardNoState.value}
+            onChange={cardNoChangeHandler}
+            onBlur={validateCardNoHandler}
+            InputProps={{
+              endAdornment: cardNoIsValid && (
+                <div>
+                  <img src="visa.svg" />
+                </div>
+              ),
+            }}
+            autoComplete="off"
+            error={cardNoIsValid === false ? true : false}
+            sx={styles(cardNoIsValid)}
+            helperText={
+              cardNoIsValid === false ? "Enter valid card number" : ""
+            }
+          />
+
+          <TextField
+            id="holderName"
+            label="holdername"
+            type="text"
+            variant="outlined"
+            value={holdarNameState.value}
+            onChange={holdarNameChangeHandler}
+            onBlur={validateHoldarNameHandler}
+            autoComplete="off"
+            error={holdarNameIsValid === false ? true : false}
+            sx={styles(holdarNameIsValid)}
+            helperText={holdarNameIsValid === false ? "Enter valid name" : ""}
+          />
+
+          <TextField
+            id="expiryDate"
+            label="expiryDate"
+            type="text"
+            placeholder="MM/YY"
+            value={expiryDateState.value}
+            onChange={expiryDateChangeHandler}
+            onBlur={validateExpiryDateHandler}
+            fullWidth
+            autoComplete="off"
+            error={expiryDateIsValid === false ? true : false}
+            sx={styles(expiryDateIsValid)}
+            helperText={expiryDateIsValid === false ? "Enter valid date" : ""}
+          />
+
+          <TextField
+            label="cvv"
+            id="cvv"
+            type="text"
+            placeholder="1234"
+            value={cvvNoState.value}
+            onChange={cvvNoChangeHandler}
+            onBlur={validateCvvNoHandler}
+            fullWidth
+            autoComplete="off"
+            error={cvvNoIsValid === false ? true : false}
+            sx={styles(cvvNoIsValid)}
+            helperText={cvvNoIsValid === false ? "Enter valid cvv number" : ""}
+          />
+        </Box>
       </div>
-      {/* </div> */}
+      <Controller
+        returnTo="shipping"
+        continueTo="placeOrder"
+        onNextPage={props.onPageChange.bind(null, 3)}
+        onPreviousPage={props.onPageChange.bind(null, 1)}
+      />
     </Box>
   );
 };

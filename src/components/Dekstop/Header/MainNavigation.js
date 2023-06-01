@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import {
   AppBar,
@@ -17,7 +17,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { addCartItems, logoutUser } from "../../../utils/api";
+import { addCartItems, fetchUserProfile, logoutUser } from "../../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../../mystore/ui-slice";
 import { authActions } from "../../../mystore/auth-slice";
@@ -83,6 +83,7 @@ const MainNavigation = () => {
   const dispatch = useDispatch();
   const itemCount = useSelector(selectNewCartCount);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [userProfile, setUserProfile] = useState(null);
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -91,6 +92,16 @@ const MainNavigation = () => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetchUserProfile();
+        setUserProfile(res.userProfile);
+      } catch (err) {
+        throw err;
+      }
+    })();
+  }, []);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -247,7 +258,15 @@ const MainNavigation = () => {
             <Tabs />
           </Box>
 
-          <Box sx={{ display: { xs: "none", md: "flex", gap: "2rem" } }}>
+          <Box
+            sx={{
+              display: {
+                xs: "none",
+                md: "flex",
+                gap: "2rem",
+              },
+            }}
+          >
             <IconButton
               size="large"
               edge="end"
@@ -273,8 +292,24 @@ const MainNavigation = () => {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                gap: "0.5rem",
+              }}
             >
               <AccountCircle fontSize="large" />
+              <Typography
+                align="right"
+                sx={{
+                  color: "white",
+                  textTransform: "capitalize",
+                  letterSpacing: "1px",
+                }}
+              >
+                {userProfile ? `Hello ${userProfile.name}` : "Signup"}
+              </Typography>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

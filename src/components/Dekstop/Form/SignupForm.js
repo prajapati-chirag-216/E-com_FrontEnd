@@ -238,7 +238,7 @@ export async function action({ request }) {
   let response;
   const formData = await request.formData();
   const userData = {
-    fullName: formData.get("fullName"),
+    name: formData.get("fullName"),
     email: formData.get("email"),
     password: formData.get("password"),
     phoneNo: formData.get("phoneNo"),
