@@ -37,7 +37,14 @@ const Controller = (props) => {
       }
       else{
 
-        console.log(2)
+         let newCartItems  = cartItems.map((item) => {
+          
+          return{
+            productId:item._id,
+            quntity:item.quntity
+          }})
+
+         console.log(newCartItems)
 
       const orderObj = {
 
@@ -57,7 +64,7 @@ const Controller = (props) => {
             pinNumber:pin       
 
            },
-          orderedItems:cartItems,
+          orderedItems:newCartItems,
           totalPrice:total
 
       }
