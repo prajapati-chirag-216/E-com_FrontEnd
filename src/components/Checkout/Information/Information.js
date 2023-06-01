@@ -1,9 +1,12 @@
 import React from "react";
+import { useState } from "react";
 import classes from "./Information.module.css";
 import { Box, TextField, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
-
 import Controller from "../Controller/Controller";
+
+
+
 const styles = {
   customTextField: {
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
@@ -20,6 +23,63 @@ const styles = {
 };
 
 const Information = () => {
+
+
+  const[country,setCountry] = useState('');
+  const [email,setEmail] = useState('');
+  const[phone,setPhone] = useState('');
+  const[firstName,setFirstName] = useState('');
+  const[lastName,setLastName] = useState('');
+  const[address,setAddress] = useState('');
+  const[city,setCity] = useState('');
+  const[state,setState] = useState('');
+  const[pin,setPin] = useState('');
+
+
+  const handlePhoneNumbe = (value) =>{
+         let num = value.replace(/\s/g,'').replace(/\D/g,'');
+         setPhone(num)
+  }
+
+
+  const handleCityName = (value) =>{
+
+      let name = value.replace(/\s/g,'').replace(/\d/g,'')
+      setCity(name)
+  }
+
+
+  const handleStateName = (value) =>{
+
+    let name = value.replace(/\s/g,'').replace(/\d/g,'')
+    setState(name)
+}
+
+
+const handleFirstName = (value) =>{
+
+  let name = value.replace(/\s/g,'').replace(/\d/g,'')
+  setFirstName(name)
+}
+
+
+const handleLastName = (value) =>{
+
+  let name = value.replace(/\s/g,'').replace(/\d/g,'')
+  setLastName(name)
+}
+
+
+const handlePin = (value) =>{
+
+  let name = value.replace(/\s/g,'').replace(/\D/g,'')
+  setPin(name)
+}
+
+
+
+
+
   return (
     <Box
       sx={{
@@ -60,12 +120,14 @@ const Information = () => {
           autoComplete="off"
           autoCapitalize="off"
           sx={styles.customTextField}
+          onChange={(event)=>setEmail(event.target.value)}
         />
         <TextField
           id="phone"
           label="Phone"
           variant="outlined"
           fullWidth
+          onChange={(event)=>handlePhoneNumbe(event.target.value)}
           sx={styles.customTextField}
         />
       </div>
@@ -86,6 +148,8 @@ const Information = () => {
           variant="outlined"
           fullWidth
           sx={styles.customTextField}
+          onChange={(event)=>setCountry(event.target.value)}
+
         />
         <div className={classes["multi_inp-div"]}>
           <TextField
@@ -94,6 +158,7 @@ const Information = () => {
             variant="outlined"
             fullWidth
             sx={styles.customTextField}
+          onChange={(event)=>handleFirstName(event.target.value)}
           />
           <TextField
             id="lastName"
@@ -101,6 +166,8 @@ const Information = () => {
             variant="outlined"
             fullWidth
             sx={styles.customTextField}
+          onChange={(event)=>handleLastName(event.target.value)}
+
           />
         </div>
         <TextField
@@ -110,6 +177,8 @@ const Information = () => {
           variant="outlined"
           fullWidth
           sx={styles.customTextField}
+          onChange={(event)=>setAddress(event.target.value)}
+
         />
         <div className={classes["multi_inp-div"]}>
           <TextField
@@ -118,6 +187,8 @@ const Information = () => {
             variant="outlined"
             fullWidth
             sx={styles.customTextField}
+          onChange={(event)=>handleCityName(event.target.value)}
+
           />
           <TextField
             id="state"
@@ -125,6 +196,8 @@ const Information = () => {
             variant="outlined"
             fullWidth
             sx={styles.customTextField}
+          onChange={(event)=>handleStateName(event.target.value)}
+
           />
           <TextField
             id="pincode"
@@ -132,6 +205,8 @@ const Information = () => {
             variant="outlined"
             fullWidth
             sx={styles.customTextField}
+          onChange={(event)=>handlePin(event.target.value)}
+
           />
         </div>
         <TextField
@@ -143,7 +218,19 @@ const Information = () => {
           sx={styles.customTextField}
         />
       </div>
-      <Controller returnTo="cart" continueTo="shipping" />
+      <Controller 
+      
+      isShippingInfo={true}
+      country={country}
+       email={email}
+      phone={phone}
+      firstName={firstName}
+      lastName={lastName}
+      address={address}
+      city={city}
+      state={state}
+      pin={pin}  
+      returnTo="cart" continueTo="shipping" />
     </Box>
   );
 };

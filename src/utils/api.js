@@ -226,3 +226,19 @@ export const getPaymentPage = async() =>{
   }
 
 }
+
+
+
+export const makeOrder = async(orderObj) =>{
+
+
+  try{
+    const result = await axios.post(`${BACKAND_DOMAIN}/postOrder`,orderObj)
+    
+     return result
+  }
+  catch(err){
+    throw err;
+  }
+
+}

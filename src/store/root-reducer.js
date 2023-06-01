@@ -5,6 +5,7 @@ import { catagoriesReducer } from "./catagories/catagories.reducer";
 import { productReducer } from "./product/product.reducer";
 import { uiReducer } from "./ui/ui.reducer";
 import {filterReducer} from './filter/filter.reducer'
+import orderInfoReducer from "./Order/order.reducer";
 
 
 export const rootReducer = combineReducers({
@@ -12,5 +13,7 @@ export const rootReducer = combineReducers({
   catagories: catagoriesReducer,
   product: productReducer,
   ui: uiReducer,
-  filter:filterReducer
+  filter:filterReducer,
+  order:orderInfoReducer
+
 });

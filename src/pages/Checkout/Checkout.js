@@ -28,8 +28,8 @@ const Checkout = () => {
           one Center
         </Typography>
         <SimpleStepper />
-        {/* <Information /> */}
-        <Shipping />
+        <Information />
+        {/* <Shipping /> */}
         {/* <Payment /> */}
       </div>
       <div className={classes["right-div"]}>
