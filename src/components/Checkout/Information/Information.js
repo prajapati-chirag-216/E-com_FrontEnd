@@ -316,6 +316,16 @@ const Information = (props) => {
         </div>
       </div>
       <Controller
+        isShippingInfo={true}
+        country={country}
+        email={email}
+        phone={phone}
+        firstName={firstName}
+        lastName={lastName}
+        address={address}
+        city={city}
+        state={state}
+        pin={pin}
         returnTo="cart"
         continueTo="shipping"
         onNextPage={
