@@ -3,10 +3,10 @@ import { Form, useActionData, useLocation } from "react-router-dom";
 import { Button, TextField, Rating, Divider, Typography } from "@mui/material";
 import { postReview, fetchProductReviews } from "../../utils/api";
 import moment from "moment";
-import {store} from '../../store/store'
+import { store } from "../../store/store";
 import LoadingSpinner from "../Dekstop/UI/LoadingSpinner";
-import {setIsLoading} from '../../store/ui/ui.action'
-import {selectIsLoading} from '../../store/ui/ui.selector'
+import { setIsLoading } from "../../store/ui/ui.action";
+import { selectIsLoading } from "../../store/ui/ui.selector";
 import classes from "./Review.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -39,7 +39,6 @@ const Review = () => {
         throw err;
       });
   }, [submitMessage]);
-
   useEffect(() => {
     if (actionData && actionData.status === 200) {
       setisFormOpen(false);
@@ -187,9 +186,8 @@ const Review = () => {
 };
 
 export async function action({ request }) {
-  
   let response;
-  store.dispatch(setIsLoading(true))
+  store.dispatch(setIsLoading(true));
   const url = window.location.href;
   const urlArray = url.split("/");
   const id = urlArray[urlArray.length - 1];

@@ -21,8 +21,14 @@
     height: 9rem;
     position: relative;
     border-radius: 10px;
-    /* overflow: hidden; */
     position: relative;
+}
+
+.item_img-container img {
+    object-fit: cover;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
 }
 
 .item_img-container::before {
@@ -52,11 +58,6 @@
     align-self: center;
     margin: auto;
     font-size: 12px;
-}
-
-img {
-    object-fit: cover;
-    border-radius: 10px;
 }
 
 .item_details-container {

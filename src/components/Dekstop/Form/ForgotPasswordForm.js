@@ -8,6 +8,7 @@ import { uiActions } from "../../../mystore/ui-slice";
 import { forgotPassword } from "../../../utils/api";
 import store from "../../../mystore/index";
 import Notification from "../UI/Notification";
+import { textFeildStyle } from "../../../utils/function";
 
 const ForgotPasswordForm = () => {
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
@@ -72,6 +73,7 @@ const ForgotPasswordForm = () => {
             onBlur={validateEmailHandler}
             autoComplete="off"
             error={emailIsValid === false ? true : false}
+            sx={textFeildStyle(emailIsValid)}
           />
           <Button
             variant="contained"

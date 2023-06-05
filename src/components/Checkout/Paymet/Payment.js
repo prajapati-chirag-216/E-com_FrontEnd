@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useReducer } from "react";
-import { Box, Button, Divider, TextField, Typography } from "@mui/material";
+import { Box, Divider, TextField, Typography } from "@mui/material";
 import Controller from "../Controller/Controller";
-import InputAdornment from "@mui/material/InputAdornment";
 import classes from "./Payment.module.css";
 import UserCrendentials from "../Shipping/UserCredentials/UserCrendentials";
 import {
@@ -9,29 +8,18 @@ import {
   cvvReducer,
   expiryDateReducer,
   generalReducer,
-  nameReducer,
 } from "../../../shared/Reducers/InputReducers";
-import { Close } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { selectOrderInfo } from "../../../store/Order/order.selector";
+import { textFeildStyle } from "../../../utils/function";
 const Payment = (props) => {
-  const styles = (feildIsValid) => {
-    return {
-      "& .MuiInputLabel-root.Mui-focused": {
-        color: feildIsValid === false ? "red" : "black",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: feildIsValid === false ? "red" : "black",
-      },
-      "& .MuiInputLabel-root": {
-        color: feildIsValid === false ? "red" : "gray",
-        letterSpacing: "1px",
-      },
-    };
-  };
+  const orderInfo = useSelector(selectOrderInfo);
+  const [paymentDetails, setPaymentDetails] = useState(null);
   const [cardNoState, dispatchCardNo] = useReducer(cardNoReducer, {
     value: "",
     isValid: null,
   });
-  const [holdarNameState, dispatchHoldarName] = useReducer(generalReducer, {
+  const [holderNameState, dispatchHolderName] = useReducer(generalReducer, {
     value: "",
     isValid: null,
   });
@@ -39,7 +27,7 @@ const Payment = (props) => {
     value: "",
     isValid: null,
   });
-  const [cvvNoState, dispatchCvvNo] = useReducer(cvvReducer, {
+  const [cvvState, dispatchCvv] = useReducer(cvvReducer, {
     value: "",
     isValid: null,
   });
@@ -48,46 +36,53 @@ const Payment = (props) => {
   const cardNoChangeHandler = (event) => {
     dispatchCardNo({ type: "USER_INPUT", val: event.target.value });
   };
-  const holdarNameChangeHandler = (event) => {
-    dispatchHoldarName({ type: "USER_INPUT", val: event.target.value });
+  const holderNameChangeHandler = (event) => {
+    dispatchHolderName({ type: "USER_INPUT", val: event.target.value });
   };
   const expiryDateChangeHandler = (event) => {
     dispatchExpiryDate({ type: "USER_INPUT", val: event.target.value });
   };
-  const cvvNoChangeHandler = (event) => {
-    dispatchCvvNo({ type: "USER_INPUT", val: event.target.value });
+  const cvvChangeHandler = (event) => {
+    dispatchCvv({ type: "USER_INPUT", val: event.target.value });
   };
   const validateCardNoHandler = () => dispatchCardNo({ type: "INPUT_BLUR" });
-  const validateHoldarNameHandler = () =>
-    dispatchHoldarName({ type: "INPUT_BLUR" });
+  const validateHolderNameHandler = () =>
+    dispatchHolderName({ type: "INPUT_BLUR" });
   const validateExpiryDateHandler = () =>
     dispatchExpiryDate({ type: "INPUT_BLUR" });
-  const validateCvvNoHandler = () => dispatchCvvNo({ type: "INPUT_BLUR" });
+  const validateCvvHandler = () => dispatchCvv({ type: "INPUT_BLUR" });
   const { isValid: cardNoIsValid } = cardNoState;
-  const { isValid: holdarNameIsValid } = holdarNameState;
+  const { isValid: holderNameIsValid } = holderNameState;
   const { isValid: expiryDateIsValid } = expiryDateState;
-  const { isValid: cvvNoIsValid } = cvvNoState;
+  const { isValid: cvvIsValid } = cvvState;
   useEffect(() => {
     const timer = setTimeout(() => {
-      setFormIsValid(
-        cardNoIsValid && holdarNameIsValid && expiryDateIsValid && cvvNoIsValid
-      );
+      const formValidity =
+        cardNoIsValid && holderNameIsValid && expiryDateIsValid && cvvIsValid;
+      setFormIsValid(formValidity);
+      if (formValidity) {
+        setPaymentDetails({
+          cardNo: cardNoState.value,
+          holderName: holderNameState.value,
+          expiryDate: expiryDateState.value,
+          cvv: cvvState.value,
+        });
+      }
     }, 500);
     return () => {
       clearTimeout(timer);
     };
-  }, [cardNoIsValid, holdarNameIsValid, expiryDateIsValid, cvvNoIsValid]);
+  }, [cardNoIsValid, holderNameIsValid, expiryDateIsValid, cvvIsValid]);
 
-  const validateFormHandler = async (event) => {
-    event.preventDefault();
+  const validateFormHandler = async () => {
     if (!cardNoIsValid) {
       document.getElementById("cardNo").focus();
-    } else if (!holdarNameIsValid) {
-      document.getElementById("holdarName").focus();
+    } else if (!holderNameIsValid) {
+      document.getElementById("holderName").focus();
     } else if (!expiryDateIsValid) {
       document.getElementById("expiryDate").focus();
     } else {
-      document.getElementById("cvvNo").focus();
+      document.getElementById("cvv").focus();
     }
   };
 
@@ -104,20 +99,20 @@ const Payment = (props) => {
       <div className={classes["details-container"]}>
         <UserCrendentials
           label="Contact"
-          value="1234@gmail.com"
-          onclick={props.onPageChange.bind(null, 0)}
+          value={orderInfo.contactInformation.email}
+          onClick={props.onPageChange.bind(null, 0)}
         />
         <Divider />
         <UserCrendentials
           label="Ship to"
-          value="12345, 380013 ahmedabad GJ, India"
-          onclick={props.onPageChange.bind(null, 0)}
+          value={orderInfo.shippingAddress.address}
+          onClick={props.onPageChange.bind(null, 0)}
         />
         <Divider />
         <UserCrendentials
           label="Method"
-          value="Online Payment : Free Shipping"
-          onclick={props.onPageChange.bind(null, 0)}
+          value={orderInfo.shippingMethod}
+          onClick={props.onPageChange.bind(null, 1)}
         />
       </div>
       <div className={classes["titleContainer"]}>
@@ -164,7 +159,7 @@ const Payment = (props) => {
           <TextField
             variant="outlined"
             label="Card Number"
-            id="cardNumber"
+            id="cardNo"
             placeholder="1234 1234 1234"
             type="text"
             value={cardNoState.value}
@@ -179,7 +174,7 @@ const Payment = (props) => {
             }}
             autoComplete="off"
             error={cardNoIsValid === false ? true : false}
-            sx={styles(cardNoIsValid)}
+            sx={textFeildStyle(cardNoIsValid)}
             helperText={
               cardNoIsValid === false ? "Enter valid card number" : ""
             }
@@ -190,13 +185,13 @@ const Payment = (props) => {
             label="holdername"
             type="text"
             variant="outlined"
-            value={holdarNameState.value}
-            onChange={holdarNameChangeHandler}
-            onBlur={validateHoldarNameHandler}
+            value={holderNameState.value}
+            onChange={holderNameChangeHandler}
+            onBlur={validateHolderNameHandler}
             autoComplete="off"
-            error={holdarNameIsValid === false ? true : false}
-            sx={styles(holdarNameIsValid)}
-            helperText={holdarNameIsValid === false ? "Enter valid name" : ""}
+            error={holderNameIsValid === false ? true : false}
+            sx={textFeildStyle(holderNameIsValid)}
+            helperText={holderNameIsValid === false ? "Enter valid name" : ""}
           />
 
           <TextField
@@ -210,7 +205,7 @@ const Payment = (props) => {
             fullWidth
             autoComplete="off"
             error={expiryDateIsValid === false ? true : false}
-            sx={styles(expiryDateIsValid)}
+            sx={textFeildStyle(expiryDateIsValid)}
             helperText={expiryDateIsValid === false ? "Enter valid date" : ""}
           />
 
@@ -219,22 +214,25 @@ const Payment = (props) => {
             id="cvv"
             type="text"
             placeholder="1234"
-            value={cvvNoState.value}
-            onChange={cvvNoChangeHandler}
-            onBlur={validateCvvNoHandler}
+            value={cvvState.value}
+            onChange={cvvChangeHandler}
+            onBlur={validateCvvHandler}
             fullWidth
             autoComplete="off"
-            error={cvvNoIsValid === false ? true : false}
-            sx={styles(cvvNoIsValid)}
-            helperText={cvvNoIsValid === false ? "Enter valid cvv number" : ""}
+            error={cvvIsValid === false ? true : false}
+            sx={textFeildStyle(cvvIsValid)}
+            helperText={cvvIsValid === false ? "Enter valid cvv number" : ""}
           />
         </Box>
       </div>
       <Controller
+        paymentDetails={paymentDetails}
         returnTo="shipping"
         continueTo="placeOrder"
         onNextPage={props.onPageChange.bind(null, 3)}
         onPreviousPage={props.onPageChange.bind(null, 1)}
+        onValidateForm={validateFormHandler}
+        formIsValid={formIsValid}
       />
     </Box>
   );

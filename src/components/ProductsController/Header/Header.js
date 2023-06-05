@@ -9,7 +9,6 @@ import { fetchCategory } from "../../../utils/api";
 import { useParams } from "react-router-dom";
 import { selectProductData } from "../../../store/ui/ui.selector";
 const Header = (props) => {
-
   const [filterModalState, setFilterModalState] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -22,7 +21,6 @@ const Header = (props) => {
     (async () => {
       try {
         const res = await fetchCategory(params.id);
-        console.log(res,'hbiu')
         setSelectedCategory(res);
       } catch (err) {
         throw err;

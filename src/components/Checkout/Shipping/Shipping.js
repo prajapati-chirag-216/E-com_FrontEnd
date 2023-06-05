@@ -3,12 +3,18 @@ import classes from "./Shipping.module.css";
 import { Divider, Typography, Box, Radio } from "@mui/material";
 import Controller from "../Controller/Controller";
 import UserCrendentials from "./UserCredentials/UserCrendentials";
-
+import { useSelector } from "react-redux";
+import { selectOrderInfo } from "../../../store/Order/order.selector";
 const Shipping = (props) => {
-  const [selectedValue, setSelectedValue] = useState("A");
+  const [selectedValue, setSelectedValue] = useState(0);
+  const shippingMethods = [
+    "Online Payment : Free Shipping",
+    "Cash on Delivery : ₹5 COD handling charges This shipping option is eligible for Cash on Delivery.",
+  ];
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+    setSelectedValue(+event.target.value);
   };
+  const orderInfo = useSelector(selectOrderInfo);
   return (
     <Box
       sx={{
@@ -22,14 +28,14 @@ const Shipping = (props) => {
       <div className={classes["details-container"]}>
         <UserCrendentials
           label="Contact"
-          value="1234@gmail.com"
-          onclick={props.onPageChange.bind(null, 0)}
+          value={orderInfo.contactInformation.email}
+          onClick={props.onPageChange.bind(null, 0)}
         />
         <Divider />
         <UserCrendentials
           label="Ship to"
-          value="12345, 380013 ahmedabad GJ, India"
-          onclick={props.onPageChange.bind(null, 0)}
+          value={orderInfo.shippingAddress.address}
+          onClick={props.onPageChange.bind(null, 0)}
         />
       </div>
       <div className={classes["shipping_details-container"]}>
@@ -63,9 +69,9 @@ const Shipping = (props) => {
         <div className={classes["details-container"]}>
           <div>
             <Radio
-              checked={selectedValue === "A"}
+              checked={selectedValue === 0}
               onChange={handleChange}
-              value="A"
+              value={0}
             />
             <Typography
               fontSize="1.1rem"
@@ -73,7 +79,7 @@ const Shipping = (props) => {
               letterSpacing="1px"
               flex="6"
             >
-              Online Payment : Free Shipping
+              {shippingMethods[0]}
             </Typography>
             <Typography
               flex="1"
@@ -88,9 +94,9 @@ const Shipping = (props) => {
 
           <div>
             <Radio
-              checked={selectedValue === "B"}
+              checked={selectedValue === 1}
               onChange={handleChange}
-              value="B"
+              value={1}
             />
             <Typography
               fontSize="1.1rem"
@@ -98,8 +104,7 @@ const Shipping = (props) => {
               letterSpacing="1px"
               flex="6"
             >
-              Cash on Delivery : ₹5 COD handling charges This shipping option is
-              eligible for Cash on Delivery.
+              {shippingMethods[1]}
             </Typography>
             <Typography
               flex="1"
@@ -114,9 +119,11 @@ const Shipping = (props) => {
       </div>
       <Controller
         returnTo="information"
-        continueTo="payment"
+        continueTo="Continue to payment"
         onNextPage={props.onPageChange.bind(null, 2)}
         onPreviousPage={props.onPageChange.bind(null, 0)}
+        shippingMethod={shippingMethods[selectedValue]}
+        formIsValid={true}
       />
     </Box>
   );

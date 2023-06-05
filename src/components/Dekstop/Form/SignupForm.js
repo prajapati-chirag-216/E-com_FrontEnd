@@ -19,9 +19,10 @@ import {
   phoneNoReducer,
 } from "../../../shared/Reducers/InputReducers";
 import { useDispatch } from "react-redux";
-import Notification from "../UI/Notification";
 import { signupUser } from "../../../utils/api";
 import { setLoginUser } from "../../../store/ui/ui.action";
+import { textFeildStyle } from "../../../utils/function";
+
 const SignupForm = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -49,7 +50,6 @@ const SignupForm = () => {
     isValid: null,
   });
   const [formIsValid, setFormIsValid] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
 
   const nameChangeHandler = (event) => {
     dispatchName({ type: "USER_INPUT", val: event.target.value.trim() });
@@ -102,24 +102,16 @@ const SignupForm = () => {
   const actionData = useActionData();
   useEffect(() => {
     if (actionData && actionData.success) {
-      // dispatch(authActions.login());
       dispatch(setLoginUser());
       return navigate("/home", { replace: true });
     }
-    if (actionData && !actionData.emailIsValid) {
-      setShowNotification(true);
-      setTimeout(() => {
-        setShowNotification(false);
-      }, 4000);
+    if (actionData?.inValidEmail) {
       document.getElementById("email").focus();
     }
     // eslint-disable-next-line
   }, [actionData]);
   return (
     <Fragment>
-      {showNotification && (
-        <Notification message="e-mail is already registered" status="invalid" />
-      )}
       <div className={classes["action-div"]}>
         <Typography
           fontSize="2rem"
@@ -139,7 +131,9 @@ const SignupForm = () => {
             onChange={nameChangeHandler}
             onBlur={validateNameHandler}
             autoComplete="off"
+            autoCapitalize="off"
             error={nameIsValid === false ? true : false}
+            sx={textFeildStyle(nameIsValid)}
           />
           <TextField
             id="email"
@@ -152,9 +146,13 @@ const SignupForm = () => {
             onBlur={validateEmailHandler}
             autoComplete="off"
             error={emailIsValid === false ? true : false}
+            sx={textFeildStyle(emailIsValid)}
           />
-          <FormControl>
-            <InputLabel htmlFor="outlined-adornment-password">
+          <FormControl sx={textFeildStyle(passwordIsValid)}>
+            <InputLabel
+              htmlFor="outlined-adornment-password"
+              error={passwordIsValid === false ? true : false}
+            >
               Password
             </InputLabel>
             <OutlinedInput
@@ -186,19 +184,13 @@ const SignupForm = () => {
             label="Phone No"
             variant="outlined"
             fullWidth
-            sx={{
-              "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
-                {
-                  WebkitAppearance: "none",
-                  margin: 0,
-                },
-            }}
             value={phoneNoState.value}
             onChange={phoneNoChangeHandler}
             onBlur={validatePhoneNoHandler}
             autoComplete="off"
-            type="number"
+            type="text"
             error={phoneNoIsValid === false ? true : false}
+            sx={textFeildStyle(phoneNoIsValid)}
           />
           <Button
             variant="contained"
@@ -210,7 +202,6 @@ const SignupForm = () => {
               padding: "0.7rem",
             }}
             onClick={!formIsValid ? validateFormHandler : () => {}}
-            disabled={showNotification}
           >
             Signup
           </Button>
@@ -246,13 +237,7 @@ export async function action({ request }) {
   try {
     response = await signupUser(userData);
   } catch (err) {
-    if (
-      err.response.data.code === 11000 &&
-      err.response.data.keyPattern.email === 1
-    ) {
-      return { emailIsValid: false };
-    }
-    throw err;
+    return { inValidEmail: true };
   }
   return response;
 }

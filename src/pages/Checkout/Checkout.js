@@ -10,9 +10,9 @@ const Checkout = () => {
   const [curruntPage, setCurruntPage] = useState(0);
   const changePageHandler = (pageNo) => setCurruntPage(pageNo);
   const pageElements = [
-    <Payment onPageChange={changePageHandler} />,
     <Information onPageChange={changePageHandler} />,
     <Shipping onPageChange={changePageHandler} />,
+    <Payment onPageChange={changePageHandler} />,
   ];
   return (
     <Box

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import SliderImages from "./SliderImages";
 import { fetchDisplayImage } from "../../../utils/api";
+import { Divider } from "@mui/material";
 
 const Display = () => {
   const [index, setIndex] = useState(0);

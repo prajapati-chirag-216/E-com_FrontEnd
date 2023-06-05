@@ -6,6 +6,7 @@
     object-fit: cover;
     transition: all 3s ease-out;
     transform: scale(1);
+    border-radius: 0px;
 }
 
 .item_details-div {

@@ -12,23 +12,11 @@ import {
   generalReducer,
   pinCodeReducer,
 } from "../../../shared/Reducers/InputReducers";
+import { textFeildStyle } from "../../../utils/function";
 
 const Information = (props) => {
-  const styles = (feildIsValid) => {
-    return {
-      "& .MuiInputLabel-root.Mui-focused": {
-        color: feildIsValid === false ? "red" : "black",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: feildIsValid === false ? "red" : "black",
-      },
-      "& .MuiInputLabel-root": {
-        color: feildIsValid === false ? "red" : "gray",
-        letterSpacing: "1px",
-      },
-    };
-  };
-
+  const countryRef = useRef();
+  const stateRef = useRef();
   const navigate = useNavigate();
   const navigateHandler = () => navigate("/cart");
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -61,6 +49,7 @@ const Information = (props) => {
     isValid: null,
   });
   const [formIsValid, setFormIsValid] = useState(false);
+  const [InformationDetails, setInformationDetails] = useState(null);
 
   const firstNameChangeHandler = (event) => {
     dispatchFirstName({ type: "USER_INPUT", val: event.target.value });
@@ -104,15 +93,32 @@ const Information = (props) => {
   const { isValid: pinCodeIsValid } = pinCodeState;
   useEffect(() => {
     const timer = setTimeout(() => {
-      setFormIsValid(
+      const formValidity =
         emailIsValid &&
-          phoneNoIsValid &&
-          firstNameIsValid &&
-          lastNameIsValid &&
-          addressIsValid &&
-          cityNameIsValid &&
-          pinCodeIsValid
-      );
+        phoneNoIsValid &&
+        firstNameIsValid &&
+        lastNameIsValid &&
+        addressIsValid &&
+        cityNameIsValid &&
+        pinCodeIsValid;
+      setFormIsValid(formValidity);
+      if (formValidity) {
+        const InformationDetails = {
+          contactInformation: {
+            email: emailState.value,
+            phoneNumber: phoneNoState.value,
+          },
+          shippingAddress: {
+            country: countryRef.current.value,
+            userName: firstNameState.value + " " + lastNameState.value,
+            address: addressState.value,
+            city: cityNameState.value,
+            state: stateRef.current.value,
+            pinNumber: pinCodeState.value,
+          },
+        };
+        setInformationDetails(InformationDetails);
+      }
     }, 500);
     return () => {
       clearTimeout(timer);
@@ -128,7 +134,7 @@ const Information = (props) => {
   ]);
 
   const validateFormHandler = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (!emailIsValid) {
       document.getElementById("email").focus();
     } else if (!phoneNoIsValid) {
@@ -180,32 +186,34 @@ const Information = (props) => {
             </Typography>
           )}
         </div>
-        <TextField
-          id="email"
-          label="Email"
-          variant="outlined"
-          value={emailState.value}
-          onChange={emailChangeHandler}
-          onBlur={validateEmailHandler}
-          fullWidth
-          autoComplete="off"
-          autoCapitalize="off"
-          error={emailIsValid === false ? true : false}
-          sx={styles(emailIsValid)}
-          helperText={emailIsValid === false ? "Enter valid email" : ""}
-        />
-        <TextField
-          id="phoneNo"
-          label="PhoneNo"
-          value={phoneNoState.value}
-          onChange={phoneNoChangeHandler}
-          onBlur={validatePhoneNoHandler}
-          variant="outlined"
-          fullWidth
-          error={phoneNoIsValid === false ? true : false}
-          sx={styles(phoneNoIsValid)}
-          helperText={phoneNoIsValid === false ? "Enter valid phoneNo" : ""}
-        />
+        <form className={classes["form-container"]}>
+          <TextField
+            id="email"
+            label="Email"
+            variant="outlined"
+            value={emailState.value}
+            onChange={emailChangeHandler}
+            onBlur={validateEmailHandler}
+            fullWidth
+            autoComplete="off"
+            autoCapitalize="off"
+            error={emailIsValid === false ? true : false}
+            sx={textFeildStyle(emailIsValid)}
+            helperText={emailIsValid === false ? "Enter valid email" : ""}
+          />
+          <TextField
+            id="phoneNo"
+            label="PhoneNo"
+            value={phoneNoState.value}
+            onChange={phoneNoChangeHandler}
+            onBlur={validatePhoneNoHandler}
+            variant="outlined"
+            fullWidth
+            error={phoneNoIsValid === false ? true : false}
+            sx={textFeildStyle(phoneNoIsValid)}
+            helperText={phoneNoIsValid === false ? "Enter valid phoneNo" : ""}
+          />
+        </form>
       </div>
       <div className={classes["details-div"]}>
         <Typography
@@ -218,119 +226,119 @@ const Information = (props) => {
         >
           Shipping address
         </Typography>
-        <TextField
-          id="region"
-          label="Country/region"
-          variant="outlined"
-          fullWidth
-          select
-          defaultValue="India"
-          sx={styles(true)}
-        >
-          {["India", "france"].map((option, index) => (
-            <MenuItem key={index} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </TextField>
-        <div className={classes["multi_inp-div"]}>
+        <form className={classes["form-container"]}>
           <TextField
-            id="firstName"
-            label="First name"
+            id="country"
+            label="Country/region"
             variant="outlined"
-            fullWidth
-            value={firstNameState.value}
-            onChange={firstNameChangeHandler}
-            onBlur={validateFirstNameHandler}
-            error={firstNameIsValid === false ? true : false}
-            sx={styles(firstNameIsValid)}
-            helperText={
-              firstNameIsValid === false ? "Enter valid firstName" : ""
-            }
-          />
-          <TextField
-            id="lastName"
-            label="Last name"
-            variant="outlined"
-            fullWidth
-            value={lastNameState.value}
-            onChange={lastNameChangeHandler}
-            onBlur={validateLastNameHandler}
-            error={lastNameIsValid === false ? true : false}
-            sx={styles(lastNameIsValid)}
-            helperText={lastNameIsValid === false ? "Enter valid lastName" : ""}
-          />
-        </div>
-        <TextField
-          id="address"
-          label="Address"
-          placeholder="Appartment, suite, etc.(optional)"
-          variant="outlined"
-          fullWidth
-          value={addressState.value}
-          onChange={addressChangeHandler}
-          onBlur={validateAddressHandler}
-          error={addressIsValid === false ? true : false}
-          sx={styles(addressIsValid)}
-          helperText={addressIsValid === false ? "Enter valid Address" : ""}
-        />
-        <div className={classes["multi_inp-div"]}>
-          <TextField
-            id="city"
-            label="City"
-            variant="outlined"
-            fullWidth
-            value={cityNameState.value}
-            onChange={cityNameChangeHandler}
-            onBlur={validateCityNameHandler}
-            error={cityNameIsValid === false ? true : false}
-            sx={styles(cityNameIsValid)}
-            helperText={cityNameIsValid === false ? "Enter valid city" : ""}
-          />
-          <TextField
-            id="state"
-            label="State"
-            variant="outlined"
+            inputRef={countryRef}
             fullWidth
             select
-            sx={styles(true)}
+            defaultValue="India"
+            sx={textFeildStyle(true)}
           >
-            {["Gujrat", "Mumbai", "Delhi"].map((option, index) => (
+            {["India", "france"].map((option, index) => (
               <MenuItem key={index} value={option}>
                 {option}
               </MenuItem>
             ))}
           </TextField>
+          <div className={classes["multi_inp-div"]}>
+            <TextField
+              id="firstName"
+              label="First name"
+              variant="outlined"
+              fullWidth
+              value={firstNameState.value}
+              onChange={firstNameChangeHandler}
+              onBlur={validateFirstNameHandler}
+              error={firstNameIsValid === false ? true : false}
+              sx={textFeildStyle(firstNameIsValid)}
+              helperText={
+                firstNameIsValid === false ? "Enter valid firstName" : ""
+              }
+            />
+            <TextField
+              id="lastName"
+              label="Last name"
+              variant="outlined"
+              fullWidth
+              value={lastNameState.value}
+              onChange={lastNameChangeHandler}
+              onBlur={validateLastNameHandler}
+              error={lastNameIsValid === false ? true : false}
+              sx={textFeildStyle(lastNameIsValid)}
+              helperText={
+                lastNameIsValid === false ? "Enter valid lastName" : ""
+              }
+            />
+          </div>
           <TextField
-            id="pincode"
-            label="PIN code"
+            id="address"
+            label="Address"
+            placeholder="Appartment, suite, etc.(optional)"
             variant="outlined"
             fullWidth
-            value={pinCodeState.value}
-            onChange={pinCodeChangeHandler}
-            onBlur={validatePinCodeHandler}
-            error={pinCodeIsValid === false ? true : false}
-            sx={styles(pinCodeIsValid)}
-            helperText={pinCodeIsValid === false ? "Enter valid PIN code" : ""}
+            value={addressState.value}
+            onChange={addressChangeHandler}
+            onBlur={validateAddressHandler}
+            error={addressIsValid === false ? true : false}
+            sx={textFeildStyle(addressIsValid)}
+            helperText={addressIsValid === false ? "Enter valid Address" : ""}
           />
-        </div>
+          <div className={classes["multi_inp-div"]}>
+            <TextField
+              id="city"
+              label="City"
+              variant="outlined"
+              fullWidth
+              value={cityNameState.value}
+              onChange={cityNameChangeHandler}
+              onBlur={validateCityNameHandler}
+              error={cityNameIsValid === false ? true : false}
+              sx={textFeildStyle(cityNameIsValid)}
+              helperText={cityNameIsValid === false ? "Enter valid city" : ""}
+            />
+            <TextField
+              id="state"
+              label="State"
+              variant="outlined"
+              inputRef={stateRef}
+              fullWidth
+              select
+              sx={textFeildStyle(true)}
+              defaultValue="Gujrat"
+            >
+              {["Gujrat", "Mumbai", "Delhi"].map((option, index) => (
+                <MenuItem key={index} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              id="pincode"
+              label="PIN code"
+              variant="outlined"
+              fullWidth
+              value={pinCodeState.value}
+              onChange={pinCodeChangeHandler}
+              onBlur={validatePinCodeHandler}
+              error={pinCodeIsValid === false ? true : false}
+              sx={textFeildStyle(pinCodeIsValid)}
+              helperText={
+                pinCodeIsValid === false ? "Enter valid PIN code" : ""
+              }
+            />
+          </div>
+        </form>
       </div>
       <Controller
-        isShippingInfo={true}
-        country={country}
-        email={email}
-        phone={phone}
-        firstName={firstName}
-        lastName={lastName}
-        address={address}
-        city={city}
-        state={state}
-        pin={pin}
+        informationDetails={InformationDetails}
         returnTo="cart"
-        continueTo="shipping"
-        onNextPage={
-          formIsValid ? props.onPageChange.bind(null, 1) : validateFormHandler
-        }
+        continueTo="Continue to shipping"
+        onNextPage={props.onPageChange.bind(null, 1)}
+        onValidateForm={validateFormHandler}
+        formIsValid={formIsValid}
         onPreviousPage={navigateHandler}
       />
     </Box>

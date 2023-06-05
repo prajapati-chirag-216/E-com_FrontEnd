@@ -51,20 +51,50 @@ export const passwordReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 
+// export const phoneNoReducer = (state, action) => {
+//   if (action.type === "USER_INPUT") {
+//     if (action.val.trim().length >= 11) {
+//       return { value: action.val.trim().slice(0, 10), isValid: true };
+//     }
+//     return {
+//       value: action.val.trim(),
+//       isValid: action.val.trim().length === 10,
+//     };
+//   }
+//   if (action.type === "INPUT_BLUR") {
+//     return {
+//       value: state.value.trim(),
+//       isValid: state.value.trim().length === 10,
+//     };
+//   }
+//   return { value: "", isValid: null };
+// };
 export const phoneNoReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
-    if (action.val.trim().length >= 11) {
-      return { value: action.val.trim().slice(0, 10), isValid: true };
+    let phoneNumber = action.val.replace(/\s/g, "").replace(/\D/g, "");
+
+    let formattedPhoneNumber = "";
+
+    for (let i = 0; i < phoneNumber.length; i++) {
+      formattedPhoneNumber += phoneNumber[i];
+      if ((i + 1) % 4 === 0 && i !== phoneNumber.length - 1) {
+        formattedPhoneNumber += "-";
+      }
+    }
+
+    if (phoneNumber.length > 10) {
+      phoneNumber = phoneNumber.slice(0, 9);
+      formattedPhoneNumber = formattedPhoneNumber.slice(0, 12);
     }
     return {
-      value: action.val.trim(),
-      isValid: action.val.trim().length === 10,
+      value: formattedPhoneNumber,
+      isValid: formattedPhoneNumber.length === 12,
     };
   }
   if (action.type === "INPUT_BLUR") {
     return {
-      value: state.value.trim(),
-      isValid: state.value.trim().length === 10,
+      value: state.value,
+      isValid: state.value.length === 12,
     };
   }
   return { value: "", isValid: null };

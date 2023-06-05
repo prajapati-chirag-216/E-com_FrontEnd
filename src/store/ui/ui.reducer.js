@@ -3,10 +3,15 @@ import { ui_types } from "./ui.types";
 
 const UI_INITIAL_STATE = {
   isLoading: true,
-  isLoggedIn: cookieParser()["userAuth"] === "true",
+  isLoggedIn: cookieParser()["  "] === "true",
+  accessToken: null,
   searchField: "",
   productData: [],
   productDataState: false,
+  snackBar: {
+    status: false,
+    message: "",
+  },
 };
 
 export const uiReducer = (state = UI_INITIAL_STATE, action) => {
@@ -24,6 +29,12 @@ export const uiReducer = (state = UI_INITIAL_STATE, action) => {
       return {
         ...state,
         isLoggedIn: false,
+      };
+    case ui_types.SET_ACCESS_TOKEN:
+      document.cookie = `userAuth=true; max-age=${1000 * 60 * 60 * 24 * 2}`;
+      return {
+        ...state,
+        isLoggedIn: true,
       };
     case ui_types.SET_ISLOADING:
       return {
@@ -44,6 +55,11 @@ export const uiReducer = (state = UI_INITIAL_STATE, action) => {
       return {
         ...state,
         productDataState: payload,
+      };
+    case ui_types.SET_SNACKBAR:
+      return {
+        ...state,
+        snackBar: payload,
       };
     default:
       return state;

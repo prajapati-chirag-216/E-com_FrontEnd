@@ -1,34 +1,34 @@
 import React from "react";
-import { LoadingButton } from "@mui/lab";
-import { useMediaQuery } from "@mui/material";
+import { Button, CircularProgress, useMediaQuery } from "@mui/material";
 
 const StatusButton = (props) => {
   const matches = useMediaQuery("(max-width:700px)");
   return (
-    <LoadingButton
+    <Button
       variant="contained"
       component="label"
-      loading={props.isLoading.status}
-      loadingPosition="start"
-      startIcon={props.icon}
       onClick={props.onClick}
       sx={{
         width: matches ? "10rem" : "20rem",
-        fontSize: matches ? "0.7rem" : "1rem",
+        size: matches ? "0.7rem" : "4rem",
         padding: matches ? "0.5rem" : "1rem",
-        gap: matches ? "0.5" : "1rem",
+        gap: matches ? "0.5rem" : "1rem",
         backgroundColor: "black",
         color: "white",
-        borderRadius: "2px",
         cursor: props.isLoading.status ? "not-allowed" : "pointer",
         "&:hover": {
           backgroundColor: "black",
         },
+        ...props.style,
       }}
       disabled={props.isLoading.status}
     >
-      {props.children}
-    </LoadingButton>
+      {props.isLoading.status ? (
+        <CircularProgress color="inherit" size={33} />
+      ) : (
+        props.children
+      )}
+    </Button>
   );
 };
 

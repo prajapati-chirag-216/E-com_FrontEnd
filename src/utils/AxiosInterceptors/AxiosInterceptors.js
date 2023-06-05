@@ -1,0 +1,39 @@
+import { store } from "../../store/store";
+import { setSnackBar } from "../../store/ui/ui.action";
+import axios from "../axios/axios";
+import { genrateAccessToken } from "../function";
+
+axios.interceptors.request.use(
+  (request) => {
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalConfig = error.config;
+    if (
+      error.response?.status === 403 &&
+      error.response?.data?.refreshTokenDecoded &&
+      !originalConfig._retry
+    ) {
+      originalConfig._retry = true;
+      await genrateAccessToken();
+      return axios(originalConfig);
+    } else if (error.response?.status === 401 || 409) {
+      store.dispatch(
+        setSnackBar({
+          status: true,
+          message: error.response?.data?.text || "somthing went wrong",
+          severity: "warning",
+        })
+      );
+    }
+    return Promise.reject(error);
+  }
+);

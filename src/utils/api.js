@@ -1,214 +1,133 @@
-import axios from "axios";
-
-const BACKAND_DOMAIN = "http://localhost:8000";
+import AxiosInstance from "./AxiosInstance/AxiosInstance";
+// import "./AxiosInterceptors/AxiosInterceptors";
 
 export async function signupUser(userData) {
-  try {
-    const response = await axios.post(
-      `${BACKAND_DOMAIN}/user/signup`,
-      {
-        ...userData,
-      },
-      {
-        withCredentials: true,
-      }
-    );
-    const data = response.data;
-    if (response.statusText !== "OK") {
-      throw new Error({ message: data.message || "Unable to Login." });
-    }
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const config = {
+    method: "POST",
+    url: `/user/signup`,
+    data: userData,
+    withCredentials: true,
+  };
+  const response = await AxiosInstance(config);
+  return response;
+}
+export async function fetchUserProfile() {
+  const config = {
+    url: `/user/profile`,
+    withCredentials: true,
+  };
+  const response = await AxiosInstance(config);
+  return response;
 }
 
-export async function fetchUserProfile(userData) {
-  try {
-    const response = await axios.get(`${BACKAND_DOMAIN}/user/profile`, {
-      withCredentials: true,
-    });
-    const data = response.data;
-    if (response.statusText !== "OK") {
-      throw new Error({ message: data.message || "Unable to Login." });
-    }
-    return data;
-  } catch (err) {
-    throw err;
-  }
-}
 export async function loginUser(userData) {
-  try {
-    const response = await axios.post(
-      `${BACKAND_DOMAIN}/user/login`,
-      {
-        ...userData,
-      },
-      {
-        withCredentials: true,
-      }
-    );
-    const data = response.data;
-    if (response.statusText !== "OK") {
-      throw new Error({ message: data.message || "Unable to Login." });
-    }
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const config = {
+    method: "POST",
+    url: `/user/login`,
+    data: userData,
+    withCredentials: true,
+  };
+  const response = await AxiosInstance(config);
+  return response;
 }
+
 export async function logoutUser() {
-  try {
-    const response = await axios.post(
-      `${BACKAND_DOMAIN}/user/logout`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
-    const data = response.data;
-    if (response.statusText !== "OK") {
-      throw new Error({ message: data.message || "Unable to Logout." });
-    }
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const config = {
+    method: "POST",
+    url: `/user/logout`,
+    withCredentials: true,
+  };
+  const response = await AxiosInstance(config);
+  return response;
 }
+
 export async function forgotPassword(userData) {
-  try {
-    const response = await axios.post(`${BACKAND_DOMAIN}/user/forgotPassword`, {
-      ...userData,
-    });
-    const data = response.data;
-    if (response.statusText !== "OK") {
-      throw new Error({ message: data.message || "Somthing went wrong." });
-    }
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const config = {
+    method: "POST",
+    url: `/user/forgotPassword`,
+    data: userData,
+  };
+  const response = await AxiosInstance(config);
+  return response;
 }
 export async function resetPassword(userData) {
-  try {
-    const response = await axios.post(
-      `${BACKAND_DOMAIN}/user/resetPassword/${userData.id}`,
-      {
-        password: userData.password,
-      }
-    );
-    const data = response.data;
-    if (response.statusText !== "OK") {
-      throw new Error({ message: data.message || "Unable to reset password." });
-    }
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const config = {
+    method: "POST",
+    url: `/user/resetPassword/${userData.id}`,
+    data: { password: userData.password },
+  };
+  const response = await AxiosInstance(config);
+  return response;
 }
 export async function fetchDisplayImage() {
-  try {
-    const response = await axios.get(
-      `${BACKAND_DOMAIN}/admin/fetchDisplayImage`
-    );
-    const data = response.data;
-    if (response.statusText !== "OK") {
-      throw new Error({ message: data.message || "Unable to Login." });
-    }
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const config = {
+    url: `/admin/fetchDisplayImage`,
+  };
+  const response = await AxiosInstance(config);
+  return response;
 }
 export const fetchCategory = async (id) => {
-  try {
-    const response = await axios.get(`${BACKAND_DOMAIN}/fetchCategory/${id}`);
-    const data = response.data;
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const fetchCategories = async () => {
-  try {
-    const response = await axios.get(`${BACKAND_DOMAIN}/fetchCategories`);
-    const data = response.data;
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
-export const fetchProduct = async (id) => {
-  try {
-    const response = await axios.get(`${BACKAND_DOMAIN}/getproduct/${id}`);
-    const data = response.data;
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
-export const fetchProductDetails = async (id) => {
-  try {
-    const response = await axios.get(
-      `${BACKAND_DOMAIN}/getproductDetails/${id}`
-    );
-    const data = response.data;
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const postReview = async (id, reviewObj) => {
-  let response;
-
-  try {
-    response = await axios.post(
-      `${BACKAND_DOMAIN}/productreview/${id}`,
-      reviewObj
-    );
-  } catch (err) {
-    throw err;
-  }
-
+  const config = {
+    url: `/fetchCategory/${id}`,
+  };
+  const response = await AxiosInstance(config);
   return response;
 };
 
+export const fetchCategories = async () => {
+  const config = {
+    url: `/fetchCategories`,
+  };
+  const response = await AxiosInstance(config);
+  return response;
+};
+export const fetchProduct = async (id) => {
+  const config = {
+    url: `/getproduct/${id}`,
+  };
+  const response = await AxiosInstance(config);
+  return response;
+};
+export const fetchProductDetails = async (id) => {
+  const config = {
+    url: `/getproductDetails/${id}`,
+  };
+  const response = await AxiosInstance(config);
+  return response;
+};
+
+export const postReview = async (id, reviewObj) => {
+  const config = {
+    method: "POST",
+    url: `/productreview/${id}`,
+    data: reviewObj,
+  };
+  const response = await AxiosInstance(config);
+  return { ...response, status: 200 };
+};
+
 export const fetchProductReviews = async (id) => {
-  try {
-    const response = await axios.get(
-      `${BACKAND_DOMAIN}/getproductReviews/${id}`
-    );
-    return response.data;
-  } catch (err) {
-    throw err;
-  }
+  const config = {
+    url: `/getproductReviews/${id}`,
+  };
+  const response = await AxiosInstance(config);
+  return response;
 };
 export const addCartItems = async (items) => {
-  try {
-    const response = await axios.post(
-      `${BACKAND_DOMAIN}/addCartItems`,
-      {
-        ...items,
-      },
-      {
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  } catch (err) {
-    throw err;
-  }
+  const config = {
+    method: "POST",
+    url: `/addCartItems`,
+    data: items,
+    withCredentials: true,
+  };
+  const response = await AxiosInstance(config);
+  return response;
 };
 
 export const fetchDataByName = async (name, data) => {
   const filterdName = name.split(" ").join("").toLowerCase();
-  console.log(data);
-
   const filteredData = data.filter((item) => {
     const itemName = item.name.split(" ").join("").toLowerCase();
-
     return itemName.includes(filterdName);
   });
 
@@ -216,43 +135,49 @@ export const fetchDataByName = async (name, data) => {
 };
 
 export const fetchFilteredProducts = async (id, name) => {
-  console.log(id, name);
-  try {
-    const response = await axios.get(
-      `${BACKAND_DOMAIN}/getfilteredproducts/${id}/${name}`
-    );
-    return response.data;
-  } catch (err) {
-    throw err;
-  }
+  const config = {
+    url: `/getfilteredproducts/${id}/${name}`,
+  };
+  const response = await AxiosInstance(config);
+  return response;
 };
 
 export const getPaymentPage = async () => {
   try {
-    const result = await axios.post(
-      `${BACKAND_DOMAIN}/create-checkout-session`
-    );
-
-    return result;
+    const config = {
+      method: "POST",
+      url: `/create-checkout-session`,
+    };
+    const response = await AxiosInstance(config);
+    return response;
   } catch (err) {
     throw err;
   }
 };
 
-}
-
-
-
-export const makeOrder = async(orderObj) =>{
-
-
-  try{
-    const result = await axios.post(`${BACKAND_DOMAIN}/postOrder`,orderObj)
-    
-     return result
-  }
-  catch(err){
+export const makeOrder = async (orderObj) => {
+  try {
+    const config = {
+      method: "POST",
+      url: `/postOrder`,
+      data: orderObj,
+    };
+    const response = await AxiosInstance(config);
+    return response;
+  } catch (err) {
     throw err;
   }
-
-}
+};
+export const getAccessToken = async () => {
+  try {
+    const config = {
+      method: "get",
+      url: `/user/getAccessToken`,
+      withCredentials: true,
+    };
+    const response = await AxiosInstance(config);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};

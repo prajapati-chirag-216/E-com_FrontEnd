@@ -1,3 +1,6 @@
+import { getAccessToken } from "../utils/api";
+import { setAccessToken } from "../store/ui/ui.action";
+import { store } from "../store/store";
 export function cookieParser() {
   const data = {};
   document.cookie.split(";").map((ele) => {
@@ -6,36 +9,32 @@ export function cookieParser() {
   return data;
 }
 
-export const validateExpiryDate = (date) => {
-  let newDate = date.split("/");
-
-  // console.log(newDate, "ui");
-
-  let isValid = newDate[0] !== "00" && Number(newDate[0]) <= 12;
-
-  isValid = isValid && newDate.join("").length === 4;
-
-  // const expiryDateErrorText = document.getElementById("exiparyDateErrorText");
-
-  // if (!isValid) {
-  //   expiryDateErrorText.textContent = "Enter Valid Expiry Date!";
-  // } else {
-  //   expiryDateErrorText.textContent = "";
-  // }
+export const genrateAccessToken = async () => {
+  const response = await getAccessToken();
+  store.dispatch(setAccessToken(response.accessToken));
+  return response;
 };
 
-export const validateCardNumber = (num) => {
-  const newNum = num.replace(/\s/g, "");
-
-  const isValid = newNum.length === 12;
-
-  console.log(isValid);
-
-  const errorText = document.getElementById("cardNumberErrorText");
-
-  if (!isValid) {
-    errorText.textContent = "Enter Valid Card Number!";
-  } else {
-    errorText.textContent = "";
-  }
+export const textFeildStyle = (feildIsValid) => {
+  return {
+    "& .MuiInputLabel-root.Mui-focused": {
+      color:
+        feildIsValid === false
+          ? "internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133))"
+          : "black",
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor:
+        feildIsValid === false
+          ? "internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133))"
+          : "black",
+    },
+    "& .MuiInputLabel-root": {
+      color:
+        feildIsValid === false
+          ? "internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133))"
+          : "gray",
+      letterSpacing: "0.5px",
+    },
+  };
 };

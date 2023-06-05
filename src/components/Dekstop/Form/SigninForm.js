@@ -8,9 +8,9 @@ import {
 } from "../../../shared/Reducers/InputReducers";
 import { loginUser } from "../../../utils/api";
 import { useDispatch } from "react-redux";
-import Notification from "../UI/Notification";
 import { setUpdateCart } from "../../../store/cart/cart.action";
-import { setLoginUser } from "../../../store/ui/ui.action";
+import { setLoginUser, setSnackBar } from "../../../store/ui/ui.action";
+import { textFeildStyle } from "../../../utils/function";
 const SigninForm = () => {
   const dispatch = useDispatch();
 
@@ -23,7 +23,6 @@ const SigninForm = () => {
     isValid: null,
   });
   const [formIsValid, setFormIsValid] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
 
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: "USER_INPUT", val: event.target.value.trim() });
@@ -62,14 +61,17 @@ const SigninForm = () => {
     if (actionData && actionData.success) {
       dispatch(setUpdateCart(actionData.cartItems));
       dispatch(setLoginUser());
+      dispatch(
+        setSnackBar({
+          status: true,
+          message: "logged in Successfully",
+          severity: "success",
+        })
+      );
       return navigate("/", { replace: true });
     }
-    if (actionData && actionData.response.status === 502) {
-      setShowNotification(true);
-      setTimeout(() => {
-        setShowNotification(false);
-      }, 4000);
-      if (actionData.response.data.validityStatus === "email") {
+    if (actionData?.response?.status === 401) {
+      if (actionData.response?.data?.validityStatus === "email") {
         document.getElementById("email").focus();
       } else {
         document.getElementById("password").focus();
@@ -79,12 +81,6 @@ const SigninForm = () => {
   }, [actionData]);
   return (
     <Fragment>
-      {showNotification && (
-        <Notification
-          message={actionData.response.data.message}
-          status="invalid"
-        />
-      )}
       <div className={classes["action-div"]}>
         <Typography
           fontSize="2rem"
@@ -105,6 +101,7 @@ const SigninForm = () => {
             onBlur={validateEmailHandler}
             autoComplete="off"
             error={emailIsValid === false ? true : false}
+            sx={textFeildStyle(emailIsValid)}
           />
           <TextField
             id="password"
@@ -117,6 +114,7 @@ const SigninForm = () => {
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
             error={passwordIsValid === false ? true : false}
+            sx={textFeildStyle(passwordIsValid)}
           />
           <Button
             variant="contained"
@@ -128,7 +126,6 @@ const SigninForm = () => {
               padding: "0.7rem",
             }}
             onClick={!formIsValid ? validateFormHandler : () => {}}
-            disabled={showNotification}
           >
             SignIn
           </Button>
@@ -151,10 +148,7 @@ export async function action({ request }) {
   try {
     response = await loginUser(userData);
   } catch (err) {
-    if (err.response && err.response.status === 502) {
-      return err;
-    }
-    throw err;
+    return err;
   }
   return response;
 }

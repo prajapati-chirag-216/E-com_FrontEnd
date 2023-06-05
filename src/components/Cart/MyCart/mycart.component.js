@@ -5,8 +5,7 @@ import {
 } from "../../../store/cart/cart.selector";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import CloseIcon from "@mui/icons-material/Close";
-import { Button, Divider, TextField, Typography } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import "./mycart.styles.scss";
 import {
   setAddItemToCart,
@@ -72,7 +71,9 @@ const MyCart = () => {
         return (
           <div className="myCartItemContainer" key={item._id}>
             <div className="itemDetailsContainer">
-              <img src={item.image[0]} />
+              <div className="itemImgContainer">
+                <img src={item.image[0]} />
+              </div>
               <div className="itemTextContainer">
                 <Typography
                   sx={{
@@ -91,13 +92,14 @@ const MyCart = () => {
                     fontSize: "1rem",
                   }}
                 >
-                  {item.description.split(".")[0]}
+                  {item.description.split(".")[0]}..
                 </Typography>
 
                 <Typography
                   sx={{
                     letterSpacing: "1px",
                     fontSize: "1.2rem",
+                    marginTop: "1rem",
                   }}
                 >
                   $ {item.price}

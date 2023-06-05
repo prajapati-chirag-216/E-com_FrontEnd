@@ -24,8 +24,8 @@ const Categories = () => {
         width: "100vw",
         display: "flex",
         flexDirection: "column",
-        gap: "3rem",
-        marginTop: "3rem",
+        gap: "4rem",
+        marginTop: "4rem",
       }}
     >
       <Box
@@ -56,7 +56,7 @@ const Categories = () => {
       </Box>
       <Suspense>
         <Await resolve={loaderData}>
-          {(categories) => <Cards  location="/product" data={categories} />}
+          {(categories) => <Cards location="/product" data={categories} />}
         </Await>
       </Suspense>
     </Box>

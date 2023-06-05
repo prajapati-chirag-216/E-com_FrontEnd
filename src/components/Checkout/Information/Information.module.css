@@ -7,6 +7,12 @@
     margin-bottom: 0.3rem;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem
+}
+
 .details-div {
     display: flex;
     flex-direction: column;

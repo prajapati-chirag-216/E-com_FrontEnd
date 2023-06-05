@@ -82,7 +82,6 @@ const MainNavigation = () => {
   const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
   const itemCount = useSelector(selectNewCartCount);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const [userProfile, setUserProfile] = useState(null);
   const navigate = useNavigate();
 
@@ -125,6 +124,7 @@ const MainNavigation = () => {
     }
     dispatch(setLogoutUser());
     dispatch(setClearCart());
+    setUserProfile(null);
     navigate("/login");
   };
 
@@ -134,6 +134,10 @@ const MainNavigation = () => {
   const closeCartHandler = () => dispatch(setIsCartOpen(false));
 
   const openCartHandler = () => dispatch(setIsCartOpen(true));
+
+  const navigateHandler = () => {
+    navigate("/signup");
+  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -154,7 +158,7 @@ const MainNavigation = () => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      {isLoggedIn && <MenuItem onClick={logoutHandler}>logout</MenuItem>}
+      <MenuItem onClick={logoutHandler}>logout</MenuItem>
     </Menu>
   );
 
@@ -290,7 +294,7 @@ const MainNavigation = () => {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={userProfile ? handleProfileMenuOpen : navigateHandler}
               color="inherit"
               sx={{
                 display: "flex",
