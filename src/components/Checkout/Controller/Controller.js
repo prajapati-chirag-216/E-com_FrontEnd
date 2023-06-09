@@ -13,9 +13,11 @@ import {
   updateOrderInfo,
 } from "../../../store/Order/order.action";
 import StatusButton from "../../../shared/components/StatusButton/StatusButton";
+import { selectOrderInfo } from "../../../store/Order/order.selector";
 const Controller = (props) => {
   const cartItems = useSelector(selectCartItems);
-  // const total = useSelector(selectNewCartTotal);
+  const total = useSelector(selectNewCartTotal);
+  const order =  useSelector(selectOrderInfo)
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState({ status: false });
 
@@ -30,17 +32,22 @@ const Controller = (props) => {
       dispatch(updateOrderInfo({ shippingMethod: props.shippingMethod }));
     } else if (props.paymentDetails) {
       console.log(props.paymentDetails);
-      // let newCartItems = cartItems.map((item) => {
-      //   return {
-      //     productId: item._id,
-      //     quntity: item.quntity,
-      //   };
-      // });
-      // try {
-      //   const res = await makeOrder(props.orderDetails);
-      // } catch (err) {
-      //   throw err;
-      // }
+      let newCartItems = cartItems.map((item) => {
+        return {
+          productId: item._id,
+          quntity: item.quntity,
+        };
+      });
+
+      order.orderedItems = newCartItems
+      order.totalPrice = total
+
+      try {
+       
+        const res = await makeOrder(order);
+      } catch (err) {
+        throw err;
+      }
     }
     setIsLoading({ status: false });
     props.onNextPage();

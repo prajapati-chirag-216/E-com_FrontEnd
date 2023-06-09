@@ -12,6 +12,8 @@ const UI_INITIAL_STATE = {
     status: false,
     message: "",
   },
+  modelState:false,
+  user:null
 };
 
 export const uiReducer = (state = UI_INITIAL_STATE, action) => {
@@ -61,6 +63,16 @@ export const uiReducer = (state = UI_INITIAL_STATE, action) => {
         ...state,
         snackBar: payload,
       };
+    case ui_types.SET_MODEL_STATE:
+      return{
+        ...state,
+        modelState:payload
+      }
+    case ui_types.SET_USER:
+      return{
+        ...state,
+        user:payload
+      }
     default:
       return state;
   }

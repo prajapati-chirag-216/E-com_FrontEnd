@@ -35,7 +35,7 @@ const SimpleModal = (props) => {
           style={{
             position: "absolute",
             right: matches ? "1rem" : "2rem",
-            top: matches ? "1rem" : "2rem",
+            top: matches ? "1rem" : "1rem",
             cursor: "pointer",
           }}
           onClick={props.onClose}

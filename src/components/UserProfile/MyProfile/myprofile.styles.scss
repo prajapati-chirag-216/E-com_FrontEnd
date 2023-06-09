@@ -1,0 +1,51 @@
+
+
+.myProfilContainer{
+
+    display: flex;
+    flex-direction: column;
+    width: 50rem;
+    align-self: center;
+    border: 1px solid rgb(209, 208, 208);
+    border-radius: 10px;
+   
+
+    .headerContainer{
+
+        height: 4rem;   
+        display: flex;
+        align-items: center;
+         padding: 1rem;
+
+
+    }
+
+
+    .personalInfoContainer{
+
+        display: flex;
+        flex-direction: column;
+        row-gap: 3rem;
+        padding: 1rem;
+       align-items: center;
+
+        div{
+            width: 30rem;
+        }
+            
+    }
+
+       
+}
+
+.infoDiv{
+
+    width: 30rem;
+    height: 4rem;
+    border-radius: 10px;
+    border: 1px solid rgb(213, 211, 211);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}

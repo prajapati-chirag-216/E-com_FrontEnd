@@ -25,7 +25,7 @@ axios.interceptors.response.use(
       originalConfig._retry = true;
       await genrateAccessToken();
       return axios(originalConfig);
-    } else if (error.response?.status === 401 || 409) {
+    } else if (error.response?.status === 401 || error.response?.status === 409) {
       store.dispatch(
         setSnackBar({
           status: true,

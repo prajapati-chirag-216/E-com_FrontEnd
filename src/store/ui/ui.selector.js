@@ -37,3 +37,14 @@ export const selectSnackBar = createSelector(
   [selectUIReducer],
   (ui) => ui.snackBar
 );
+
+
+export const selectModelState = createSelector(
+  [selectUIReducer],
+  (ui) => ui.modelState
+);
+
+export const selectUser = createSelector(
+  [selectUIReducer],
+  (ui) => ui.user
+);

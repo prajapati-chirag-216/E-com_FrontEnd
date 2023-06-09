@@ -91,6 +91,8 @@ const MainNavigation = () => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+
+
   useEffect(() => {
     (async () => {
       try {
@@ -113,6 +115,14 @@ const MainNavigation = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+
+const handleProfilePage = (link) =>{
+   
+      navigate(link);
+      setAnchorEl(null);
+      handleMobileMenuClose();
+}
+
   const logoutHandler = async () => {
     setAnchorEl(null);
     handleMobileMenuClose();
@@ -156,7 +166,7 @@ const MainNavigation = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleProfilePage.bind(null,'/myProfile')}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={logoutHandler}>logout</MenuItem>
     </Menu>
@@ -312,7 +322,7 @@ const MainNavigation = () => {
                   letterSpacing: "1px",
                 }}
               >
-                {userProfile ? `Hello ${userProfile.name}` : "Signup"}
+                {userProfile ? `Hello, ${userProfile.name}` : "Signup/SignIn"}
               </Typography>
             </IconButton>
           </Box>
