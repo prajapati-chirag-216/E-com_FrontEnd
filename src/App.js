@@ -28,6 +28,9 @@ import Signup from "./pages/Deshboard/Signup";
 import Checkout from "./pages/Checkout/Checkout";
 import MyCart from "./components/Cart/MyCart/mycart.component";
 import "./App.css";
+import ProtectedRoutes, {
+  loader as profileLoader,
+} from "./routes/ProtectedRoutes";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,12 +49,19 @@ const router = createBrowserRouter(
       />
       <Route
         element={
-          <PrivateRoutes message="Access denied! You don't have permissions for this page." />
+          <ProtectedRoutes message="Access denied! You don't have permissions for this page." />
         }
       >
         <Route path="/success" element={<Success />} />
       </Route>
-      <Route path="/checkout" element={<Checkout />} />
+      <Route
+        element={
+          <ProtectedRoutes message="Access denied! You don't have permissions for this page." />
+        }
+        loader={profileLoader}
+      >
+        <Route path="/checkout" element={<Checkout />} />
+      </Route>
 
       <Route element={<Layout />}>
         <Route index element={<Navigate to="/home" />} />

@@ -20,7 +20,6 @@ import {
 } from "../../../shared/Reducers/InputReducers";
 import { useDispatch } from "react-redux";
 import { signupUser } from "../../../utils/api";
-import { setLoginUser } from "../../../store/ui/ui.action";
 import { textFeildStyle } from "../../../utils/function";
 
 const SignupForm = () => {
@@ -102,7 +101,6 @@ const SignupForm = () => {
   const actionData = useActionData();
   useEffect(() => {
     if (actionData && actionData.success) {
-      dispatch(setLoginUser());
       return navigate("/home", { replace: true });
     }
     if (actionData?.inValidEmail) {

@@ -80,6 +80,7 @@ const CartSlider = (props) => {
             borderRadius: "0rem",
           }}
           onClick={checkOuthandler}
+          disabled={cartItems.length == 0}
         >
           Go to CheckOut
         </Button>

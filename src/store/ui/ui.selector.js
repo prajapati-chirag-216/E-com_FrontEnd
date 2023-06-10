@@ -2,11 +2,6 @@ import { createSelector } from "reselect";
 
 const selectUIReducer = (state) => state.ui;
 
-export const selectIsLoggedIn = createSelector(
-  [selectUIReducer],
-  (ui) => ui.isLoggedIn
-);
-
 export const selectIsLoading = createSelector(
   [selectUIReducer],
   (ui) => ui.isLoading
@@ -17,23 +12,22 @@ export const selectSearchField = createSelector(
   (ui) => ui.searchField
 );
 
-export const selectProductData = createSelector([selectUIReducer], (ui) => {
-  return ui.productData;
-});
+export const selectProductData = createSelector(
+  [selectUIReducer],
+  (ui) => ui.productData
+);
 
 export const selectProductDataState = createSelector(
   [selectUIReducer],
-  (ui) => {
-    return ui.productDataState;
-  }
-);
-
-export const selectAccessToken = createSelector(
-  [selectUIReducer],
-  (ui) => ui.accessToken
+  (ui) => ui.productDataState
 );
 
 export const selectSnackBar = createSelector(
   [selectUIReducer],
   (ui) => ui.snackBar
+);
+
+export const selectSuccess = createSelector(
+  [selectUIReducer],
+  (ui) => ui.success
 );
