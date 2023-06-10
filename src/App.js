@@ -15,6 +15,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import { action as resetPasswordAction } from "./components/Dekstop/Form/ResetPasswordForm";
 import { action as forgotPasswordAction } from "./components/Dekstop/Form/ForgotPasswordForm";
+import { action as messageAction } from "./components/ContactUs/contactUs.component";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import Error from "./pages/Error/Error";
 import Success from "./pages/Success/Success";
@@ -28,6 +29,9 @@ import Signup from "./pages/Deshboard/Signup";
 import Checkout from "./pages/Checkout/Checkout";
 import MyCart from "./components/Cart/MyCart/mycart.component";
 import "./App.css";
+import ContactUs from "./components/ContactUs/contactUs.component";
+import AboutUs from "./components/AboutUs/AboutUs.component";
+import UserProfile from "./components/UserProfile/UserProfile.component";
 import ProtectedRoutes, {
   loader as profileLoader,
 } from "./routes/ProtectedRoutes";
@@ -65,7 +69,14 @@ const router = createBrowserRouter(
 
       <Route element={<Layout />}>
         <Route index element={<Navigate to="/home" />} />
+        <Route
+          action={messageAction}
+          path="/contactus"
+          element={<ContactUs />}
+        />
+        <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/home" element={<Dashboard />} loader={categoryLoader} />
+        <Route path="/myProfile" element={<UserProfile />} />
         <Route
           path="/product/:id"
           element={<ProductsController />}

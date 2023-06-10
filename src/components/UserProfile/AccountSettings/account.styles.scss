@@ -1,0 +1,30 @@
+.accountPageContainer{
+
+    display: flex;
+    flex-direction: column;
+    width: 50rem;
+    align-self: center;
+    border: 1px solid rgb(209, 208, 208);
+    border-radius: 10px;
+   
+
+    .headerContainer{
+
+        height: 4rem;   
+        display: flex;
+        align-items: center;
+         padding: 1rem;
+
+
+    }
+
+    .inputDiv{
+
+           display: flex;
+           flex-direction: column;
+           row-gap: 3rem;
+           padding: 2rem;
+         
+    }
+
+}

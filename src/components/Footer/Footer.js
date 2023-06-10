@@ -1,8 +1,20 @@
 import React from "react";
 import classes from "./Footer.module.css";
 import { Divider, Grid, Typography, Button, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+
+
+  const navigate = useNavigate();
+
+  const handleLinkChangeHandler = (link) =>{
+
+         navigate(link)
+
+  }
+
+
   return (
     <div className={classes["footer"]}>
       <Divider variant="fullWidth" />
@@ -19,7 +31,7 @@ const Footer = () => {
               Corporate
             </Typography>
             <ul>
-              <li>About us</li>
+              <li onClick={handleLinkChangeHandler.bind(null,'/aboutus')}>About us</li>
               <li>Blog</li>
               <li>Faq</li>
             </ul>
@@ -37,7 +49,7 @@ const Footer = () => {
               support
             </Typography>
             <ul>
-              <li>Contact us</li>
+              <li onClick={handleLinkChangeHandler.bind(null,'/contactus')}>Contact us</li>
               <li>offers</li>
             </ul>
           </Box>

@@ -17,6 +17,14 @@
     color: rgb(202, 203, 203);
     transform: scale(0.9);
 }
+.tabs:nth-child(3):hover {
+    color: rgb(202, 203, 203);
+    transform: scale(0.9);
+}
+.tabs:nth-child(4):hover {
+    color: rgb(202, 203, 203);
+    transform: scale(0.9);
+}
 
 .tabs:active {
     color: rgb(202, 203, 203);

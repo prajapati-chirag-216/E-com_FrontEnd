@@ -161,6 +161,7 @@ export const makeOrder = async (orderObj) => {
       method: "POST",
       url: `/postOrder`,
       data: orderObj,
+      withCredentials:true
     };
     const response = await AxiosInstance(config);
     return response;
@@ -181,3 +182,63 @@ export const getAccessToken = async () => {
     throw err;
   }
 };
+
+
+export const postUserMessage = async(message) =>{
+
+  try{
+
+    const config = {
+        method:'post',
+        url:'/postMymeassage',
+        data:message
+    }
+     
+    const response = await AxiosInstance(config)
+
+    return response
+  }catch(err){
+     throw err;
+  }
+}
+
+export const fetchUserOrders = async() =>{
+
+  console.log(1)
+    
+   try{
+     
+       const config = {
+          method:'get',
+          url:`/getUserOrders`,
+          withCredentials:true
+       }
+
+       const response = await AxiosInstance(config)
+
+       console.log(response)
+
+       return response;
+   }catch(err){
+    throw err;
+   }
+}
+
+export const UpdateUserInformation = async(updateObj) =>{
+     
+       try{
+        const config = {
+          method:'patch',
+          url:`/updateUser`,
+          data:updateObj,
+          withCredentials:true
+       }
+
+       const response = await AxiosInstance(config)
+
+       return response
+
+       }catch(err){
+         throw err
+       }
+}
