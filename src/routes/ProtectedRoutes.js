@@ -1,12 +1,39 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import React, { Fragment, Suspense, useEffect, useState } from "react";
+import { Await, Navigate, Outlet, useLoaderData } from "react-router-dom";
+import { fetchUserProfile } from "../utils/api";
+import LoadingSpinner from "../components/Dekstop/UI/LoadingSpinner";
+import { useDispatch } from "react-redux";
+import { setSnackBar } from "../store/ui/ui.action";
 
 const ProtectedRoutes = (props) => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-  const element = <Navigate to={props.destination} replace />;
-  return isLoggedIn ? <Outlet /> : element;
+  const dispatch = useDispatch();
+  const loaderData = useLoaderData();
+  useEffect(() => {
+    if (!loaderData.userProfile) {
+      dispatch(
+        setSnackBar({
+          status: true,
+          message: "You need to login to your account",
+          severity: "info",
+        })
+      );
+    }
+  }, []);
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <Await resolve={loaderData}>
+        {(data) => (data.userProfile ? <Outlet /> : <Navigate to="/login" />)}
+      </Await>
+    </Suspense>
+  );
 };
-
+export async function loader() {
+  let res;
+  try {
+    res = fetchUserProfile();
+  } catch (err) {
+    throw err;
+  }
+  return res;
+}
 export default ProtectedRoutes;

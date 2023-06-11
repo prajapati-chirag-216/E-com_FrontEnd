@@ -3,8 +3,6 @@ import classes from "./Information.module.css";
 import { Box, TextField, Typography, MenuItem } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import Controller from "../Controller/Controller";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../../store/ui/ui.selector";
 import {
   nameReducer,
   emailReducer,
@@ -19,7 +17,6 @@ const Information = (props) => {
   const stateRef = useRef();
   const navigate = useNavigate();
   const navigateHandler = () => navigate("/cart");
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const [firstNameState, dispatchFirstName] = useReducer(nameReducer, {
     value: "",
     isValid: null,
@@ -173,7 +170,7 @@ const Information = (props) => {
           >
             Contact Information
           </Typography>
-          {isLoggedIn && (
+          {/* {isLoggedIn && (
             <Typography
               sx={{
                 color: "gray",
@@ -184,7 +181,7 @@ const Information = (props) => {
               Already have an account?
               <NavLink className={classes["link"]}>Login</NavLink>
             </Typography>
-          )}
+          )} */}
         </div>
         <form className={classes["form-container"]}>
           <TextField

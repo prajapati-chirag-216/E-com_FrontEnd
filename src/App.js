@@ -15,7 +15,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import { action as resetPasswordAction } from "./components/Dekstop/Form/ResetPasswordForm";
 import { action as forgotPasswordAction } from "./components/Dekstop/Form/ForgotPasswordForm";
-import {action as messageAction} from './components/ContactUs/contactUs.component'
+import { action as messageAction } from "./components/ContactUs/contactUs.component";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import Error from "./pages/Error/Error";
 import Success from "./pages/Success/Success";
@@ -32,6 +32,9 @@ import "./App.css";
 import ContactUs from "./components/ContactUs/contactUs.component";
 import AboutUs from "./components/AboutUs/AboutUs.component";
 import UserProfile from "./components/UserProfile/UserProfile.component";
+import ProtectedRoutes, {
+  loader as profileLoader,
+} from "./routes/ProtectedRoutes";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -50,20 +53,30 @@ const router = createBrowserRouter(
       />
       <Route
         element={
-          <PrivateRoutes message="Access denied! You don't have permissions for this page." />
+          <ProtectedRoutes message="Access denied! You don't have permissions for this page." />
         }
       >
         <Route path="/success" element={<Success />} />
       </Route>
-      <Route path="/checkout" element={<Checkout />} />
-       
+      <Route
+        element={
+          <ProtectedRoutes message="Access denied! You don't have permissions for this page." />
+        }
+        loader={profileLoader}
+      >
+        <Route path="/checkout" element={<Checkout />} />
+      </Route>
 
       <Route element={<Layout />}>
         <Route index element={<Navigate to="/home" />} />
-       <Route  action={messageAction} path='/contactus' element={<ContactUs/>}/>
-       <Route  path='/aboutus' element={<AboutUs/>}/>
+        <Route
+          action={messageAction}
+          path="/contactus"
+          element={<ContactUs />}
+        />
+        <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/home" element={<Dashboard />} loader={categoryLoader} />
-        <Route path='/myProfile' element={<UserProfile/>}/>
+        <Route path="/myProfile" element={<UserProfile />} />
         <Route
           path="/product/:id"
           element={<ProductsController />}

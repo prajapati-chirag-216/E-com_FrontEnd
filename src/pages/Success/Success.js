@@ -16,19 +16,15 @@ const Success = () => {
         userSelect: "none",
       }}
     >
-      <header className={classes.header}>
-        Instructions have been E-mailed
-      </header>
+      <header className={classes.header}>Order placed</header>
       <hr className={classes.line}></hr>
       <div className={`${classes.success}`}>
         <p>
-          We have sent a link to reset the password to your registered email.
-          <span className={classes.span}>
-            Please check your email and follow the instructions.
-          </span>
+          you order is placed succesfully.
+          <span className={classes.span}>Please check your profile.</span>
         </p>
       </div>
-      <Link to="/login" className={classes.link}>
+      <Link to="/profile" className={classes.link}>
         <ArrowBackIosIcon
           sx={{
             fontSize: matches ? "0.7rem" : "1rem",

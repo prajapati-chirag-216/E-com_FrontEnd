@@ -11,7 +11,6 @@ export function cookieParser() {
 
 export const genrateAccessToken = async () => {
   const response = await getAccessToken();
-  store.dispatch(setAccessToken(response.accessToken));
   return response;
 };
 

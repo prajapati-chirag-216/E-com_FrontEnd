@@ -19,8 +19,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { addCartItems, fetchUserProfile, logoutUser } from "../../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
-import { uiActions } from "../../../mystore/ui-slice";
-import { authActions } from "../../../mystore/auth-slice";
 import { ShoppingCart } from "@mui/icons-material";
 import Drawer from "../Category/Drawer/Drawer";
 import Tabs from "./Tabs";
@@ -32,8 +30,7 @@ import {
 import { setIsCartOpen, setClearCart } from "../../../store/cart/cart.action";
 import { selectCartItems } from "../../../store/cart/cart.selector";
 import { useNavigate } from "react-router-dom";
-import { selectIsLoggedIn } from "../../../store/ui/ui.selector";
-import { setLogoutUser } from "../../../store/ui/ui.action";
+import { setSnackBar } from "../../../store/ui/ui.action";
 import { setSearchField } from "../../../store/ui/ui.action";
 
 const Search = styled("div")(({ theme }) => ({
@@ -97,7 +94,7 @@ const MainNavigation = () => {
     (async () => {
       try {
         const res = await fetchUserProfile();
-        setUserProfile(res.userProfile);
+        setUserProfile(res?.userProfile);
       } catch (err) {
         throw err;
       }
@@ -132,8 +129,14 @@ const handleProfilePage = (link) =>{
     } catch (err) {
       throw err;
     }
-    dispatch(setLogoutUser());
     dispatch(setClearCart());
+    dispatch(
+      setSnackBar({
+        status: true,
+        severity: "success",
+        message: "Logged out successfully",
+      })
+    );
     setUserProfile(null);
     navigate("/login");
   };

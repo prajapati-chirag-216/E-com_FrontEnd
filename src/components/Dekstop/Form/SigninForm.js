@@ -9,7 +9,7 @@ import {
 import { loginUser } from "../../../utils/api";
 import { useDispatch } from "react-redux";
 import { setUpdateCart } from "../../../store/cart/cart.action";
-import { setLoginUser, setSnackBar } from "../../../store/ui/ui.action";
+import { setSnackBar } from "../../../store/ui/ui.action";
 import { textFeildStyle } from "../../../utils/function";
 const SigninForm = () => {
   const dispatch = useDispatch();
@@ -60,7 +60,6 @@ const SigninForm = () => {
   useEffect(() => {
     if (actionData && actionData.success) {
       dispatch(setUpdateCart(actionData.cartItems));
-      dispatch(setLoginUser());
       dispatch(
         setSnackBar({
           status: true,
