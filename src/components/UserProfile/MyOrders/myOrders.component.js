@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Typography } from "@mui/material";
 import OrderTable from "./orderTable";
-import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
-// import LoadingSpinner from "../components/Dekstop/UI/LoadingSpinner";
+// import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
 
 const MyOrders = () => {
   const [userOrder, setUserOrder] = useState();
@@ -16,6 +15,7 @@ const MyOrders = () => {
       try {
         const userOrder = await fetchUserOrders();
 
+        console.log(userOrder);
         setUserOrder(userOrder);
       } catch (err) {
         throw err;
@@ -40,7 +40,7 @@ const MyOrders = () => {
             alignItems: "center",
           }}
         >
-          Waiting For Your Orders 😊
+          Waiting For Your Orders 😊 !
         </Typography>
         // <div
         //   style={{

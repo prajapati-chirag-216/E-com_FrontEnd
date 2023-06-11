@@ -43,6 +43,7 @@ const Display = () => {
           index={index}
           text={images[index].text}
           label={images[index].label}
+          categoryname={images[index].categoryName}
         />
       )}
     </Box>

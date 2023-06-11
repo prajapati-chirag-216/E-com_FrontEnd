@@ -231,3 +231,36 @@ export const UpdateUserInformation = async (updateObj) => {
     throw err;
   }
 };
+
+export const fetchSingleCategoryByName = async (name) => {
+  try {
+    const config = {
+      method: "get",
+      url: `/getCategoryByName/${name}`,
+    };
+
+    const response = await AxiosInstance(config);
+
+    console.log(response);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updatePassword = async (passObj) => {
+  try {
+    const config = {
+      method: "patch",
+      url: "/updatePassword",
+      data: passObj,
+      withCredentials: true,
+    };
+
+    const response = await AxiosInstance(config);
+
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
