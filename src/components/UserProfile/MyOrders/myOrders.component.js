@@ -1,20 +1,9 @@
-import { fetchUserOrders, fetchUserProfile } from "../../../utils/api"
-import { setSnackBar } from "../../../store/ui/ui.action"
 import * as React from "react";
-import { useState, useEffect, memo, Fragment } from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import TableRow from "@mui/material/TableRow";
-import { useDispatch, useSelector } from "react-redux";
-import { IconButton, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Typography } from "@mui/material";
 import OrderTable from "./orderTable";
+import { fetchUserOrders } from "../../../utils/api"
 
 
 
@@ -22,7 +11,7 @@ const MyOrders = () =>{
 
 
 
-const[userOrder,setUserOrder] = useState()
+const[userOrder,setUserOrder] = useState({})
 const dispatch = useDispatch();
 
 
@@ -34,7 +23,8 @@ useEffect(()=>{
         try{
             const userOrder = await fetchUserOrders();
             
-            console.log(userOrder)
+             console.log(userOrder)
+             
              setUserOrder(userOrder)
         }catch(err){
             throw err
@@ -53,7 +43,7 @@ useEffect(()=>{
             <div>
  
 
-              {userOrder ? <OrderTable orderData={userOrder}/>:
+              {userOrder.success ? <OrderTable orderData={userOrder.data}/>:
                  <Typography style={{fontSize:'3rem',marginTop:'10rem',letterSpacing:'3px',display:'flex',justifyContent:'center',alignItems:'center'}}>
                   Waiting For Your Orders 😊 !
                 </Typography>}

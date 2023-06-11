@@ -2,10 +2,34 @@ import React, { Fragment } from "react";
 import { motion } from "framer-motion";
 import classes from "./SliderImages.module.css";
 import { Button, Typography } from "@mui/material";
+import { fetchSingleCategoryByName } from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const transition = { type: "twin", duration: 1 };
 
 const SliderImages = (props) => {
+
+const navigate = useNavigate()
+
+
+const handleShopButtonClick = async() =>{
+     
+     try{
+        const id = await fetchSingleCategoryByName(props.categoryname)
+
+         if(id){ 
+
+           window.open(`/product/${id}`)
+             
+         }
+     }catch(err){
+          
+     }
+         
+}
+
+
+
   return (
     <Fragment>
       <div className={classes["img-container"]}>
@@ -39,6 +63,7 @@ const SliderImages = (props) => {
           {props.text}
         </Typography>
         <Button
+          onClick={handleShopButtonClick}
           sx={{
             width: "max-content",
             padding: "1rem",
