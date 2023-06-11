@@ -35,6 +35,9 @@ import UserProfile from "./components/UserProfile/UserProfile.component";
 import ProtectedRoutes, {
   loader as profileLoader,
 } from "./routes/ProtectedRoutes";
+import Information from "./components/Checkout/Information/Information";
+import Shipping from "./components/Checkout/Shipping/Shipping";
+import Payment from "./components/Checkout/Paymet/Payment";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -53,10 +56,10 @@ const router = createBrowserRouter(
       />
       <Route
         element={
-          <ProtectedRoutes message="Access denied! You don't have permissions for this page." />
+          <PrivateRoutes message="Access denied! You don't have permissions for this page." />
         }
       >
-        <Route path="/success" element={<Success />} />
+        <Route path="/success" element={<Success forPasswordReset={true} />} />
       </Route>
       <Route
         element={
@@ -64,7 +67,11 @@ const router = createBrowserRouter(
         }
         loader={profileLoader}
       >
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout/" element={<Checkout />}>
+          <Route index element={<Information />} />
+          <Route path="shipping" element={<Shipping />} />
+          <Route path="payment" element={<Payment />} />
+        </Route>
       </Route>
 
       <Route element={<Layout />}>
@@ -76,7 +83,14 @@ const router = createBrowserRouter(
         />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/home" element={<Dashboard />} loader={categoryLoader} />
-        <Route path="/myProfile" element={<UserProfile />} />
+        <Route
+          element={
+            <ProtectedRoutes message="Access denied! You don't have permissions for this page." />
+          }
+          loader={profileLoader}
+        >
+          <Route path="/myProfile" element={<UserProfile />} />
+        </Route>
         <Route
           path="/product/:id"
           element={<ProductsController />}

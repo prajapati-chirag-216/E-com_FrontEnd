@@ -18,7 +18,7 @@ function CustomStepIcon(props) {
 const SimpleStepper = (props) => {
   return (
     <Stepper
-      activeStep={props.curruntPage}
+      activeStep={props.currentPage}
       alternativeLabel
       sx={{ width: "60%" }}
     >

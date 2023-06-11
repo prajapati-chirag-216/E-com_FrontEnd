@@ -1,19 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import classes from "./Checkout.module.css";
 import SimpleStepper from "../../components/Checkout/Stepper/SimpleStepper";
-import Information from "../../components/Checkout/Information/Information";
 import Ticket from "../../components/Checkout/Ticket/Ticket";
-import Shipping from "../../components/Checkout/Shipping/Shipping";
-import Payment from "../../components/Checkout/Paymet/Payment";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectOrderInfo } from "../../store/Order/order.selector";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import { setSnackBar } from "../../store/ui/ui.action";
+
 const Checkout = () => {
-  const [curruntPage, setCurruntPage] = useState(0);
-  const changePageHandler = (pageNo) => setCurruntPage(pageNo);
-  const pageElements = [
-    <Information onPageChange={changePageHandler} />,
-    <Shipping onPageChange={changePageHandler} />,
-    <Payment onPageChange={changePageHandler} />,
-  ];
+  const cartItems = useSelector(selectCartItems);
+  const dispatch = useDispatch();
+  const orderInfo = useSelector(selectOrderInfo);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(0);
+  const changePageHandler = (page) => {
+    let location;
+    if (page == 0) {
+      location = "/checkout";
+    } else if (page == 1) {
+      location = "/checkout/shipping";
+    } else if (page == 2) {
+      location = "/checkout/payment";
+    } else if (page == 3) {
+      location = "/success";
+    }
+    navigate(location);
+    setCurrentPage(page);
+  };
+  useEffect(() => {
+    if (!orderInfo?.contactInformation || !orderInfo?.shippingAddress) {
+      navigate("/checkout");
+      setCurrentPage(0);
+    } else if (!orderInfo?.shippingMethod) {
+      navigate("/checkout/shipping");
+      setCurrentPage(1);
+    }
+    if (location.pathname.endsWith("/checkout")) {
+      setCurrentPage(0);
+    } else if (location.pathname.endsWith("/shipping")) {
+      setCurrentPage(1);
+    } else if (location.pathname.endsWith("/payment")) {
+      setCurrentPage(2);
+    }
+  }, []);
+  if (cartItems.length == 0) {
+    dispatch(
+      setSnackBar({
+        status: true,
+        severity: "info",
+        message: "You cart is Empty",
+      })
+    );
+    return <Navigate to="/home" />;
+  }
+
   return (
     <Box
       sx={{
@@ -34,8 +77,9 @@ const Checkout = () => {
         >
           one Center
         </Typography>
-        <SimpleStepper curruntPage={curruntPage + 1} />
-        {pageElements[curruntPage]}
+        <SimpleStepper currentPage={currentPage + 1} />
+        {console.log("ran")}
+        <Outlet context={{ onPageChange: changePageHandler }} />
       </div>
       <div className={classes["right-div"]}>
         <Ticket />

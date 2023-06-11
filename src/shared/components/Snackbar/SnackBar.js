@@ -37,7 +37,7 @@ const SimpleSnackBar = () => {
           vertical: "top",
           horizontal: "right",
         }}
-        autoHideDuration={60000}
+        autoHideDuration={6000}
         TransitionComponent={TransitionLeft}
         key="transitionLeft"
         sx={{ display: "flex", alignItems: "center" }}

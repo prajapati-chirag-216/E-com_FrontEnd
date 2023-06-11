@@ -1,19 +1,12 @@
-import React, { Fragment, useEffect, useReducer, useState } from "react";
+import React, { Fragment, useReducer } from "react";
 import { Button, TextField, Typography } from "@mui/material";
-import {
-  Form,
-  redirect,
-  useActionData,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Form, redirect, useActionData, useParams } from "react-router-dom";
 import classes from "./ActionForm.module.css";
 import { passwordReducer } from "../../../shared/Reducers/InputReducers";
 import { resetPassword } from "../../../utils/api";
-import Notification from "../UI/Notification";
+import { textFeildStyle } from "../../../utils/function";
 
 const ResetPasswordForm = () => {
-  const [showNotification, setShowNotification] = useState(false);
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
     value: "",
     isValid: null,
@@ -33,28 +26,10 @@ const ResetPasswordForm = () => {
       return document.getElementById("password").focus();
     }
   };
-  const navigate = useNavigate();
-  const actionData = useActionData();
   const params = useParams();
 
-  useEffect(() => {
-    if (actionData && actionData.response.status === 502) {
-      setShowNotification(true);
-      setTimeout(() => {
-        setShowNotification(false);
-      }, 4000);
-      document.getElementById("password").focus();
-    }
-    // eslint-disable-next-line
-  }, [actionData]);
   return (
     <Fragment>
-      {showNotification && (
-        <Notification
-          status="invalid"
-          message={actionData.response.data.message}
-        />
-      )}
       <div className={classes["action-div"]}>
         <Typography
           fontSize="2rem"
@@ -79,6 +54,7 @@ const ResetPasswordForm = () => {
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
             error={passwordIsValid === false ? true : false}
+            style={textFeildStyle(passwordIsValid)}
           />
           <Button
             variant="contained"
@@ -90,7 +66,6 @@ const ResetPasswordForm = () => {
               padding: "0.7rem",
             }}
             onClick={!passwordIsValid ? validateFormHandler : () => {}}
-            disabled={showNotification}
           >
             Reset
           </Button>
@@ -101,18 +76,14 @@ const ResetPasswordForm = () => {
 };
 
 export async function action({ request, params }) {
-  let response;
   const formData = await request.formData();
   const userData = {
     password: formData.get("password"),
     id: params.id,
   };
   try {
-    response = await resetPassword(userData);
+    const response = await resetPassword(userData);
   } catch (err) {
-    if (err.response && err.response.status === 502) {
-      return err;
-    }
     throw err;
   }
   return redirect("/login");

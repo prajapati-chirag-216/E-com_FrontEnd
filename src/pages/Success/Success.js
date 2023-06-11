@@ -1,11 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./Success.module.css";
 import { Container } from "@mui/system";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { useMediaQuery } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 
-const Success = () => {
+const Success = (props) => {
   const matches = useMediaQuery("(max-width:700px)");
+  const navigate = useNavigate();
+  const navigateHandler = (location) => {
+    navigate(location, { replace: true });
+  };
   return (
     <Container
       maxWidth="sm"
@@ -16,23 +20,60 @@ const Success = () => {
         userSelect: "none",
       }}
     >
-      <header className={classes.header}>Order placed</header>
+      <header className={classes.header}>
+        {props.forPasswordReset
+          ? "Instructions have been Emailed"
+          : "Order placed"}
+      </header>
       <hr className={classes.line}></hr>
       <div className={`${classes.success}`}>
-        <p>
-          you order is placed succesfully.
-          <span className={classes.span}>Please check your profile.</span>
-        </p>
+        <Typography
+          sx={{
+            fontSize: "1.2rem",
+            color: "rgb(100,100,100)",
+            letterSpacing: "0.5px",
+          }}
+        >
+          {props.forPasswordReset
+            ? "We have sent a link to reset the password to your registered email."
+            : "you order is placed succesfully."}
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: "1.2rem",
+            color: "rgb(50,50,50)",
+            letterSpacing: "0.5px",
+          }}
+        >
+          {props.forPasswordReset
+            ? "Please check your email and follow the instructions."
+            : "Please check your profile."}
+        </Typography>
       </div>
-      <Link to="/profile" className={classes.link}>
+      <Typography
+        onClick={navigateHandler.bind(
+          null,
+          props.forPasswordReset ? "/login" : "/myProfile"
+        )}
+        sx={{
+          fontSize: "1.1rem",
+          "&:hover": {
+            cursor: "pointer",
+            color: "black",
+          },
+          display: "flex",
+          alignItems: "center",
+          transition: "all 100ms",
+        }}
+      >
         <ArrowBackIosIcon
           sx={{
             fontSize: matches ? "0.7rem" : "1rem",
-            marginRight: matches ? "0.4rem" : "0.6rem",
+            marginRight: matches ? "0.2rem" : "0.4rem",
           }}
         />
-        Back to Sigin
-      </Link>
+        {props.forPasswordReset ? "Back to login" : "Go to Profile"}
+      </Typography>
     </Container>
   );
 };

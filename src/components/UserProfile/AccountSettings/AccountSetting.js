@@ -1,68 +1,78 @@
-import { Divider, Typography,TextField, Button} from '@mui/material'
-import './account.styles.scss'
-import { useState } from 'react';
-
+import { Divider, Typography, TextField, Button, Box } from "@mui/material";
+import "./account.styles.scss";
+import { useState } from "react";
+import { textFeildStyle } from "../../../utils/function";
 const AccountSettings = () => {
+  const [newPassword, setnewPassWord] = useState("");
+  const [passErr, setPassErr] = useState(false);
 
-const[newPassword,setnewPassWord] = useState('');
-const[passErr,setPassErr] = useState(false);
+  const handlePasswordReset = () => {
+    if (!newPassword) {
+      setPassErr(true);
+      return;
+    }
+  };
 
-const handlePasswordReset = () =>{
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        padding: "1rem",
+        marginTop: "1.5rem",
+      }}
+    >
+      <div className="headerContainer">
+        <Typography
+          sx={{
+            fontSize: "1.8rem",
+            letterSpacing: "1px",
+            color: "black",
+            fontWeight: "550",
+          }}
+        >
+          Password Reset
+        </Typography>
+      </div>
 
-       if(!newPassword){
-           setPassErr(true)
-           return;
-       }
-      
-}
+      <Divider />
 
+      <div className="inputDiv">
+        <TextField
+          error={passErr === true}
+          id="outlined-error"
+          label="currunt Password"
+          onChange={(e) => setnewPassWord(e.target.value)}
+          sx={textFeildStyle(true)}
+        />
+        <TextField
+          error={passErr === true}
+          id="outlined-error"
+          label="New Password"
+          onChange={(e) => setnewPassWord(e.target.value)}
+          sx={textFeildStyle(true)}
+        />
 
+        <Button
+          sx={{
+            background: "black",
+            "&:hover": { background: "black" },
+            borderRadius: 0,
+            width: "30rem",
+            padding: "1rem",
+            letterSpacing: "3px",
+            fontSize: "1.1rem",
+            marginTop: "1rem",
+          }}
+          variant="contained"
+          onClick={handlePasswordReset}
+        >
+          Reset Password
+        </Button>
+      </div>
+    </Box>
+  );
+};
 
-
-
-    return (
-        <div className='accountPageContainer'>
-
-
-            <div className='headerContainer'>
-                <Typography sx={{ fontSize: '35px', letterSpacing: '3px' }}>Password Reset</Typography>
-            </div>
-
-            <Divider />
-
-
-            <div className='inputDiv'>
-
-                <TextField
-                    error = {passErr === true}
-                    id="outlined-error"
-                    label="New Password"
-                    onChange={(e) => setnewPassWord(e.target.value)}
-                />
-
-            <Button
-                sx={{
-                    background: "black",
-                    "&:hover": { background: "black" },
-                    borderRadius: 0,
-                    width: "30rem",
-                    height: "4rem",
-                    letterSpacing: "3px",
-                    fontSize: "1.1rem",
-                    "&:active": { transform: "scale(0.9)" },
-                }}
-                variant="contained"
-                onClick={handlePasswordReset}
-            >
-                Reset Password
-            </Button>
-            </div>
-
-
-
-        </div>
-    )
-}
-
-
-export default AccountSettings
+export default AccountSettings;

@@ -7,105 +7,106 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
 import TableRow from "@mui/material/TableRow";
-import { useDispatch, useSelector } from "react-redux";
-import { Hidden, IconButton, Typography } from "@mui/material";
-import Stack from '@mui/material/Stack';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import { styled } from '@mui/material/styles';
-import StepLabel from '@mui/material/StepLabel';
-import PropTypes from 'prop-types';
-import PendingActionsIcon from '@mui/icons-material/PendingActions';
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-import DoorBackIcon from '@mui/icons-material/DoorBack';
-import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
-
+import { useDispatch } from "react-redux";
+import { Box, Typography } from "@mui/material";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import { styled } from "@mui/material/styles";
+import StepLabel from "@mui/material/StepLabel";
+import PropTypes from "prop-types";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
+import DoorBackIcon from "@mui/icons-material/DoorBack";
+import StepConnector, {
+  stepConnectorClasses,
+} from "@mui/material/StepConnector";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-    [`&.${stepConnectorClasses.alternativeLabel}`]: {
-      top: 22,
-    },
-    [`&.${stepConnectorClasses.active}`]: {
-      [`& .${stepConnectorClasses.line}`]: {
-        backgroundImage:
-          'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-      },
-    },
-    [`&.${stepConnectorClasses.completed}`]: {
-      [`& .${stepConnectorClasses.line}`]: {
-        backgroundImage:
-          'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-      },
-    },
+  [`&.${stepConnectorClasses.alternativeLabel}`]: {
+    top: 22,
+  },
+  [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      height: 3,
-      border: 0,
-      backgroundColor:
-        theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-      borderRadius: 1,
+      backgroundImage:
+        "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
     },
-  }));
+  },
+  [`&.${stepConnectorClasses.completed}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      backgroundImage:
+        "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
+    },
+  },
+  [`& .${stepConnectorClasses.line}`]: {
+    height: 3,
+    border: 0,
+    backgroundColor:
+      theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+    borderRadius: 1,
+  },
+}));
 
-  const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
-    zIndex: 1,
-    color: '#fff',
-    width: 50,
-    height: 50,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    ...(ownerState.active && {
-      backgroundImage:
-        'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-      boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
-    }),
-    ...(ownerState.completed && {
-      backgroundImage:
-        'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-    }),
-  }));
-  
-  
-  function ColorlibStepIcon(props) {
-    const { active, completed, className } = props;
-  
-    const icons = {
-      1: <PendingActionsIcon />,
-      2: <DeliveryDiningIcon />,
-      3: <DoorBackIcon />,
-    };
-  
-    return (
-      <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
-        {icons[String(props.icon)]}
-      </ColorlibStepIconRoot>
-    );
-  }
-  
-  ColorlibStepIcon.propTypes = {
-    /**
-     * Whether this step is active.
-     * @default false
-     */
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    /**
-     * Mark the step as completed. Is passed to child components.
-     * @default false
-     */
-    completed: PropTypes.bool,
-    /**
-     * The label displayed in the step icon.
-     */
-    icon: PropTypes.node,
+const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
+  zIndex: 1,
+  color: "#fff",
+  width: 50,
+  height: 50,
+  display: "flex",
+  borderRadius: "50%",
+  justifyContent: "center",
+  alignItems: "center",
+  ...(ownerState.active && {
+    backgroundImage:
+      "linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)",
+    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
+  }),
+  ...(ownerState.completed && {
+    backgroundImage:
+      "linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)",
+  }),
+}));
+
+function ColorlibStepIcon(props) {
+  const { active, completed, className } = props;
+
+  const icons = {
+    1: <PendingActionsIcon />,
+    2: <DeliveryDiningIcon />,
+    3: <DoorBackIcon />,
   };
-  
-  const steps = ['Pending', 'Shipped', 'Reaching Your Door'];
+
+  return (
+    <ColorlibStepIconRoot
+      ownerState={{ completed, active }}
+      className={className}
+    >
+      {icons[String(props.icon)]}
+    </ColorlibStepIconRoot>
+  );
+}
+
+ColorlibStepIcon.propTypes = {
+  /**
+   * Whether this step is active.
+   * @default false
+   */
+  active: PropTypes.bool,
+  className: PropTypes.string,
+  /**
+   * Mark the step as completed. Is passed to child components.
+   * @default false
+   */
+  completed: PropTypes.bool,
+  /**
+   * The label displayed in the step icon.
+   */
+  icon: PropTypes.node,
+};
+
+const steps = ["Pending", "Shipped", "Reaching Your Door"];
 const columns = [
   { id: "product", label: "product", minWidth: 80 },
   {
@@ -159,36 +160,32 @@ const columns = [
   },
 ];
 
-const OrderTable = ({orderData}) => {
+const OrderTable = ({ orderData }) => {
   const dispatch = useDispatch();
-
-
 
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     setRows(
-        orderData.orderedItems?.map((order) => ({
-        product:order.name, 
-        Image:<img 
-        width="50px"
-        height="50px"
-        style={{ objectFit: "cover" }}src={order.image[0]}/>,
-        Quantity:order.quntity,
-        TransactionId:orderData._id,
-        'Your Name':orderData.shippingAddress.userName,
-        Phone:orderData.contactInformation.phoneNumber,
-        'Shipping Address':orderData.shippingAddress.address,
-        'Ordered At': new Date(orderData.createdAt).toLocaleString(),
+      orderData.orderedItems?.map((order) => ({
+        product: order.name,
+        Image: (
+          <img
+            width="50px"
+            height="50px"
+            style={{ objectFit: "cover" }}
+            src={order.image[0]}
+          />
+        ),
+        Quantity: order.quntity,
+        TransactionId: orderData._id,
+        "Your Name": orderData.shippingAddress.userName,
+        Phone: orderData.contactInformation.phoneNumber,
+        "Shipping Address": orderData.shippingAddress.address,
+        "Ordered At": new Date(orderData.createdAt).toLocaleString(),
       }))
     );
   }, [orderData]);
-
-
-
-
-
-
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -203,98 +200,130 @@ const OrderTable = ({orderData}) => {
   };
 
   const Text_Color = {
-    DeliveryStatus:{
-        Pending:'red',
-        Shipped:'gray',
-        'Out For Delivery':'green'
+    DeliveryStatus: {
+      Pending: "red",
+      Shipped: "gray",
+      "Out For Delivery": "green",
     },
-    
-    TransactionId:'blue'
+
+    TransactionId: "blue",
   };
 
   const font_weight = {
-     
-    DeliveryStatus:'700'
-     
-  }
-  
+    DeliveryStatus: "700",
+  };
 
   if (!rows) return <div>Loading...</div>;
   return (
-    <Fragment>
+    <Box
+      sx={{
+        padding: "1rem",
+        marginTop: "1.5rem",
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column", rowGap: "3rem" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            rowGap: "2rem",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            style={{
+              fontSize: "1.8rem",
+              letterSpacing: "1px",
+              color: "black",
+              fontWeight: "550",
+            }}
+          >
+            Your Order Status
+          </Typography>
 
-    <div style={{display:'flex',flexDirection:'column',rowGap:'3rem'}}>
+          <Stepper
+            style={{ width: "100%" }}
+            alternativeLabel
+            activeStep={
+              orderData.deliveryStatus === "Pending"
+                ? 0
+                : orderData.deliveryStatus === "Shipped"
+                ? 1
+                : 2
+            }
+            connector={<ColorlibConnector />}
+          >
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={ColorlibStepIcon}>
+                  {label}
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </div>
 
-<div style={{display:'flex',flexDirection:'column',rowGap:'2rem',justifyContent:'center',alignItems:'center'}}>
-
-<Typography style={{textTransform:'uppercase', letterSpacing:'3px', }}>Your Order Status</Typography>
- 
-<Stepper  style={{width:'100%'}} alternativeLabel activeStep={orderData.deliveryStatus === 'Pending'?0:orderData.deliveryStatus === 'Shipped'?1:2} connector={<ColorlibConnector />}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
- </Stepper>
-</div>
-
-
-     
-      <Paper sx={{ width: "100%", overflow: "hidden", marginTop: "1%" }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell
-                            style={{ color: column.id === 'DeliveryStatus'?Text_Color[column.id][value]: Text_Color[column.id],fontWeight:font_weight[column.id]}}
-                            key={column.id}
-                            align={column.align}
-                          >
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </div>
-
-    </Fragment>
+        <Paper sx={{ width: "100%", overflow: "hidden", marginTop: "1%" }}>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    return (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell
+                              style={{
+                                color:
+                                  column.id === "DeliveryStatus"
+                                    ? Text_Color[column.id][value]
+                                    : Text_Color[column.id],
+                                fontWeight: font_weight[column.id],
+                              }}
+                              key={column.id}
+                              align={column.align}
+                            >
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </div>
+    </Box>
   );
 };
 

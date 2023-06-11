@@ -1,7 +1,12 @@
 import React, { useReducer, useState, useEffect, useRef } from "react";
 import classes from "./Information.module.css";
 import { Box, TextField, Typography, MenuItem } from "@mui/material";
-import { NavLink, useNavigate } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate,
+  useOutlet,
+  useOutletContext,
+} from "react-router-dom";
 import Controller from "../Controller/Controller";
 import {
   nameReducer,
@@ -11,12 +16,15 @@ import {
   pinCodeReducer,
 } from "../../../shared/Reducers/InputReducers";
 import { textFeildStyle } from "../../../utils/function";
-
-const Information = (props) => {
+import { useSelector } from "react-redux";
+import { selectOrderInfo } from "../../../store/Order/order.selector";
+const Information = () => {
+  const props = useOutletContext();
   const countryRef = useRef();
   const stateRef = useRef();
   const navigate = useNavigate();
   const navigateHandler = () => navigate("/cart");
+  const orderInfo = useSelector(selectOrderInfo);
   const [firstNameState, dispatchFirstName] = useReducer(nameReducer, {
     value: "",
     isValid: null,
@@ -129,23 +137,60 @@ const Information = (props) => {
     cityNameIsValid,
     pinCodeIsValid,
   ]);
+  useEffect(() => {
+    countryRef.current.value = orderInfo?.shippingAddress?.country || "India";
+    stateRef.current.value = orderInfo?.shippingAddress?.state || "Gujrat";
+    dispatchFirstName({
+      type: "USER_INPUT",
+      val: orderInfo?.shippingAddress?.userName?.split(" ")[0] || "",
+    });
+    dispatchLastName({
+      type: "USER_INPUT",
+      val: orderInfo?.shippingAddress?.userName?.split(" ")[1] || "",
+    });
+    dispatchEmail({
+      type: "USER_INPUT",
+      val: orderInfo?.contactInformation?.email || "",
+    });
+    dispatchPhoneNo({
+      type: "USER_INPUT",
+      val: orderInfo?.contactInformation?.phoneNumber || "",
+    });
+    dispatchCityName({
+      type: "USER_INPUT",
+      val: orderInfo?.shippingAddress?.city || "",
+    });
+    dispatchAddress({
+      type: "USER_INPUT",
+      val: orderInfo?.shippingAddress?.address || "",
+    });
+    dispatchPinCode({
+      type: "USER_INPUT",
+      val: orderInfo?.shippingAddress?.pinNumber || "",
+    });
+  }, []);
 
   const validateFormHandler = async (event) => {
-    // event.preventDefault();
+    if (!pinCodeIsValid) {
+      document.getElementById("pincode").focus();
+    }
+    if (!cityNameIsValid) {
+      document.getElementById("city").focus();
+    }
+    if (!addressIsValid) {
+      document.getElementById("address").focus();
+    }
+    if (!lastNameIsValid) {
+      document.getElementById("lastName").focus();
+    }
+    if (!firstNameIsValid) {
+      document.getElementById("firstName").focus();
+    }
+    if (!phoneNoIsValid) {
+      document.getElementById("phoneNo").focus();
+    }
     if (!emailIsValid) {
       document.getElementById("email").focus();
-    } else if (!phoneNoIsValid) {
-      document.getElementById("phoneNo").focus();
-    } else if (!firstNameIsValid) {
-      document.getElementById("firstName").focus();
-    } else if (!lastNameIsValid) {
-      document.getElementById("lastName").focus();
-    } else if (!addressIsValid) {
-      document.getElementById("address").focus();
-    } else if (!cityNameIsValid) {
-      document.getElementById("city").focus();
-    } else {
-      document.getElementById("pincode").focus();
     }
   };
 
@@ -170,18 +215,6 @@ const Information = (props) => {
           >
             Contact Information
           </Typography>
-          {/* {isLoggedIn && (
-            <Typography
-              sx={{
-                color: "gray",
-                fontSize: "1.1rem",
-                cursor: "pointer",
-              }}
-            >
-              Already have an account?
-              <NavLink className={classes["link"]}>Login</NavLink>
-            </Typography>
-          )} */}
         </div>
         <form className={classes["form-container"]}>
           <TextField

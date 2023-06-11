@@ -161,7 +161,7 @@ export const makeOrder = async (orderObj) => {
       method: "POST",
       url: `/postOrder`,
       data: orderObj,
-      withCredentials:true
+      withCredentials: true,
     };
     const response = await AxiosInstance(config);
     return response;
@@ -183,62 +183,51 @@ export const getAccessToken = async () => {
   }
 };
 
-
-export const postUserMessage = async(message) =>{
-
-  try{
-
+export const postUserMessage = async (message) => {
+  try {
     const config = {
-        method:'post',
-        url:'/postMymeassage',
-        data:message
-    }
-     
-    const response = await AxiosInstance(config)
+      method: "post",
+      url: "/postMymeassage",
+      data: message,
+    };
 
-    return response
-  }catch(err){
-     throw err;
-  }
-}
+    const response = await AxiosInstance(config);
 
-export const fetchUserOrders = async() =>{
-
-  console.log(1)
-    
-   try{
-     
-       const config = {
-          method:'get',
-          url:`/getUserOrders`,
-          withCredentials:true
-       }
-
-       const response = await AxiosInstance(config)
-
-       console.log(response)
-
-       return response;
-   }catch(err){
+    return response;
+  } catch (err) {
     throw err;
-   }
-}
+  }
+};
 
-export const UpdateUserInformation = async(updateObj) =>{
-     
-       try{
-        const config = {
-          method:'patch',
-          url:`/updateUser`,
-          data:updateObj,
-          withCredentials:true
-       }
+export const fetchUserOrders = async () => {
+  try {
+    const config = {
+      method: "get",
+      url: `/getUserOrders`,
+      withCredentials: true,
+    };
 
-       const response = await AxiosInstance(config)
+    const response = await AxiosInstance(config);
 
-       return response
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
 
-       }catch(err){
-         throw err
-       }
-}
+export const UpdateUserInformation = async (updateObj) => {
+  try {
+    const config = {
+      method: "patch",
+      url: `/updateUser`,
+      data: updateObj,
+      withCredentials: true,
+    };
+
+    const response = await AxiosInstance(config);
+
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};

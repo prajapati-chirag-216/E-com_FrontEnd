@@ -203,7 +203,6 @@ export const addCartItems = async (items) => {
 
 export const fetchDataByName = async (name, data) => {
   const filterdName = name.split(" ").join("").toLowerCase();
-  console.log(data);
 
   const filteredData = data.filter((item) => {
     const itemName = item.name.split(" ").join("").toLowerCase();
@@ -215,7 +214,6 @@ export const fetchDataByName = async (name, data) => {
 };
 
 export const fetchFilteredProducts = async (id, name) => {
-  console.log(id, name);
   try {
     const response = await axios.get(
       `${BACKAND_DOMAIN}/getfilteredproducts/${id}/${name}`

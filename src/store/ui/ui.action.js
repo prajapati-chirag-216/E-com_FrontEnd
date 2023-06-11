@@ -10,11 +10,12 @@ export const setSearchField = (string) => {
 export const setSnackBar = (string) => {
   return createAction(ui_types.SET_SNACKBAR, string);
 };
-export const setModelState = (boolean) =>{   
-  return createAction(ui_types.SET_MODEL_STATE,boolean)
-}
-export const setUser = (object) =>{  
-  return createAction(ui_types.SET_USER,object)
-}export const setSuccess = (boolean) => {
+export const setModelState = (boolean) => {
+  return createAction(ui_types.SET_MODEL_STATE, boolean);
+};
+export const setUser = (object) => {
+  return createAction(ui_types.SET_USER, object);
+};
+export const setSuccess = (boolean) => {
   return createAction(ui_types.SET_SUCCESS, boolean);
 };

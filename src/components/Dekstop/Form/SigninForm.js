@@ -49,10 +49,11 @@ const SigninForm = () => {
 
   const validateFormHandler = async (event) => {
     event.preventDefault();
+    if (!passwordIsValid) {
+      document.getElementById("password").focus();
+    }
     if (!emailIsValid) {
       document.getElementById("email").focus();
-    } else {
-      return document.getElementById("password").focus();
     }
   };
   const navigate = useNavigate();

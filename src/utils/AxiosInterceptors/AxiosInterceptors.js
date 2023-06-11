@@ -17,19 +17,20 @@ axios.interceptors.response.use(
   },
   async (error) => {
     const originalConfig = error.config;
+    console.log(error);
     if (
       error.response?.status === 403 &&
       error.response?.data?.refreshTokenDecoded &&
       !originalConfig._retry
     ) {
       originalConfig._retry = true;
-      console.log("here");
       await genrateAccessToken();
       return axios(originalConfig);
     } else if (
       error.response?.status === 401 ||
       error.response?.status === 409
     ) {
+      console.log("error ", error);
       store.dispatch(
         setSnackBar({
           status: true,

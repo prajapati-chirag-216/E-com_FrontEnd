@@ -3,7 +3,6 @@ import classes from "./Controller.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { makeOrder } from "../../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
-import { ArrowRight } from "@mui/icons-material";
 import {
   selectCartItems,
   selectNewCartTotal,
@@ -17,7 +16,7 @@ import { selectOrderInfo } from "../../../store/Order/order.selector";
 const Controller = (props) => {
   const cartItems = useSelector(selectCartItems);
   const total = useSelector(selectNewCartTotal);
-  const order =  useSelector(selectOrderInfo)
+  const order = useSelector(selectOrderInfo);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState({ status: false });
 
@@ -31,7 +30,6 @@ const Controller = (props) => {
     } else if (props.shippingMethod) {
       dispatch(updateOrderInfo({ shippingMethod: props.shippingMethod }));
     } else if (props.paymentDetails) {
-      console.log(props.paymentDetails);
       let newCartItems = cartItems.map((item) => {
         return {
           productId: item._id,
@@ -39,18 +37,17 @@ const Controller = (props) => {
         };
       });
 
-      order.orderedItems = newCartItems
-      order.totalPrice = total
+      order.orderedItems = newCartItems;
+      order.totalPrice = total;
 
       try {
-       
-        const res = await makeOrder(order);
+        await makeOrder(order);
       } catch (err) {
         throw err;
       }
     }
-    setIsLoading({ status: false });
     props.onNextPage();
+    setIsLoading({ status: false });
   };
   return (
     <div className={classes["controll-div"]}>

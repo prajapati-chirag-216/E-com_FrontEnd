@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
+import { selectSuccess } from "../store/ui/ui.selector";
 
 const PrivateRoutes = (props) => {
-  const success = useSelector((state) => state.ui.success);
+  const success = useSelector(selectSuccess);
+  console.log(success);
   try {
     if (success) {
       return <Outlet />;

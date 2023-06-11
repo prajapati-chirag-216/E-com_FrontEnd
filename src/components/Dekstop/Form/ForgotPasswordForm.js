@@ -1,21 +1,18 @@
 import React, { Fragment, useEffect, useReducer, useState } from "react";
 import { Button, TextField, Typography } from "@mui/material";
-import { Form, redirect, useActionData, useNavigate } from "react-router-dom";
+import { Form, redirect, useActionData } from "react-router-dom";
 import classes from "./ActionForm.module.css";
 import { emailReducer } from "../../../shared/Reducers/InputReducers";
-import { useDispatch } from "react-redux";
-import { uiActions } from "../../../mystore/ui-slice";
 import { forgotPassword } from "../../../utils/api";
-import store from "../../../mystore/index";
-import Notification from "../UI/Notification";
+import { store } from "../../../store/store";
 import { textFeildStyle } from "../../../utils/function";
+import { setSuccess } from "../../../store/ui/ui.action";
 
 const ForgotPasswordForm = () => {
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     value: "",
     isValid: null,
   });
-  const [showNotification, setShowNotification] = useState(false);
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: "USER_INPUT", val: event.target.value.trim() });
   };
@@ -32,23 +29,12 @@ const ForgotPasswordForm = () => {
   };
   const actionData = useActionData();
   useEffect(() => {
-    if (actionData && actionData.response.status === 502) {
-      setShowNotification(true);
-      setTimeout(() => {
-        setShowNotification(false);
-      }, 4000);
+    if (actionData?.response?.status === 401) {
       document.getElementById("email").focus();
     }
-    // eslint-disable-next-line
   }, [actionData]);
   return (
     <Fragment>
-      {showNotification && (
-        <Notification
-          message={actionData.response.data.message}
-          status="invalid"
-        />
-      )}
       <div className={classes["action-div"]}>
         <Typography
           fontSize="2rem"
@@ -85,7 +71,6 @@ const ForgotPasswordForm = () => {
               padding: "0.7rem",
             }}
             onClick={!emailIsValid ? validateFormHandler : () => {}}
-            disabled={showNotification}
           >
             Forgot Password
           </Button>
@@ -104,12 +89,9 @@ export async function action({ request }) {
   try {
     response = await forgotPassword(userData);
   } catch (err) {
-    if (err.response && err.response.status === 502) {
-      return err;
-    }
-    throw err;
+    return err;
   }
-  store.dispatch(uiActions.setSuccess(true));
+  store.dispatch(setSuccess(true));
   return redirect("/success");
 }
 

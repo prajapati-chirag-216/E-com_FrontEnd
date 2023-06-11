@@ -87,14 +87,17 @@ const SignupForm = () => {
 
   const validateFormHandler = async (event) => {
     event.preventDefault();
+    if (!phoneNoIsValid) {
+      document.getElementById("phoneNo").focus();
+    }
+    if (!passwordIsValid) {
+      document.getElementById("password").focus();
+    }
+    if (!emailIsValid) {
+      document.getElementById("email").focus();
+    }
     if (!nameIsValid) {
       document.getElementById("fullName").focus();
-    } else if (!emailIsValid) {
-      document.getElementById("email").focus();
-    } else if (!passwordIsValid) {
-      document.getElementById("password").focus();
-    } else {
-      document.getElementById("phoneNo").focus();
     }
   };
   const navigate = useNavigate();

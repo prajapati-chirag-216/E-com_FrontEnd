@@ -12,8 +12,10 @@ import {
 import { useSelector } from "react-redux";
 import { selectOrderInfo } from "../../../store/Order/order.selector";
 import { textFeildStyle } from "../../../utils/function";
-const Payment = (props) => {
+import { useOutletContext } from "react-router-dom";
+const Payment = () => {
   const orderInfo = useSelector(selectOrderInfo);
+  const props = useOutletContext();
   const [paymentDetails, setPaymentDetails] = useState(null);
   const [cardNoState, dispatchCardNo] = useReducer(cardNoReducer, {
     value: "",
@@ -77,11 +79,14 @@ const Payment = (props) => {
   const validateFormHandler = async () => {
     if (!cardNoIsValid) {
       document.getElementById("cardNo").focus();
-    } else if (!holderNameIsValid) {
+    }
+    if (!holderNameIsValid) {
       document.getElementById("holderName").focus();
-    } else if (!expiryDateIsValid) {
+    }
+    if (!expiryDateIsValid) {
       document.getElementById("expiryDate").focus();
-    } else {
+    }
+    if (!cvvIsValid) {
       document.getElementById("cvv").focus();
     }
   };
@@ -99,19 +104,19 @@ const Payment = (props) => {
       <div className={classes["details-container"]}>
         <UserCrendentials
           label="Contact"
-          value={orderInfo.contactInformation.email}
+          value={orderInfo?.contactInformation?.email || ""}
           onClick={props.onPageChange.bind(null, 0)}
         />
         <Divider />
         <UserCrendentials
           label="Ship to"
-          value={orderInfo.shippingAddress.address}
+          value={orderInfo?.shippingAddress?.address || ""}
           onClick={props.onPageChange.bind(null, 0)}
         />
         <Divider />
         <UserCrendentials
           label="Method"
-          value={orderInfo.shippingMethod}
+          value={orderInfo?.shippingMethod || ""}
           onClick={props.onPageChange.bind(null, 1)}
         />
       </div>

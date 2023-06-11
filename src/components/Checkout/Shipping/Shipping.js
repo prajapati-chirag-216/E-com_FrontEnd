@@ -5,8 +5,12 @@ import Controller from "../Controller/Controller";
 import UserCrendentials from "./UserCredentials/UserCrendentials";
 import { useSelector } from "react-redux";
 import { selectOrderInfo } from "../../../store/Order/order.selector";
-const Shipping = (props) => {
-  const [selectedValue, setSelectedValue] = useState(0);
+import { useOutletContext } from "react-router-dom";
+const Shipping = () => {
+  const props = useOutletContext();
+  const orderInfo = useSelector(selectOrderInfo);
+  const checkedValue = orderInfo?.shippingMethod?.startsWith("Cash") ? 1 : 0;
+  const [selectedValue, setSelectedValue] = useState(checkedValue);
   const shippingMethods = [
     "Online Payment : Free Shipping",
     "Cash on Delivery : ₹5 COD handling charges This shipping option is eligible for Cash on Delivery.",
@@ -14,7 +18,6 @@ const Shipping = (props) => {
   const handleChange = (event) => {
     setSelectedValue(+event.target.value);
   };
-  const orderInfo = useSelector(selectOrderInfo);
   return (
     <Box
       sx={{
@@ -28,13 +31,13 @@ const Shipping = (props) => {
       <div className={classes["details-container"]}>
         <UserCrendentials
           label="Contact"
-          value={orderInfo.contactInformation.email}
+          value={orderInfo?.contactInformation?.email || ""}
           onClick={props.onPageChange.bind(null, 0)}
         />
         <Divider />
         <UserCrendentials
           label="Ship to"
-          value={orderInfo.shippingAddress.address}
+          value={orderInfo?.shippingAddress?.address || ""}
           onClick={props.onPageChange.bind(null, 0)}
         />
       </div>
