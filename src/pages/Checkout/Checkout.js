@@ -7,7 +7,7 @@ import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectOrderInfo } from "../../store/Order/order.selector";
 import { selectCartItems } from "../../store/cart/cart.selector";
-import { setSnackBar } from "../../store/ui/ui.action";
+import { setSnackBar, setSuccess } from "../../store/ui/ui.action";
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
@@ -25,6 +25,7 @@ const Checkout = () => {
     } else if (page == 2) {
       location = "/checkout/payment";
     } else if (page == 3) {
+      dispatch(setSuccess(true));
       location = "/success";
     }
     navigate(location);
