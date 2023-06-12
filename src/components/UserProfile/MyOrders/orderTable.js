@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect, memo, Fragment } from "react";
+import { useState, useEffect, memo } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,8 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useDispatch } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import { styled } from "@mui/material/styles";
@@ -21,6 +20,7 @@ import DoorBackIcon from "@mui/icons-material/DoorBack";
 import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
+import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -161,20 +161,18 @@ const columns = [
 ];
 
 const OrderTable = ({ orderData }) => {
-  const dispatch = useDispatch();
-
   const [rows, setRows] = useState([]);
-
+  console.log(rows);
   useEffect(() => {
     setRows(
       orderData.orderedItems?.map((order) => ({
-        product: order.name,
+        product: order.productId.name,
         Image: (
           <img
             width="50px"
             height="50px"
             style={{ objectFit: "cover" }}
-            src={order.image[0]}
+            src={order.productId.image[0]}
           />
         ),
         Quantity: order.quntity,
@@ -213,12 +211,25 @@ const OrderTable = ({ orderData }) => {
     DeliveryStatus: "700",
   };
 
-  if (!rows) return <div>Loading...</div>;
+  if (!rows)
+    return (
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "3rem",
+        }}
+      >
+        <LoadingSpinner />
+      </Container>
+    );
   return (
     <Box
       sx={{
         padding: "1rem",
-        marginTop: "1.5rem",
+        marginTop: "3rem",
+        marginBottom: "5rem",
+        height: "100%",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", rowGap: "3rem" }}>
@@ -231,19 +242,40 @@ const OrderTable = ({ orderData }) => {
             alignItems: "center",
           }}
         >
-          <Typography
-            style={{
-              fontSize: "1.8rem",
-              letterSpacing: "1px",
-              color: "black",
-              fontWeight: "550",
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              justifyContent: "center",
+              marginBottom: "2rem",
             }}
           >
-            Your Order Status
-          </Typography>
-
+            <Typography
+              align="center"
+              sx={{
+                fontSize: "1.8rem",
+                letterSpacing: "2px",
+                color: "black",
+                fontWeight: "550",
+                flexGrow: 1,
+                marginLeft: "5rem",
+              }}
+            >
+              Your Order status
+            </Typography>
+            <Typography
+              sx={{
+                marginLeft: "auto",
+                width: "fit-content",
+                letterSpacing: "2px",
+              }}
+            >
+              {rows.length > 0 && rows[0]["Ordered At"].split(",")[0]}
+            </Typography>
+          </Box>
           <Stepper
-            style={{ width: "100%" }}
+            style={{ width: "80%" }}
             alternativeLabel
             activeStep={
               orderData.deliveryStatus === "Pending"

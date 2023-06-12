@@ -1,22 +1,20 @@
 import { fetchUserOrders } from "../../../utils/api";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import OrderTable from "./orderTable";
-// import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
+import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
 
 const MyOrders = () => {
   const [userOrder, setUserOrder] = useState();
-  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const run = async () => {
       try {
         const userOrder = await fetchUserOrders();
-
-        console.log(userOrder);
         setUserOrder(userOrder);
+        setIsLoading(false);
       } catch (err) {
         throw err;
       }
@@ -24,33 +22,49 @@ const MyOrders = () => {
 
     run();
   }, []);
-
+  if (isLoading) {
+    return (
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "3rem",
+        }}
+      >
+        <LoadingSpinner />
+      </Container>
+    );
+  }
   return (
     <div>
-      {userOrder ? (
-        <OrderTable orderData={userOrder} />
+      {userOrder?.success && !isLoading ? (
+        userOrder?.data?.map((order) => {
+          return <OrderTable key={order._id} orderData={order || []} />;
+        })
       ) : (
-        <Typography
-          style={{
-            fontSize: "3rem",
-            marginTop: "10rem",
-            letterSpacing: "3px",
+        <Container
+          sx={{
             display: "flex",
             justifyContent: "center",
-            alignItems: "center",
+            marginTop: "10rem",
           }}
         >
-          Waiting For Your Orders 😊 !
-        </Typography>
-        // <div
-        //   style={{
-        //     width: "100%",
-        //     textAlign: "center",
-        //     marginTop: "5rem",
-        //   }}
-        // >
-        //   <LoadingSpinner />
-        // </div>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <Typography
+              style={{
+                fontSize: "2rem",
+                letterSpacing: "3px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              Waiting for your orders..
+            </Typography>
+          )}
+        </Container>
       )}
     </div>
   );

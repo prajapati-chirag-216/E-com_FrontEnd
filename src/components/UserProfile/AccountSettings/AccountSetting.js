@@ -1,34 +1,70 @@
 import { Divider, Typography, TextField, Button, Box } from "@mui/material";
 import "./account.styles.scss";
-import { useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { updatePassword } from "../../../utils/api";
 import { useDispatch } from "react-redux";
 import { setSnackBar } from "../../../store/ui/ui.action";
 import { textFeildStyle } from "../../../utils/function";
+import { passwordReducer } from "../../../shared/Reducers/InputReducers";
 
 const AccountSettings = () => {
-  const [newPassword, setnewPassWord] = useState("");
-  const [currentPass, setCurrentPass] = useState("");
+  const [currentPasswordState, dispatchCurrentPassword] = useReducer(
+    passwordReducer,
+    {
+      value: "",
+      isValid: null,
+    }
+  );
+  const [newPasswordState, dispatchNewPassword] = useReducer(passwordReducer, {
+    value: "",
+    isValid: null,
+  });
+  const [formIsValid, setFormIsValid] = useState(false);
+  const currentPasswordChangeHandler = (event) => {
+    dispatchCurrentPassword({
+      type: "USER_INPUT",
+      val: event.target.value.trim(),
+    });
+  };
+  const newPasswordChangeHandler = (event) => {
+    dispatchNewPassword({ type: "USER_INPUT", val: event.target.value.trim() });
+  };
 
-  const [passErr, setPassErr] = useState(false);
+  const validateCurrentPasswordHandler = () =>
+    dispatchCurrentPassword({ type: "INPUT_BLUR" });
+  const validateNewPasswordHandler = () =>
+    dispatchNewPassword({ type: "INPUT_BLUR" });
+
+  const { isValid: currentPasswordIsValid } = currentPasswordState;
+  const { isValid: newPasswordIsValid } = newPasswordState;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFormIsValid(currentPasswordIsValid && newPasswordIsValid);
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [currentPasswordIsValid, newPasswordIsValid]);
+
+  const validateFormHandler = async (event) => {
+    event.preventDefault();
+    if (!newPasswordIsValid) {
+      document.getElementById("newPassword").focus();
+    }
+    if (!currentPasswordIsValid) {
+      document.getElementById("currentPassword").focus();
+    }
+  };
+
   const dispacth = useDispatch();
 
   const handlePasswordReset = async () => {
-    if (!newPassword || !currentPass) {
-      setPassErr(true);
-      return;
-    }
-
     const passObj = {
-      curPass: currentPass,
-      newPass: newPassword,
+      curPass: currentPasswordState.value,
+      newPass: newPasswordState.value,
     };
-
     try {
       const response = await updatePassword(passObj);
-
-      console.log(response);
-
       if (response?.success) {
         dispacth(
           setSnackBar({
@@ -69,18 +105,30 @@ const AccountSettings = () => {
 
       <div className="inputDiv">
         <TextField
-          error={passErr === true}
-          id="outlined-error"
-          label="currunt Password"
-          onChange={(e) => setnewPassWord(e.target.value)}
-          sx={textFeildStyle(true)}
+          id="currentPassword"
+          label="current Password"
+          onChange={currentPasswordChangeHandler}
+          onBlur={validateCurrentPasswordHandler}
+          value={currentPasswordState.value}
+          error={currentPasswordIsValid == false ? true : false}
+          sx={textFeildStyle(currentPasswordIsValid)}
+          helperText={
+            currentPasswordIsValid === false
+              ? "Enter valid current password"
+              : ""
+          }
         />
         <TextField
-          error={passErr === true}
-          id="outlined-error"
+          id="newPassword"
           label="New Password"
-          onChange={(e) => setnewPassWord(e.target.value)}
-          sx={textFeildStyle(true)}
+          onChange={newPasswordChangeHandler}
+          onBlur={validateNewPasswordHandler}
+          value={newPasswordState.value}
+          error={newPasswordIsValid == false ? true : false}
+          sx={textFeildStyle(newPasswordIsValid)}
+          helperText={
+            newPasswordIsValid == false ? "Enter valid new password" : ""
+          }
         />
 
         <Button
@@ -95,7 +143,7 @@ const AccountSettings = () => {
             marginTop: "1rem",
           }}
           variant="contained"
-          onClick={handlePasswordReset}
+          onClick={formIsValid ? handlePasswordReset : validateFormHandler}
         >
           Reset Password
         </Button>

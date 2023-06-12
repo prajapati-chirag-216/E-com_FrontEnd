@@ -4,16 +4,11 @@ import { Divider, Grid, Typography, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
-
-
   const navigate = useNavigate();
 
-  const handleLinkChangeHandler = (link) =>{
-
-         navigate(link)
-
-  }
-
+  const handleLinkChangeHandler = (link) => {
+    navigate(link);
+  };
 
   return (
     <div className={classes["footer"]}>
@@ -31,7 +26,9 @@ const Footer = () => {
               Corporate
             </Typography>
             <ul>
-              <li onClick={handleLinkChangeHandler.bind(null,'/aboutus')}>About us</li>
+              <li onClick={handleLinkChangeHandler.bind(null, "/aboutus")}>
+                About us
+              </li>
               <li>Blog</li>
               <li>Faq</li>
             </ul>
@@ -49,7 +46,9 @@ const Footer = () => {
               support
             </Typography>
             <ul>
-              <li onClick={handleLinkChangeHandler.bind(null,'/contactus')}>Contact us</li>
+              <li onClick={handleLinkChangeHandler.bind(null, "/contactus")}>
+                Contact us
+              </li>
               <li>offers</li>
             </ul>
           </Box>
@@ -66,19 +65,19 @@ const Footer = () => {
               About the shop
             </Typography>
             <p className={classes["description-p"]}>
-              One Center is a renowned Indian online marketplace that offers a
+              Shopzee is a renowned Indian online marketplace that offers a
               diverse range of products catering to all your shopping needs.
               From premium apparel for men and women to an extensive collection
               of electronics, home decor, accessories, and more, we have it all.
-              As a trendsetter in the Indian e-commerce landscape, One Center is
+              As a trendsetter in the Indian e-commerce landscape, Shopzee is
               committed to providing high-quality products that meet the highest
               standards of excellence. Our platform showcases a wide variety of
               items, all meticulously curated to ensure the utmost satisfaction
               of our valued customers. With secure payment options, fast
-              shipping, and exceptional customer service, One Center strives to
+              shipping, and exceptional customer service, Shopzee strives to
               create a seamless and enjoyable shopping experience for everyone.
               Explore our extensive selection and discover the convenience and
-              quality that One Center brings to your fingertips.
+              quality that Shopzee brings to your fingertips.
             </p>
           </Box>
         </Grid>

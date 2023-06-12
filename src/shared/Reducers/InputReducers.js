@@ -35,7 +35,7 @@ export const passwordReducer = (state, action) => {
       value: action.val,
       isValid:
         action.val.trim().length >= 6 &&
-        action.val.trim().length <= 8 &&
+        action.val.trim().length <= 10 &&
         !action.val.trim().toLowerCase().includes("password"),
     };
   }
@@ -44,7 +44,7 @@ export const passwordReducer = (state, action) => {
       value: state.value,
       isValid:
         state.value.trim().length >= 6 &&
-        state.value.trim().length <= 8 &&
+        state.value.trim().length <= 10 &&
         !state.value.trim().toLowerCase().includes("password"),
     };
   }
