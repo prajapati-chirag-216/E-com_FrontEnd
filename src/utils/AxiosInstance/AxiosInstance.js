@@ -10,6 +10,7 @@ const AxiosInstance = async (config) => {
       data: config.data || null,
       withCredentials: config.withCredentials || false,
     });
+    console.log(response);
     return response.data;
   } catch (err) {
     throw err;

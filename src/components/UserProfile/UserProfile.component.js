@@ -59,12 +59,11 @@ const UserProfile = () => {
             borderColor: "divider",
             "& .MuiTabs-indicator": {
               backgroundColor: "black",
-              color: "black",
             },
             "& .MuiTab-root": {
               color: "gray",
             },
-            "& .MuiTab-selected": {
+            "& .MuiTab-root.Mui-selected": {
               color: "black",
             },
           }}

@@ -1,5 +1,4 @@
 import AxiosInstance from "./AxiosInstance/AxiosInstance";
-// import "./AxiosInterceptors/AxiosInterceptors";
 
 export async function signupUser(userData) {
   const config = {

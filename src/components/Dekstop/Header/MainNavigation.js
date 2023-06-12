@@ -167,10 +167,6 @@ const MainNavigation = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleProfilePage.bind(null, "/myProfile")}>
-        Profile
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleProfilePage.bind(null, "/myProfile")}>
         My Profile
       </MenuItem>
       <MenuItem onClick={logoutHandler}>logout</MenuItem>
@@ -262,7 +258,7 @@ const MainNavigation = () => {
               fontFamily="'Times New Roman', Times, serif"
               fontWeight="bold"
             >
-              Shopee
+              Shopzee
             </Typography>
             <Tabs />
           </Box>

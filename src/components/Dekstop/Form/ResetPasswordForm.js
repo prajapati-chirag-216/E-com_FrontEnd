@@ -1,6 +1,6 @@
-import React, { Fragment, useReducer } from "react";
+import React, { Fragment, useReducer, useEffect, useState } from "react";
 import { Button, TextField, Typography } from "@mui/material";
-import { Form, redirect, useActionData, useParams } from "react-router-dom";
+import { Form, redirect, useParams } from "react-router-dom";
 import classes from "./ActionForm.module.css";
 import { passwordReducer } from "../../../shared/Reducers/InputReducers";
 import { resetPassword } from "../../../utils/api";
@@ -11,6 +11,7 @@ const ResetPasswordForm = () => {
     value: "",
     isValid: null,
   });
+  const [formIsValid, setFormIsValid] = useState(false);
   const passwordChangeHandler = (event) => {
     dispatchPassword({ type: "USER_INPUT", val: event.target.value.trim() });
   };
@@ -19,6 +20,14 @@ const ResetPasswordForm = () => {
     dispatchPassword({ type: "INPUT_BLUR" });
 
   const { isValid: passwordIsValid } = passwordState;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFormIsValid(passwordIsValid);
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [passwordIsValid]);
 
   const validateFormHandler = async (event) => {
     event.preventDefault();

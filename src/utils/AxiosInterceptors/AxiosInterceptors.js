@@ -23,6 +23,7 @@ axios.interceptors.response.use(
       error.response?.data?.refreshTokenDecoded &&
       !originalConfig._retry
     ) {
+      console.log("came");
       originalConfig._retry = true;
       await genrateAccessToken();
       return axios(originalConfig);
