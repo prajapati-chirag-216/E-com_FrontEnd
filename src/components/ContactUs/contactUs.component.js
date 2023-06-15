@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import "./contactus.styles.scss";
 import { Card, TextField, Button } from "@mui/material";
 import { Form } from "react-router-dom";
@@ -5,10 +6,23 @@ import { postUserMessage } from "../../utils/api";
 import { setSnackBar } from "../../store/ui/ui.action";
 import { useDispatch } from "react-redux";
 import { store } from "../../store/store";
+import { useEffect } from "react";
+import { startConfetti } from "../../utils/confetti";
 const ContactUs = () => {
   const dispatch = useDispatch();
 
+  useEffect(()=>{
+
+ 
+    startConfetti();
+    console.log('lkjjo')
+
+  },[])
+
   return (
+    <Fragment>
+
+      <canvas id="world"></canvas>
     <div>
       <div className="contactUsContainer">
         <div className="headerContainer">
@@ -98,6 +112,8 @@ const ContactUs = () => {
         </div>
       </div>
     </div>
+
+    </Fragment>
   );
 };
 

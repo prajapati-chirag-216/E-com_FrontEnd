@@ -253,12 +253,12 @@ const MainNavigation = () => {
           >
             <Typography
               variant="h3"
-              letterSpacing="3px"
-              textTransform="uppercase"
+              letterSpacing="5px"
+              // textTransform="uppercase"
               fontFamily="'Times New Roman', Times, serif"
-              fontWeight="bold"
+              // fontWeight="bold"
             >
-              Shopzee
+              shop<span style={{fontFamily:'Times New Roman',fontWeight:'bold',fontSize:'70px',color:'white'}}>Z</span>ee
             </Typography>
             <Tabs />
           </Box>
