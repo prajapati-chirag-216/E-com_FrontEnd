@@ -105,3 +105,6 @@ export const setClearItemFromCart = (cartItems, productToClear) => {
 export const setUpdateCartState = () => {
   return createAction(CART_ACTION_TYPES.UPDATE_CART_STATE);
 };
+export const setEmptyCart  = (emptyArray) =>{
+   return createAction(CART_ACTION_TYPES.SET_EMPTY_CART,emptyArray)
+}

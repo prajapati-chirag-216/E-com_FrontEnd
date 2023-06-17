@@ -157,6 +157,8 @@ useEffect(() =>{
       })
     );
     setUserProfile(null);
+    window.history.replaceState({}, document.title, '/login');
+
     navigate("/login",{replace:true});
   };
 

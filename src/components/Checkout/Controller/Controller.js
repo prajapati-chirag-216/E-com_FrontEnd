@@ -13,6 +13,7 @@ import {
 } from "../../../store/Order/order.action";
 import StatusButton from "../../../shared/components/StatusButton/StatusButton";
 import { selectOrderInfo } from "../../../store/Order/order.selector";
+import { setAddItemToCart, setEmptyCart } from "../../../store/cart/cart.action";
 const Controller = (props) => {
   const cartItems = useSelector(selectCartItems);
   const total = useSelector(selectNewCartTotal);
@@ -42,6 +43,7 @@ const Controller = (props) => {
 
       try {
         await makeOrder(order);
+        dispatch(setEmptyCart([]))
       } catch (err) {
         throw err;
       }
