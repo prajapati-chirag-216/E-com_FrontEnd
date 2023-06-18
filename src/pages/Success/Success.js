@@ -22,15 +22,23 @@ const Success = () => {
  
   useEffect(()=>{
 
-   startConfetti();
+    const urlArray = window.location.href.split('/');
 
-   setTimeout(()=>{
 
-     document.getElementById('world').style.display = 'none'
+    if(urlArray[urlArray.length-1] === 'success'){
 
-   },5000)
+      startConfetti();
+   
+      setTimeout(()=>{
+   
+        document.getElementById('world').style.display = 'none'
+   
+      },5000)
 
-  },[])
+    }
+
+
+  },[window.location.href])
   
   
 
