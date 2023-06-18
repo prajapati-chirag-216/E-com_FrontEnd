@@ -12,6 +12,7 @@ const ProtectedRoutes = (props) => {
   const cartItems = useSelector(selectCartItems);
   useEffect(() => {
     if (!loaderData.userProfile) {
+      console.log('her')
       dispatch(
         setSnackBar({
           status: true,
@@ -48,7 +49,7 @@ export async function loader() {
   try {
 
     res = await fetchUserProfile();
-    
+
   } catch (err) {
     throw err;
   }
