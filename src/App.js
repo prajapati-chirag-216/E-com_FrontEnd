@@ -59,7 +59,7 @@ const router = createBrowserRouter(
           <PrivateRoutes message="Access denied! You don't have permissions for this page." />
         }
       >
-        <Route path="/success" element={<Success />} />
+        <Route path="/success" element={<Success forPasswordReset={true} />} />
       </Route>
       <Route
         element={
@@ -85,7 +85,7 @@ const router = createBrowserRouter(
         <Route path="/home" element={<Dashboard />} loader={categoryLoader} />
         <Route
           element={
-            <ProtectedRoutes message="Access denied! You don't have permissions for this page." />
+            <ProtectedRoutes isProfilePage={true} message="Access denied! You don't have permissions for this page." />
           }
           loader={profileLoader}
         >
@@ -109,6 +109,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
+
   return <RouterProvider router={router} />;
 }
 
