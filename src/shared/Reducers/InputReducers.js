@@ -1,8 +1,8 @@
 export const nameReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
     return {
-      value: action.val.trim(),
-      isValid: action.val.trim().length > 5 && action.val.trim().length <= 10,
+      value: action.val,
+      isValid: action.val.trim().length > 5 && action.val.trim().length <= 20,
     };
   }
   if (action.type === "INPUT_BLUR") {
@@ -103,7 +103,7 @@ export const generalReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
     return {
       value: action.val,
-      isValid: action.val.length > 0 && action.val.length < 30,
+      isValid: action.val.length > 10 && action.val.length < 100,
     };
   }
   if (action.type === "INPUT_BLUR") {
