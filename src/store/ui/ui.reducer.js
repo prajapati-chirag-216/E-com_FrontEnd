@@ -10,7 +10,7 @@ const UI_INITIAL_STATE = {
   },
   modelState: false,
   user: null,
-  success: false,
+  success: { status: false, for: "" },
 };
 
 export const uiReducer = (state = UI_INITIAL_STATE, action) => {

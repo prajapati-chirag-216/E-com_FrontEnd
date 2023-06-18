@@ -1,12 +1,7 @@
 import React, { useReducer, useState, useEffect, useRef } from "react";
 import classes from "./Information.module.css";
 import { Box, TextField, Typography, MenuItem } from "@mui/material";
-import {
-  NavLink,
-  useNavigate,
-  useOutlet,
-  useOutletContext,
-} from "react-router-dom";
+import { NavLink, useNavigate, useOutletContext } from "react-router-dom";
 import Controller from "../Controller/Controller";
 import {
   nameReducer,
@@ -16,12 +11,14 @@ import {
   pinCodeReducer,
 } from "../../../shared/Reducers/InputReducers";
 import { textFeildStyle } from "../../../utils/function";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectOrderInfo } from "../../../store/Order/order.selector";
+
 const Information = () => {
   const props = useOutletContext();
   const countryRef = useRef();
   const stateRef = useRef();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const navigateHandler = () => navigate("/cart");
   const orderInfo = useSelector(selectOrderInfo);
@@ -54,7 +51,7 @@ const Information = () => {
     isValid: null,
   });
   const [formIsValid, setFormIsValid] = useState(false);
-  const [InformationDetails, setInformationDetails] = useState(null);
+  const [informationDetails, setInformationDetails] = useState(null);
 
   const firstNameChangeHandler = (event) => {
     dispatchFirstName({ type: "USER_INPUT", val: event.target.value });
@@ -108,7 +105,7 @@ const Information = () => {
         pinCodeIsValid;
       setFormIsValid(formValidity);
       if (formValidity) {
-        const InformationDetails = {
+        const informationData = {
           contactInformation: {
             email: emailState.value,
             phoneNumber: phoneNoState.value,
@@ -122,7 +119,7 @@ const Information = () => {
             pinNumber: pinCodeState.value,
           },
         };
-        setInformationDetails(InformationDetails);
+        setInformationDetails(informationData);
       }
     }, 500);
     return () => {
@@ -141,33 +138,36 @@ const Information = () => {
     countryRef.current.value = orderInfo?.shippingAddress?.country || "India";
     stateRef.current.value = orderInfo?.shippingAddress?.state || "Gujrat";
     dispatchFirstName({
-      type: "USER_INPUT",
+      type: "INPUT_FETCH",
       val: orderInfo?.shippingAddress?.userName?.split(" ")[0] || "",
     });
     dispatchLastName({
-      type: "USER_INPUT",
+      type: "INPUT_FETCH",
       val: orderInfo?.shippingAddress?.userName?.split(" ")[1] || "",
     });
     dispatchEmail({
-      type: "USER_INPUT",
+      type: "INPUT_FETCH",
       val: orderInfo?.contactInformation?.email || "",
     });
     dispatchPhoneNo({
-      type: "USER_INPUT",
+      type: "INPUT_FETCH",
       val: orderInfo?.contactInformation?.phoneNumber || "",
     });
     dispatchCityName({
-      type: "USER_INPUT",
+      type: "INPUT_FETCH",
       val: orderInfo?.shippingAddress?.city || "",
     });
     dispatchAddress({
-      type: "USER_INPUT",
+      type: "INPUT_FETCH",
       val: orderInfo?.shippingAddress?.address || "",
     });
     dispatchPinCode({
-      type: "USER_INPUT",
+      type: "INPUT_FETCH",
       val: orderInfo?.shippingAddress?.pinNumber || "",
     });
+    return () => {
+      console.log("informationDetails ", informationDetails);
+    };
   }, []);
 
   const validateFormHandler = async (event) => {
@@ -363,7 +363,7 @@ const Information = () => {
         </form>
       </div>
       <Controller
-        informationDetails={InformationDetails}
+        informationDetails={informationDetails}
         returnTo="cart"
         continueTo="Continue to shipping"
         onNextPage={props.onPageChange.bind(null, 1)}

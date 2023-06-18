@@ -77,15 +77,11 @@ export async function loader(string) {
 
   try {
     if (typeof string === "object") {
-      console.log(3)
-      console.log(catagoryId)
       response = await fetchProduct(catagoryId);
     } else {
-      console.log(2)
       response = await fetchFilteredProducts(catagoryId, string);
     }
   } catch (err) {
-    console.log(1)
     throw err;
   }
 

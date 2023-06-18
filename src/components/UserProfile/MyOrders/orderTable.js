@@ -162,7 +162,6 @@ const columns = [
 
 const OrderTable = ({ orderData }) => {
   const [rows, setRows] = useState([]);
-  console.log(rows);
   useEffect(() => {
     setRows(
       orderData.orderedItems?.map((order) => ({

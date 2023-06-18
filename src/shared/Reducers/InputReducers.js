@@ -1,4 +1,15 @@
+import { formateData, formateDate } from "../../utils/function";
+
 export const nameReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    return {
+      value: action.val.trim(),
+      isValid:
+        action.val.trim().length == 0
+          ? null
+          : action.val.trim().length > 5 && action.val.trim().length <= 10,
+    };
+  }
   if (action.type === "USER_INPUT") {
     return {
       value: action.val.trim(),
@@ -14,6 +25,13 @@ export const nameReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 export const emailReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    return {
+      value: action.val.trim(),
+      isValid:
+        action.val.trim().length == 0 ? null : action.val.trim().includes("@"),
+    };
+  }
   if (action.type === "USER_INPUT") {
     return {
       value: action.val.trim(),
@@ -30,6 +48,17 @@ export const emailReducer = (state, action) => {
 };
 
 export const passwordReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    return {
+      value: action.val.trim(),
+      isValid:
+        action.val.trim().length == 0
+          ? null
+          : action.val.trim().length >= 6 &&
+            action.val.trim().length <= 10 &&
+            !action.val.trim().toLowerCase().includes("password"),
+    };
+  }
   if (action.type === "USER_INPUT") {
     return {
       value: action.val,
@@ -51,41 +80,19 @@ export const passwordReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 
-// export const phoneNoReducer = (state, action) => {
-//   if (action.type === "USER_INPUT") {
-//     if (action.val.trim().length >= 11) {
-//       return { value: action.val.trim().slice(0, 10), isValid: true };
-//     }
-//     return {
-//       value: action.val.trim(),
-//       isValid: action.val.trim().length === 10,
-//     };
-//   }
-//   if (action.type === "INPUT_BLUR") {
-//     return {
-//       value: state.value.trim(),
-//       isValid: state.value.trim().length === 10,
-//     };
-//   }
-//   return { value: "", isValid: null };
-// };
 export const phoneNoReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    const formattedPhoneNumber = formateData(action.val, "-", 10);
+    return {
+      value: formattedPhoneNumber,
+      isValid:
+        action.val.trim().length == 0
+          ? null
+          : formattedPhoneNumber.length === 12,
+    };
+  }
   if (action.type === "USER_INPUT") {
-    let phoneNumber = action.val.replace(/\s/g, "").replace(/\D/g, "");
-
-    let formattedPhoneNumber = "";
-
-    for (let i = 0; i < phoneNumber.length; i++) {
-      formattedPhoneNumber += phoneNumber[i];
-      if ((i + 1) % 4 === 0 && i !== phoneNumber.length - 1) {
-        formattedPhoneNumber += "-";
-      }
-    }
-
-    if (phoneNumber.length > 10) {
-      phoneNumber = phoneNumber.slice(0, 9);
-      formattedPhoneNumber = formattedPhoneNumber.slice(0, 12);
-    }
+    const formattedPhoneNumber = formateData(action.val, "-", 10);
     return {
       value: formattedPhoneNumber,
       isValid: formattedPhoneNumber.length === 12,
@@ -100,6 +107,15 @@ export const phoneNoReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 export const generalReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    return {
+      value: action.val,
+      isValid:
+        action.val.trim().length == 0
+          ? null
+          : action.val.length > 0 && action.val.length < 30,
+    };
+  }
   if (action.type === "USER_INPUT") {
     return {
       value: action.val,
@@ -115,6 +131,13 @@ export const generalReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 export const pinCodeReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    return {
+      value: action.val.trim(),
+      isValid:
+        action.val.trim().length == 0 ? null : action.val.trim().length === 6,
+    };
+  }
   if (action.type === "USER_INPUT") {
     if (action.val.trim().length === 7) {
       return { value: state.value.trim(), isValid: true };
@@ -134,22 +157,18 @@ export const pinCodeReducer = (state, action) => {
 };
 
 export const cardNoReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    const formattedCardNumber = formateData(action.val, " ", 12);
+    return {
+      value: action.val.trim(),
+      isValid:
+        action.val.trim().length == 0
+          ? null
+          : formattedCardNumber.length === 14,
+    };
+  }
   if (action.type === "USER_INPUT") {
-    let cardNumber = action.val.replace(/\s/g, "").replace(/\D/g, "");
-
-    let formattedCardNumber = "";
-
-    for (let i = 0; i < cardNumber.length; i++) {
-      formattedCardNumber += cardNumber[i];
-      if ((i + 1) % 4 === 0 && i !== cardNumber.length - 1) {
-        formattedCardNumber += " ";
-      }
-    }
-
-    if (cardNumber.length > 12) {
-      cardNumber = cardNumber.slice(0, 11);
-      formattedCardNumber = formattedCardNumber.slice(0, 14);
-    }
+    const formattedCardNumber = formateData(action.val, " ", 12);
     return {
       value: formattedCardNumber,
       isValid: formattedCardNumber.length === 14,
@@ -164,6 +183,15 @@ export const cardNoReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 export const cvvReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    return {
+      value: action.val.trim(),
+      isValid:
+        action.val.trim().length == 0
+          ? null
+          : action.val.trim().length >= 3 && action.val.trim().length <= 4,
+    };
+  }
   if (action.type === "USER_INPUT") {
     if (action.val.trim().length === 5) {
       return { value: state.value.trim(), isValid: true };
@@ -183,25 +211,15 @@ export const cvvReducer = (state, action) => {
 };
 
 export const expiryDateReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    const { tempDate, isValid } = formateDate(action.val);
+    return {
+      value: tempDate,
+      isValid: action.val.trim().length == 0 ? null : isValid,
+    };
+  }
   if (action.type === "USER_INPUT") {
-    let extractedDate = action.val.replace(/\s/g, "").replace(/\D/g, "");
-
-    let tempDate = "";
-
-    for (let i = 0; i < extractedDate.length; i++) {
-      tempDate += extractedDate[i];
-
-      if (tempDate.length === 2) {
-        tempDate += "/";
-      }
-    }
-    let newDate = tempDate.split("/");
-
-    let isValid = newDate[0] !== "00" && +newDate[0] <= 12 && +newDate[1] > 23; // letter we will change to currunt time
-    isValid = isValid && newDate.join("").length === 4;
-    if (tempDate.length > 5) {
-      tempDate = tempDate.slice(0, 5);
-    }
+    const { tempDate, isValid } = formateDate(action.val);
     return {
       value: tempDate,
       isValid: isValid,

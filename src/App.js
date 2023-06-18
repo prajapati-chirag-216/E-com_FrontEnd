@@ -59,7 +59,7 @@ const router = createBrowserRouter(
           <PrivateRoutes message="Access denied! You don't have permissions for this page." />
         }
       >
-        <Route path="/success" element={<Success forPasswordReset={true} />} />
+        <Route path="/success" element={<Success />} />
       </Route>
       <Route
         element={

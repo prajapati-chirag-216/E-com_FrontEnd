@@ -6,7 +6,6 @@ export const useRefreshToken = () => {
   const dispatch = useDispatch();
   const refresh = async () => {
     const response = await getAccessToken();
-    console.log(response,'k')
     dispatch(setAccessToken(response.accessToken));
   };
   return refresh;

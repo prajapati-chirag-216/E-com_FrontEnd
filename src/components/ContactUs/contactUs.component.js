@@ -11,108 +11,102 @@ import { startConfetti } from "../../utils/confetti";
 const ContactUs = () => {
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-
- 
+  useEffect(() => {
     startConfetti();
-    console.log('lkjjo')
-
-  },[])
+  }, []);
 
   return (
     <Fragment>
-
       <canvas id="world"></canvas>
-    <div>
-      <div className="contactUsContainer">
-        <div className="headerContainer">
-          <h2 style={{ textTransform: "uppercase", letterSpacing: "3px" }}>
-            {" "}
-            contact Us
-          </h2>
-
-          <h3 style={{ letterSpacing: "2px" }}>
-            Feel Free To Call Us at{" "}
-            <span style={{ color: "gray" }}>
-              +917405547234 Or +917487935333
-            </span>{" "}
-            (10:00 am To 6:00 pm){" "}
-          </h3>
-        </div>
-
-        <div className="addressContainer">
-          <Card variant="outlined" style={{ padding: "1rem" }}>
-            <h2 style={{ textDecoration: "underline" }}>
-              Postal Address For Indian Customers:-
+      <div>
+        <div className="contactUsContainer">
+          <div className="headerContainer">
+            <h2 style={{ textTransform: "uppercase", letterSpacing: "3px" }}>
+              {" "}
+              contact Us
             </h2>
-            <ul>
-              <li>45/360,Sunrise Tower,</li>
-              <li>Ahmedabad,</li>
-              <li>Gujrat,</li>
-              <li>India,</li>
-              <li>380064</li>
-            </ul>
-          </Card>
-        </div>
 
-        <div className="MessageFormContainer">
-          <h2 style={{ textTransform: "uppercase", letterSpacing: "3px" }}>
-            send us your message
-          </h2>
+            <h3 style={{ letterSpacing: "2px" }}>
+              Feel Free To Call Us at{" "}
+              <span style={{ color: "gray" }}>
+                +917405547234 Or +917487935333
+              </span>{" "}
+              (10:00 am To 6:00 pm){" "}
+            </h3>
+          </div>
 
-          <Form method="post" action={"/contactus"}>
-            <div className="formContainer">
-              <div className="UpperPartContainer">
+          <div className="addressContainer">
+            <Card variant="outlined" style={{ padding: "1rem" }}>
+              <h2 style={{ textDecoration: "underline" }}>
+                Postal Address For Indian Customers:-
+              </h2>
+              <ul>
+                <li>45/360,Sunrise Tower,</li>
+                <li>Ahmedabad,</li>
+                <li>Gujrat,</li>
+                <li>India,</li>
+                <li>380064</li>
+              </ul>
+            </Card>
+          </div>
+
+          <div className="MessageFormContainer">
+            <h2 style={{ textTransform: "uppercase", letterSpacing: "3px" }}>
+              send us your message
+            </h2>
+
+            <Form method="post" action={"/contactus"}>
+              <div className="formContainer">
+                <div className="UpperPartContainer">
+                  <TextField
+                    style={{ width: "19rem" }}
+                    name="name"
+                    id="outlined-basic"
+                    label="Your Name"
+                    variant="outlined"
+                  />
+                  <TextField
+                    style={{ width: "19rem" }}
+                    name="email"
+                    id="outlined-basic"
+                    label="Your Email"
+                    variant="outlined"
+                  />
+                </div>
                 <TextField
-                  style={{ width: "19rem" }}
-                  name="name"
+                  name="phone"
                   id="outlined-basic"
-                  label="Your Name"
+                  label="Your Phone(optional)"
                   variant="outlined"
                 />
                 <TextField
-                  style={{ width: "19rem" }}
-                  name="email"
-                  id="outlined-basic"
-                  label="Your Email"
-                  variant="outlined"
+                  name="message"
+                  id="outlined-multiline-static"
+                  label="Your Message"
+                  multiline
+                  rows={7}
                 />
-              </div>
-              <TextField
-                name="phone"
-                id="outlined-basic"
-                label="Your Phone(optional)"
-                variant="outlined"
-              />
-              <TextField
-                name="message"
-                id="outlined-multiline-static"
-                label="Your Message"
-                multiline
-                rows={7}
-              />
 
-              <Button
-                variant="contained"
-                type="submit"
-                fullWidth
-                sx={{
-                  padding: "1rem",
-                  backgroundColor: "black",
-                  "&:hover": {
+                <Button
+                  variant="contained"
+                  type="submit"
+                  fullWidth
+                  sx={{
+                    padding: "1rem",
                     backgroundColor: "black",
-                  },
-                  borderRadius: "0rem",
-                }}
-              >
-                Send Your Message
-              </Button>
-            </div>
-          </Form>
+                    "&:hover": {
+                      backgroundColor: "black",
+                    },
+                    borderRadius: "0rem",
+                  }}
+                >
+                  Send Your Message
+                </Button>
+              </div>
+            </Form>
+          </div>
         </div>
       </div>
-    </div>
-
     </Fragment>
   );
 };

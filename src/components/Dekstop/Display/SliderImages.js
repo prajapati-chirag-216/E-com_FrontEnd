@@ -3,32 +3,19 @@ import { motion } from "framer-motion";
 import classes from "./SliderImages.module.css";
 import { Button, Typography } from "@mui/material";
 import { fetchSingleCategoryByName } from "../../../utils/api";
-import { useNavigate } from "react-router-dom";
 
 const transition = { type: "twin", duration: 1 };
 
 const SliderImages = (props) => {
+  const handleShopButtonClick = async () => {
+    try {
+      const id = await fetchSingleCategoryByName(props.categoryname);
 
-const navigate = useNavigate()
-
-
-const handleShopButtonClick = async() =>{
-     
-     try{
-        const id = await fetchSingleCategoryByName(props.categoryname)
-
-         if(id){ 
-
-           window.open(`/product/${id}`)
-             
-         }
-     }catch(err){
-          
-     }
-         
-}
-
-
+      if (id) {
+        window.open(`/product/${id}`);
+      }
+    } catch (err) {}
+  };
 
   return (
     <Fragment>
@@ -40,7 +27,7 @@ const handleShopButtonClick = async() =>{
           exit={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
           src={props.img}
-          alt=""
+          alt="unable to load"
           className={classes["motion-img"]}
         />
       </div>

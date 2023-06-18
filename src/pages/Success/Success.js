@@ -1,15 +1,27 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import classes from "./Success.module.css";
 import { Container } from "@mui/system";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Typography, useMediaQuery } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setClearCart, setIsCartOpen } from "../../store/cart/cart.action";
+import { useEffect } from "react";
 
-const Success = (props) => {
+const Success = () => {
+  const props = useOutletContext();
   const matches = useMediaQuery("(max-width:700px)");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const navigateHandler = (location) => {
     navigate(location, { replace: true });
   };
+  console.log("insuccess");
+  useEffect(() => {
+    if (props.for === "order") {
+      dispatch(setClearCart());
+      dispatch(setIsCartOpen(false));
+    }
+  }, [dispatch, props.for]);
   return (
     <Container
       maxWidth="sm"
@@ -21,7 +33,7 @@ const Success = (props) => {
       }}
     >
       <header className={classes.header}>
-        {props.forPasswordReset
+        {props.for === "password"
           ? "Instructions have been Emailed"
           : "Order placed"}
       </header>

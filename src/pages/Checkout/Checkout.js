@@ -7,7 +7,7 @@ import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectOrderInfo } from "../../store/Order/order.selector";
 import { selectCartItems } from "../../store/cart/cart.selector";
-import { setSnackBar, setSuccess } from "../../store/ui/ui.action";
+import { setSuccess } from "../../store/ui/ui.action";
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
@@ -16,6 +16,7 @@ const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
+
   const changePageHandler = (page) => {
     let location;
     if (page == 0) {
@@ -25,17 +26,21 @@ const Checkout = () => {
     } else if (page == 2) {
       location = "/checkout/payment";
     } else if (page == 3) {
-      dispatch(setSuccess(true));
+      dispatch(setSuccess({ status: true, for: "order" }));
       location = "/success";
     }
-    navigate(location);
+    navigate(location, { replace: true });
     setCurrentPage(page);
   };
+
   useEffect(() => {
-    if (!orderInfo?.contactInformation || !orderInfo?.shippingAddress) {
+    if (
+      (!orderInfo?.contactInformation || !orderInfo?.shippingAddress) &&
+      currentPage > 0
+    ) {
       navigate("/checkout");
       setCurrentPage(0);
-    } else if (!orderInfo?.shippingMethod) {
+    } else if (!orderInfo?.shippingMethod && currentPage > 1) {
       navigate("/checkout/shipping");
       setCurrentPage(1);
     }
@@ -46,17 +51,10 @@ const Checkout = () => {
     } else if (location.pathname.endsWith("/payment")) {
       setCurrentPage(2);
     }
+    return () => {
+      console.log("leave");
+    };
   }, []);
-  if (cartItems.length == 0) {
-    dispatch(
-      setSnackBar({
-        status: true,
-        severity: "info",
-        message: "You cart is Empty",
-      })
-    );
-    return <Navigate to="/home" />;
-  }
 
   return (
     <Box
@@ -72,14 +70,12 @@ const Checkout = () => {
           sx={{
             letterSpacing: "2px",
             fontWeight: "bold",
-            textTransform: "uppercase",
             fontFamily: "Georgia, 'Times New Roman', Times, serif",
           }}
         >
-          one Center
+          shopZee
         </Typography>
         <SimpleStepper currentPage={currentPage + 1} />
-        {console.log("ran")}
         <Outlet context={{ onPageChange: changePageHandler }} />
       </div>
       <div className={classes["right-div"]}>

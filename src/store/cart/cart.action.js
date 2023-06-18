@@ -60,7 +60,6 @@ const clearCartItem = (cartItems, itemToBeCleared) => {
   return updatedCartItems;
 };
 export const setClearCart = () => {
-  // localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
   localStorage.removeItem("cartItems");
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, []);
 };

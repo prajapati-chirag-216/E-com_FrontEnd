@@ -13,6 +13,7 @@ import {
 } from "../../../store/Order/order.action";
 import StatusButton from "../../../shared/components/StatusButton/StatusButton";
 import { selectOrderInfo } from "../../../store/Order/order.selector";
+import { setClearCart } from "../../../store/cart/cart.action";
 const Controller = (props) => {
   const cartItems = useSelector(selectCartItems);
   const total = useSelector(selectNewCartTotal);
@@ -45,6 +46,7 @@ const Controller = (props) => {
       } catch (err) {
         throw err;
       }
+      dispatch(setOrderInfo({}));
     }
     props.onNextPage();
     setIsLoading({ status: false });

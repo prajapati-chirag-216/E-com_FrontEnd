@@ -5,10 +5,9 @@ import { selectSuccess } from "../store/ui/ui.selector";
 
 const PrivateRoutes = (props) => {
   const success = useSelector(selectSuccess);
-  console.log(success);
   try {
-    if (success) {
-      return <Outlet />;
+    if (success.status) {
+      return <Outlet context={{ for: success.for }} />;
     }
     throw { message: props.message, status: 404 };
   } catch (err) {

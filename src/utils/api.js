@@ -240,7 +240,6 @@ export const fetchSingleCategoryByName = async (name) => {
 
     const response = await AxiosInstance(config);
 
-    console.log(response);
     return response;
   } catch (err) {
     throw err;

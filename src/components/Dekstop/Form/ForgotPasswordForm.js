@@ -91,7 +91,7 @@ export async function action({ request }) {
   } catch (err) {
     return err;
   }
-  store.dispatch(setSuccess(true));
+  store.dispatch(setSuccess({ status: true, for: "password" }));
   return redirect("/success");
 }
 

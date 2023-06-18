@@ -16,6 +16,6 @@ export const setModelState = (boolean) => {
 export const setUser = (object) => {
   return createAction(ui_types.SET_USER, object);
 };
-export const setSuccess = (boolean) => {
-  return createAction(ui_types.SET_SUCCESS, boolean);
+export const setSuccess = (string) => {
+  return createAction(ui_types.SET_SUCCESS, string);
 };
