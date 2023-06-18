@@ -6,11 +6,12 @@ import { Typography, useMediaQuery } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setClearCart, setIsCartOpen } from "../../store/cart/cart.action";
 import {startConfetti} from '../../utils/confetti'
-import { useEffect } from "react";
+import { Fragment, useEffect,useState } from "react";
 
 const Success = () => {
   const props = useOutletContext();
   const matches = useMediaQuery("(max-width:700px)");
+  const[startAnimation,setstartAnimation] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const navigateHandler = (location) => {
@@ -18,35 +19,31 @@ const Success = () => {
   };
   
 
-  useEffect(() =>{
+ 
+  useEffect(()=>{
 
+   startConfetti();
 
-    if(props.isforPasswordReset === undefined){
+   setTimeout(()=>{
 
+     document.getElementById('world').style.display = 'none'
 
-      setTimeout(() =>{
-
-        startConfetti()
-
-      },5000)
-       
-         
-    }
-
-
+   },5000)
 
   },[])
-
-
+  
+  
 
 
   useEffect(() => {
-    if (props.for === "order") {
+    if (props?.for === "order") {
       dispatch(setClearCart());
       dispatch(setIsCartOpen(false));
     }
-  }, [dispatch, props.for]);
+  }, [dispatch, props?.for]);
   return (
+    <Fragment>
+        <canvas id="world"></canvas>
     <Container
       maxWidth="sm"
       sx={{
@@ -111,6 +108,7 @@ const Success = () => {
         {props.forPasswordReset ? "Back to login" : "Go to Profile"}
       </Typography>
     </Container>
+    </Fragment>
   );
 };
 
