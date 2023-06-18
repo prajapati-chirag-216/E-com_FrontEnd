@@ -27,11 +27,13 @@ const Success = () => {
 
     if(urlArray[urlArray.length-1] === 'success'){
 
+
       startConfetti();
+      document.getElementById('world').style.visibility = 'visible'
    
       setTimeout(()=>{
    
-        document.getElementById('world').style.display = 'none'
+        document.getElementById('world').style.display = 'hidden'
    
       },5000)
 
