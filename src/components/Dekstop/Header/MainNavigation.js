@@ -80,6 +80,7 @@ const MainNavigation = () => {
   const dispatch = useDispatch();
   const itemCount = useSelector(selectNewCartCount);
   const [userProfile, setUserProfile] = useState(null);
+  const[showSearchBar,setShowSearchBar] = useState(true);
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -97,7 +98,28 @@ const MainNavigation = () => {
         throw err;
       }
     })();
+
+    console.log(1)
+  
   }, []);
+
+useEffect(() =>{
+
+
+  let url = window.location.href
+
+  let urlArray = url.split("/");
+
+  if(urlArray[urlArray.length-1] === 'home' || (urlArray.length>2 && urlArray[urlArray.length-2] === 'product')){
+    setShowSearchBar(true)
+  }else{
+    setShowSearchBar(false)
+  }
+ 
+
+},[window.location.href])
+
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -135,7 +157,9 @@ const MainNavigation = () => {
       })
     );
     setUserProfile(null);
-    navigate("/login");
+    window.history.replaceState({}, document.title, '/login');
+
+    navigate("/login",{replace:true});
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -230,7 +254,7 @@ const MainNavigation = () => {
       >
         <Toolbar>
           {matches && <Drawer />}
-          <Search
+         { showSearchBar && <Search
             onChange={(event) => dispatch(setSearchField(event.target.value))}
           >
             <SearchIconWrapper>
@@ -240,7 +264,7 @@ const MainNavigation = () => {
               placeholder="Search Category or Product"
               inputProps={{ "aria-label": "search" }}
             />
-          </Search>
+          </Search>}
 
           <Box
             sx={{
