@@ -19,7 +19,7 @@ const ProtectedRoutes = (props) => {
           severity: "info",
         })
       );
-    } else if ( !props.isProfilePage && cartItems.length === 0) {
+    } else if ( !props.isProfilePage  && cartItems.length === 0) {
       dispatch(
         setSnackBar({
           status: true,
@@ -33,7 +33,7 @@ const ProtectedRoutes = (props) => {
     <Suspense fallback={<LoadingSpinner />}>
       <Await resolve={loaderData}>
         {(data) =>
-          data?.userProfile && cartItems.length !== 0 ? (
+          data?.userProfile ? (
             <Outlet />
           ) : (
             <Navigate to={!data?.userProfile ? "/login" : "/home"} />
@@ -46,6 +46,7 @@ const ProtectedRoutes = (props) => {
 export async function loader() {
   let res;
   try {
+
     res = fetchUserProfile();
   } catch (err) {
     throw err;
