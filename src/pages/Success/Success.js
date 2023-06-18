@@ -5,8 +5,9 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Typography, useMediaQuery } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setClearCart, setIsCartOpen } from "../../store/cart/cart.action";
-import {startConfetti} from '../../utils/confetti'
 import { Fragment, useEffect,useState } from "react";
+import ConfettiGenerator from 'confetti-js';
+import './Success.module.css'
 
 const Success = () => {
   const props = useOutletContext();
@@ -28,14 +29,30 @@ const Success = () => {
     if(urlArray[urlArray.length-1] === 'success'){
 
 
-      document.getElementById('world').style.display = 'block'
-      startConfetti();
-   
+      const canvasSettings = {
+        target: 'world',
+        max: 200,
+        props: ['square', 'triangle', 'line', 'circle'],
+        colors: [
+          [165, 104, 246],
+          [230, 61, 135],
+          [0, 199, 228],
+          [253, 214, 126],
+        ],
+        rotate: true,
+      };
+      
+      
+      const canvas = new ConfettiGenerator(canvasSettings);
+      
+      
+      
+      canvas.render();
+
       setTimeout(()=>{
-   
-        document.getElementById('world').style.display = 'none'
-   
+              canvas.clear();
       },5000)
+      
 
     }
 
@@ -53,7 +70,7 @@ const Success = () => {
   }, [dispatch, props?.for]);
   return (
     <Fragment>
-        <canvas id="world"></canvas>
+        <canvas style={{zIndex:'-1'}} id="world"></canvas>
     <Container
       maxWidth="sm"
       sx={{

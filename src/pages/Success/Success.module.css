@@ -7,7 +7,9 @@
     font-weight: 500;
     display: flex;
     flex-direction: column;
-    gap: 0.7rem
+    gap: 0.7rem;
+    position: relative;
+    z-index: 10;
 }
 
 #world{
@@ -18,8 +20,10 @@
     height: 100vh;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: none;
     visibility: visible;
+   
+
  }
 
 .header {

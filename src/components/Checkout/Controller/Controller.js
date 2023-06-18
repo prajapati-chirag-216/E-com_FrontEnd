@@ -46,6 +46,7 @@ const Controller = (props) => {
 
       try {
         await makeOrder(order);
+        
       } catch (err) {
         throw err;
       }
