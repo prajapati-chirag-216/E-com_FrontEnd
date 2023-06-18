@@ -47,7 +47,8 @@ export async function loader() {
   let res;
   try {
 
-    res = fetchUserProfile();
+    res = await fetchUserProfile();
+    
   } catch (err) {
     throw err;
   }
