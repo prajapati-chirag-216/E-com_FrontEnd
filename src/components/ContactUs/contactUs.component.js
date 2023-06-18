@@ -7,13 +7,11 @@ import { setSnackBar } from "../../store/ui/ui.action";
 import { useDispatch } from "react-redux";
 import { store } from "../../store/store";
 import { useEffect } from "react";
-import { startConfetti } from "../../utils/confetti";
+
 const ContactUs = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    startConfetti();
-  }, []);
+  
 
   return (
     <Fragment>

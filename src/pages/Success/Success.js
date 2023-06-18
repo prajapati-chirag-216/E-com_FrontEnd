@@ -5,6 +5,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Typography, useMediaQuery } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setClearCart, setIsCartOpen } from "../../store/cart/cart.action";
+import {startConfetti} from '../../utils/confetti'
 import { useEffect } from "react";
 
 const Success = () => {
@@ -15,7 +16,30 @@ const Success = () => {
   const navigateHandler = (location) => {
     navigate(location, { replace: true });
   };
-  console.log("insuccess");
+  
+
+  useEffect(() =>{
+
+
+    if(props.isforPasswordReset === undefined){
+
+
+      setTimeout(() =>{
+
+        startConfetti()
+
+      },5000)
+       
+         
+    }
+
+
+
+  },[])
+
+
+
+
   useEffect(() => {
     if (props.for === "order") {
       dispatch(setClearCart());
