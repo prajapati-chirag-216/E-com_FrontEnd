@@ -29,11 +29,11 @@ const Success = () => {
 
 
       startConfetti();
-      document.getElementById('world').style.visibility = 'visible'
+      document.getElementById('world').style.visibility = 'block'
    
       setTimeout(()=>{
    
-        document.getElementById('world').style.display = 'hidden'
+        document.getElementById('world').style.display = 'none'
    
       },5000)
 
