@@ -46,7 +46,6 @@ const Controller = (props) => {
 
       try {
         await makeOrder(order);
-        dispatch(setEmptyCart([]));
       } catch (err) {
         throw err;
       }
