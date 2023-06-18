@@ -28,8 +28,8 @@ const Success = () => {
     if(urlArray[urlArray.length-1] === 'success'){
 
 
+      document.getElementById('world').style.display = 'block'
       startConfetti();
-      document.getElementById('world').style.visibility = 'block'
    
       setTimeout(()=>{
    
