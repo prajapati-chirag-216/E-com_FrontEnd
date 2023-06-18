@@ -103,7 +103,7 @@ export const generalReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
     return {
       value: action.val,
-      isValid: action.val.length > 10 && action.val.length < 100,
+      isValid: action.val.length > 10 && action.val.length < 300,
     };
   }
   if (action.type === "INPUT_BLUR") {
