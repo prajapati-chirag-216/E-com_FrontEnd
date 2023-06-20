@@ -1,7 +1,7 @@
 import { fetchUserOrders } from "../../../utils/api";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import OrderTable from "./orderTable";
 import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
 

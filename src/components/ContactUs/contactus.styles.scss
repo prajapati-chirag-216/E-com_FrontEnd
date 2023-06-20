@@ -1,64 +1,38 @@
-
-.contactUsContainer{
-
-     display: flex;
-     flex-direction: column;
-     row-gap: 8rem;
-      .headerContainer{
-
-           display: flex;
-           justify-content: center;
-           flex-direction: column;
-           align-items: center;
-        //    align-self: center;
-            
-      }
-
-    .MessageFormContainer{
-
-         display: flex;
-         flex-direction: column;
-         justify-content: center;
-         align-items: center; 
-         row-gap: 4rem;
-
-        Form{
-
-
-            .formContainer{
-    
-               display: flex;
-               flex-direction: column;
-               row-gap: 2rem;
-               width: 40rem;
-
-               .UpperPartContainer{
-                 
-                  display: flex;
-                  column-gap: 2rem;
-                  
-                 
-
-                  
-               }
-    
-            }
-
-        }
-
-
-
-              
+.contactUsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin-top: 4rem;
+  .headerContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    .cridentials-info {
+      color: gray;
+      text-decoration: underline;
     }
-}
+  }
+  .MessageFormContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    Form {
+      .formContainer {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+        width: 40rem;
 
-
-#world{
-
-   position: absolute;
-   width: 100%;
-   height: 100vh;
-   margin: 0;
-   padding: 0;
-   overflow: hidden;
+        .UpperPartContainer {
+          display: flex;
+          column-gap: 2rem;
+        }
+      }
+    }
+  }
 }

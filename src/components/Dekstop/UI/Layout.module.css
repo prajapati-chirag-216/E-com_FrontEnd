@@ -4,8 +4,9 @@
     align-items: center;
     gap: 5rem;
     overflow: hidden;
+
 }
 
-::-webkit-scrollbar {
+.main-div::-webkit-scrollbar {
     display: none;
 }

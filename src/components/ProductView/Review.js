@@ -14,13 +14,14 @@ import { selectIsLoading } from "../../store/ui/ui.selector";
 import classes from "./Review.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  descriptionReducer,
   generalReducer,
   nameReducer,
 } from "../../shared/Reducers/InputReducers";
 const Review = () => {
   const [isFormOpen, setisFormOpen] = useState(false);
   const [starRating, setStartRating] = useState(0);
-  const [ratingError, setRatingError] = useState(true);
+  const [ratingError, setRatingError] = useState(false);
   const [submitMessage, setsubmiMessage] = useState(false);
   const [reviews, setReviews] = useState([]);
   const location = useLocation();
@@ -40,10 +41,13 @@ const Review = () => {
     value: "",
     isValid: null,
   });
-  const [descriptionState, dispatchDescription] = useReducer(generalReducer, {
-    value: "",
-    isValid: null,
-  });
+  const [descriptionState, dispatchDescription] = useReducer(
+    descriptionReducer,
+    {
+      value: "",
+      isValid: null,
+    }
+  );
 
   const [formIsValid, setFormIsValid] = useState(false);
 
@@ -114,9 +118,11 @@ const Review = () => {
     }
   };
   useEffect(() => {
-    let res;
     const fetch = async () => {
-      res = await fetchProductReviews(id);
+      const res = await fetchProductReviews(id);
+      const { userProfile } = await fetchUserProfile();
+      const exist = res.find((review) => review.userId === userProfile?._id);
+      if (exist) setsubmiMessage(true);
       setReviews(res);
     };
     fetch()
@@ -134,18 +140,23 @@ const Review = () => {
     }
   }, [actionData]);
 
-  useEffect(() => {
-    if (submitMessage) {
-      setTimeout(() => {
-        setsubmiMessage(false);
-      }, 3000);
-    }
-  }, [submitMessage]);
-
   return (
     <div className={classes["lowerViewContainer"]}>
+      <Typography
+        variant="h5"
+        sx={{
+          color: "black",
+          display: "flex",
+          justifyContent: "center",
+          letterSpacing: "2px",
+          color: "rgb(56 52 52 / 68%)",
+          fontSize: "1.5rem",
+          borderBottom: "1px solid black",
+        }}
+      >
+        REVIEWS
+      </Typography>
       <div className={classes["reviewListContainer"]}>
-        <h2 className={classes["title"]}>REVIEWS</h2>
         {isLoading && <LoadingSpinner />}
         {reviews.length === 0 ? (
           <Typography
@@ -214,7 +225,7 @@ const Review = () => {
 
       {submitMessage && !isFormOpen && (
         <div className={classes["successMessageConatiner"]}>
-          Your Review Submited Succsesfully!
+          Thanks For Your Precious Review
         </div>
       )}
 
@@ -264,7 +275,7 @@ const Review = () => {
             />
             {ratingError && (
               <Typography sx={{ color: "red", marginTop: "-1rem" }}>
-                Minimum critaria not match (Atleast half)
+                Minimum critaria not meet (Atleast half)
               </Typography>
             )}
             <Button
@@ -307,9 +318,6 @@ export async function action({ request }) {
   try {
     response = await postReview(id, reviewObj);
   } catch (err) {
-    if (err.response && err.response.status === 502) {
-      return err;
-    }
     throw err;
   }
   return response;

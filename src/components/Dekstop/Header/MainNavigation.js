@@ -80,7 +80,7 @@ const MainNavigation = () => {
   const dispatch = useDispatch();
   const itemCount = useSelector(selectNewCartCount);
   const [userProfile, setUserProfile] = useState(null);
-  const[showSearchBar,setShowSearchBar] = useState(true);
+  const [showSearchBar, setShowSearchBar] = useState(true);
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -99,26 +99,23 @@ const MainNavigation = () => {
       }
     })();
 
-    console.log(1)
-  
+    console.log(1);
   }, []);
 
-useEffect(() =>{
+  useEffect(() => {
+    let url = window.location.href;
 
+    let urlArray = url.split("/");
 
-  let url = window.location.href
-
-  let urlArray = url.split("/");
-
-  if(urlArray[urlArray.length-1] === 'home' || (urlArray.length>2 && urlArray[urlArray.length-2] === 'product')){
-    setShowSearchBar(true)
-  }else{
-    setShowSearchBar(false)
-  }
- 
-
-},[window.location.href])
-
+    if (
+      urlArray[urlArray.length - 1] === "home" ||
+      (urlArray.length > 2 && urlArray[urlArray.length - 2] === "product")
+    ) {
+      setShowSearchBar(true);
+    } else {
+      setShowSearchBar(false);
+    }
+  }, [window.location.href]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -157,9 +154,9 @@ useEffect(() =>{
       })
     );
     setUserProfile(null);
-    window.history.replaceState({}, document.title, '/login');
+    window.history.replaceState({}, document.title, "/login");
 
-    navigate("/login",{replace:true});
+    navigate("/login", { replace: true });
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -254,17 +251,21 @@ useEffect(() =>{
       >
         <Toolbar>
           {matches && <Drawer />}
-         { showSearchBar && <Search
-            onChange={(event) => dispatch(setSearchField(event.target.value))}
-          >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search Category or Product"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>}
+          {showSearchBar ? (
+            <Search
+              onChange={(event) => dispatch(setSearchField(event.target.value))}
+            >
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search Category or Product"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          ) : (
+            <div style={{ width: "296px" }} />
+          )}
 
           <Box
             sx={{
@@ -282,7 +283,18 @@ useEffect(() =>{
               fontFamily="'Times New Roman', Times, serif"
               // fontWeight="bold"
             >
-              shop<span style={{fontFamily:'Times New Roman',fontWeight:'bold',fontSize:'70px',color:'white'}}>Z</span>ee
+              shop
+              <span
+                style={{
+                  fontFamily: "Times New Roman",
+                  fontWeight: "bold",
+                  fontSize: "70px",
+                  color: "white",
+                }}
+              >
+                Z
+              </span>
+              ee
             </Typography>
             <Tabs />
           </Box>

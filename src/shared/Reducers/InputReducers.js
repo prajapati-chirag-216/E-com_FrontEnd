@@ -3,7 +3,7 @@ import { formateData, formateDate } from "../../utils/function";
 export const nameReducer = (state, action) => {
   if (action.type === "INPUT_FETCH") {
     return {
-      value: action.val.trim(),
+      value: action.val,
       isValid:
         action.val.trim().length == 0
           ? null
@@ -13,12 +13,12 @@ export const nameReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
     return {
       value: action.val,
-      isValid: action.val.trim().length > 5 && action.val.trim().length <= 20,
+      isValid: action.val.trim().length > 5 && action.val.trim().length <= 10,
     };
   }
   if (action.type === "INPUT_BLUR") {
     return {
-      value: state.value.trim(),
+      value: state.value,
       isValid: state.value.trim().length > 5 && state.value.trim().length <= 10,
     };
   }
@@ -119,7 +119,7 @@ export const generalReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
     return {
       value: action.val,
-      isValid: action.val.length > 10 && action.val.length < 300,
+      isValid: action.val.length > 0 && action.val.length < 30,
     };
   }
   if (action.type === "INPUT_BLUR") {
@@ -234,6 +234,34 @@ export const expiryDateReducer = (state, action) => {
     return {
       value: state.value,
       isValid: isValid,
+    };
+  }
+  return { value: "", isValid: null };
+};
+
+export const descriptionReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    return {
+      value: action.val,
+      isValid:
+        action.val.trim().length == 0
+          ? null
+          : action.val.length >= 40 && action.val.length <= 400,
+    };
+  }
+  if (action.type === "USER_INPUT") {
+    return {
+      value:
+        action.val.startsWith(" ") || action.val.endsWith("  ")
+          ? action.val.trim() + " "
+          : action.val,
+      isValid: action.val.length >= 40 && action.val.length <= 400,
+    };
+  }
+  if (action.type === "INPUT_BLUR") {
+    return {
+      value: state.value,
+      isValid: state.value.length >= 40 && state.value.length <= 400,
     };
   }
   return { value: "", isValid: null };

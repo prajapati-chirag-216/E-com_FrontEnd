@@ -28,9 +28,9 @@ const AboutUs = () => {
         align="center"
         sx={{
           color: "rgb(50,50,50)",
-          fontSize: "2rem",
+          fontSize: "1.6rem",
           fontWeight: "550",
-          letterSpacing: "1px",
+          letterSpacing: "1.5px",
           textTransform: "uppercase",
         }}
       >

@@ -1,12 +1,24 @@
 .cart-container {
-    /* background-color: aqua; */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     gap: 1rem;
     padding: 1rem 0rem;
     max-height: 40vh;
-    overflow: scroll;
+    overflow-y: scroll;
+}
+
+.cart-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.cart-container::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #c3bfbf44;
+}
+
+.cart-container::-webkit-scrollbar-thumb:hover {
+    background: #9c9c9c;
 }
 
 .item-container {

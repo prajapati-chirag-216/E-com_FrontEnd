@@ -100,6 +100,7 @@ export const postReview = async (id, reviewObj) => {
     method: "POST",
     url: `/productreview/${id}`,
     data: reviewObj,
+    withCredentials: true,
   };
   const response = await AxiosInstance(config);
   return { ...response, status: 200 };

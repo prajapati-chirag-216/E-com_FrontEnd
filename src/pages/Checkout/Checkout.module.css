@@ -7,8 +7,12 @@
     gap: 2rem;
     box-sizing: border-box;
     user-select: none;
-    overflow: scroll;
+    overflow-y: scroll;
     height: 100vh;
+}
+
+.left-div::-webkit-scrollbar {
+    display: none;
 }
 
 .right-div {

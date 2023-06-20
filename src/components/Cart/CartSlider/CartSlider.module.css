@@ -35,7 +35,11 @@
   flex-direction: column;
   gap: 2rem;
   flex: 16;
-  overflow: scroll;
+  overflow-y: scroll;
+}
+
+.cart-items::-webkit-scrollbar {
+  display: none;
 }
 
 .button-div {
