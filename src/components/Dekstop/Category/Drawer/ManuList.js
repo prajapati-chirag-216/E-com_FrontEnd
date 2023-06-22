@@ -7,7 +7,9 @@ import {
   ListItemText,
   Box,
 } from "@mui/material";
-import { Inbox, Dashboard, Category, Inventory2 } from "@mui/icons-material";
+import Home from '@mui/icons-material/Home';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import GroupsIcon from '@mui/icons-material/Groups';
 import { useNavigate } from "react-router-dom";
 const ManuList = (props) => {
   const navigate = useNavigate();
@@ -21,56 +23,44 @@ const ManuList = (props) => {
       <List>
         <ListItem disablePadding onClick={props.onClose}>
           <ListItemButton
-            sx={{ height: "100px", display: "flex", flexDirection: "column" }}
+            sx={{height: "100px", display: "flex", flexDirection: "column" }}
             onClick={() => {
-              navigate("/user");
+              navigate("/home");
             }}
           >
-            <ListItemIcon style={{ justifyContent: "center" }}>
-              <Dashboard fontSize="large" />
+            <ListItemIcon style={{ justifyContent: "center" ,transform:'scale(1.2)'}}>
+              <Home fontSize="large" />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" style={{ textAlign: "center" }} />
+            <ListItemText primary="Home" style={{ textAlign: "center" }} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding onClick={props.onClose}>
           <ListItemButton
             sx={{ height: "100px", display: "flex", flexDirection: "column" }}
             onClick={() => {
-              navigate("/user/customer");
+              navigate("/aboutus");
             }}
           >
             <ListItemIcon style={{ justifyContent: "center" }}>
-              <Category fontSize="large" />
+              < GroupsIcon fontSize="large" />
             </ListItemIcon>
-            <ListItemText primary="Customer" style={{ textAlign: "center" }} />
+            <ListItemText primary="About Us" style={{ textAlign: "center" }} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding onClick={props.onClose}>
           <ListItemButton
             sx={{ height: "100px", display: "flex", flexDirection: "column" }}
             onClick={() => {
-              navigate("/user/product");
+              navigate("/contactus");
             }}
           >
             <ListItemIcon style={{ justifyContent: "center" }}>
-              <Inventory2 fontSize="large" />
+              < QuestionAnswerIcon  fontSize="large" />
             </ListItemIcon>
-            <ListItemText primary="Product" style={{ textAlign: "center" }} />
+            <ListItemText primary="Contact Us" style={{ textAlign: "center" }} />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={props.onClose}>
-          <ListItemButton
-            sx={{ height: "100px", display: "flex", flexDirection: "column" }}
-            onClick={() => {
-              navigate("/user/order");
-            }}
-          >
-            <ListItemIcon style={{ justifyContent: "center" }}>
-              <Inbox fontSize="large" />
-            </ListItemIcon>
-            <ListItemText primary="Order" style={{ textAlign: "center" }} />
-          </ListItemButton>
-        </ListItem>
+  
       </List>
     </Box>
   );

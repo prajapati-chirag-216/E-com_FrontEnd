@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import SliderImages from "./SliderImages";
 import { fetchDisplayImage } from "../../../utils/api";
 import { Divider } from "@mui/material";
+import './display.style.scss'
 
 const Display = () => {
   const [index, setIndex] = useState(0);
@@ -30,8 +31,10 @@ const Display = () => {
 
   return (
     <Box
+    className='upperPartHomePageContainer'
       sx={{
-        width: "100vw",
+        display:'flex',
+        // width: "100vw",
         height: "100vh",
         position: "relative",
         overflow: "hidden",
@@ -39,6 +42,7 @@ const Display = () => {
     >
       {images.length !== 0 && (
         <SliderImages
+          className='displayImageContainer'
           img={images[index].image}
           index={index}
           text={images[index].text}

@@ -13,8 +13,8 @@ import { selectSearchField } from "../../../store/ui/ui.selector";
 import { fetchDataByName } from "../../../utils/api";
 const style = {
   card: {
-    minWidth: { xs: "20rem", sm: "20rem", md: "25rem" },
-    height: "40rem",
+    width: { xs: "23rem", md: "35rem" },
+    height: {xs:'30rem',md:'40rem'},
     display: "flex",
     flexDirection: "column",
     border: "1px solid rgb(190, 190, 190)",
@@ -118,12 +118,12 @@ const Cards = (props) => {
       container
       spacing={8}
       sx={{
-        p: { xs: "0 3rem", sm: "0 2rem", md: "0 4rem" },
+        p: { xs: "5rem", md: "0 4rem" },
       }}
     >
       {filteredData.length !== 0 ? (
         filteredData.map((item) => (
-          <Grid item xs={12} sm={6} md={6} lg={4} key={item._id}>
+          <Grid  sx={{flex:1,width:{xs:'22rem',display:'flex'}}}item xs={12} sm={6} md={6} lg={4} key={item._id}>
             <Card onClick={navigateHandler.bind(null, item)} sx={style.card}>
               <img
                 className={classes["item-img"]}

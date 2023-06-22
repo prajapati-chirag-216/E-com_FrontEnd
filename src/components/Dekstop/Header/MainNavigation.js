@@ -32,6 +32,7 @@ import { selectCartItems } from "../../../store/cart/cart.selector";
 import { useNavigate } from "react-router-dom";
 import { setSnackBar } from "../../../store/ui/ui.action";
 import { setSearchField } from "../../../store/ui/ui.action";
+import './mainNavigation.style.scss'
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -40,12 +41,13 @@ const Search = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(2),
+  marginRight: theme.spacing(4),
   marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
+  width: "17rem",
+  height:'45px',
+  [theme.breakpoints.up("xs")]: {
     marginLeft: theme.spacing(2),
-    width: "auto",
+    // width: "17rem",
   },
 }));
 
@@ -62,13 +64,14 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
+    
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
-    width: "13rem",
-    // [theme.breakpoints.up("md")]: {
-    //   width: "20ch",
+    width: "17rem",
+    // [theme.breakpoints.up("sm")]: {
+    //   width: "2rem",
     // },
   },
 }));
@@ -99,7 +102,7 @@ const MainNavigation = () => {
       }
     })();
 
-    console.log(1)
+    console.log(userProfile)
   
   }, []);
 
@@ -170,6 +173,7 @@ useEffect(() =>{
   const openCartHandler = () => dispatch(setIsCartOpen(true));
 
   const navigateHandler = () => {
+    console.log(1)
     navigate("/signup");
   };
 
@@ -214,33 +218,57 @@ useEffect(() =>{
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-          onClick={handleProfilePage.bind(null, "/myProfile")}
-        ></IconButton>
-        <p>My Profile</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-          onClick={logoutHandler}
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>logout</p>
-      </MenuItem>
+      
+    { userProfile  ?
+
+<div>
+<MenuItem>
+  <IconButton
+    size="large"
+    aria-label="show 17 new notifications"
+    color="inherit"
+   
+  ></IconButton>
+  <p  onClick={handleProfilePage.bind(null, "/myProfile")} >My Profile</p>
+</MenuItem>
+<MenuItem>
+  <IconButton
+    size="large"
+    aria-label="account of current user"
+    aria-controls="primary-search-account-menu"
+    aria-haspopup="true"
+    color="inherit"
+   
+  >
+    <AccountCircle />
+  </IconButton>
+  <p  onClick={logoutHandler} >logout</p>
+</MenuItem>
+
+</div>
+
+     :<MenuItem>
+     <IconButton
+       size="large"
+       aria-label="show 17 new notifications"
+       color="inherit"
+       
+     >
+     </IconButton>
+     <p onClick={navigateHandler} >Signup/Signin</p>
+   </MenuItem>
+   
+    
+     } 
     </Menu>
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+
+
+    <div style={{display:'flex',}}>
+
+    <Box  sx={{ flexGrow: 1}}>
       <CartDropdown status={cartState} onClose={closeCartHandler} />
 
       <AppBar
@@ -252,8 +280,10 @@ useEffect(() =>{
           padding: "1rem",
         }}
       >
-        <Toolbar>
+        <Toolbar className="mainNavigationContainer">
           {matches && <Drawer />}
+
+        <div className="leftPartContainer">
          { showSearchBar && <Search
             onChange={(event) => dispatch(setSearchField(event.target.value))}
           >
@@ -266,6 +296,9 @@ useEffect(() =>{
             />
           </Search>}
 
+
+          <div className="leftMiddlePartContainer">
+
           <Box
             sx={{
               flexGrow: 1,
@@ -276,23 +309,31 @@ useEffect(() =>{
             }}
           >
             <Typography
+              className="webLgogContainer"
               variant="h3"
               letterSpacing="5px"
               // textTransform="uppercase"
               fontFamily="'Times New Roman', Times, serif"
               // fontWeight="bold"
             >
-              shop<span style={{fontFamily:'Times New Roman',fontWeight:'bold',fontSize:'70px',color:'white'}}>Z</span>ee
+              shop<span>Z</span>ee
             </Typography>
-            <Tabs />
           </Box>
 
+            <Tabs />
+
+          </div>
+
+        </div>
+
+
+       
           <Box
+          className="rightPartContainer"
             sx={{
               display: {
-                xs: "none",
                 md: "flex",
-                gap: "2rem",
+                gap: "3rem",
               },
             }}
           >
@@ -314,6 +355,7 @@ useEffect(() =>{
               </div>
             </IconButton>
             <IconButton
+               className="profileIconContainer"
               size="large"
               edge="end"
               aria-label="account of current user"
@@ -322,7 +364,8 @@ useEffect(() =>{
               onClick={userProfile ? handleProfileMenuOpen : navigateHandler}
               color="inherit"
               sx={{
-                display: "flex",
+                xs:"none",
+                md: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-end",
                 gap: "0.5rem",
@@ -341,7 +384,7 @@ useEffect(() =>{
               </Typography>
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" },  }}>
             <IconButton
               size="large"
               aria-label="show more"
@@ -353,11 +396,15 @@ useEffect(() =>{
               <MoreIcon />
             </IconButton>
           </Box>
+
+      
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </Box>
+    </Box> 
+    </div>
+    
   );
 };
 

@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { motion } from "framer-motion";
-import classes from "./SliderImages.module.css";
 import { Button, Typography } from "@mui/material";
 import { fetchSingleCategoryByName } from "../../../utils/api";
+import  "./SliderImages.style.scss";
 
 const transition = { type: "twin", duration: 1 };
 
@@ -19,7 +19,7 @@ const SliderImages = (props) => {
 
   return (
     <Fragment>
-      <div className={classes["img-container"]}>
+      <div className="img-container">
         <motion.img
           key={props.index}
           initial={{ opacity: 0, x: 1000 }}
@@ -27,8 +27,9 @@ const SliderImages = (props) => {
           exit={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
           src={props.img}
+          // src='https://res.cloudinary.com/dzpuekeql/image/upload/v1684587879/bagni9injjvd4t53oq6h.jpg'
           alt="unable to load"
-          className={classes["motion-img"]}
+          className="motion-img"
         />
       </div>
       <motion.div
@@ -36,7 +37,7 @@ const SliderImages = (props) => {
         initial={{ opacity: 0, y: 100 }}
         transition={{ type: "twin", duration: 1, delay: 1 }}
         whileInView={{ opacity: 1, y: 0 }}
-        className={classes["motion-div"]}
+        className="motion-div"
       >
         <Typography
           variant="h4"

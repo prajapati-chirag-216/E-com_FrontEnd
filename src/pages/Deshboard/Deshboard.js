@@ -2,7 +2,7 @@ import React from "react";
 import Categories from "../../components/Dekstop/Category/Categories";
 import Display from "../../components/Dekstop/Display/Display";
 import CartSlider from "../../components/Cart/CartSlider/CartSlider";
-import classes from "./Deshboard.module.css";
+import "./Deshboard.style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsCartOpen } from "../../store/cart/cart.action";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
@@ -13,7 +13,8 @@ const Deshboard = () => {
   const dispatch = useDispatch();
   const closeCartHandler = () => dispatch(setIsCartOpen(false));
   return (
-    <div className={classes["container-div"]}>
+    <div className="container-div">
+    
       <Display />
       <Categories />
       <CartSlider status={cartState} onClose={closeCartHandler} />

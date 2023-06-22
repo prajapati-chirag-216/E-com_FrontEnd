@@ -6,7 +6,7 @@ import { fetchCategories } from "../../../utils/api";
 import { Await, useLoaderData } from "react-router-dom";
 const textCss = {
   fontWeight: "bold",
-  fontSize: "6rem",
+  fontSize: {md:"6rem",xs:'3rem'},
   color: "black",
   WebkitTextStroke: "2px black",
   WebkitTextFillColor: "white",
@@ -21,7 +21,7 @@ const Categories = () => {
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: {xs:'60rem',md:'100vw'},
         display: "flex",
         flexDirection: "column",
         gap: "4rem",
@@ -30,11 +30,12 @@ const Categories = () => {
     >
       <Box
         sx={{
+          width:{xs:'60rem',md:'100vw'},
           display: "flex",
-          flexDirection: { sm: "column", md: "row" },
+          flexDirection: 'row',
           justifyContent: "center",
           alignItems: "center",
-          gap: { sm: "1rem", md: "3rem" },
+          gap: { xs: "2rem", md: "3rem" },
         }}
       >
         <Typography variant="h1" sx={textCss}>
