@@ -25,6 +25,7 @@
     width: 40rem;
     flex-direction: column;
     row-gap: 2rem;
+    
 
 }
 
@@ -43,6 +44,22 @@
     justify-content: center;
     letter-spacing: 2px;
     color: rgb(56 52 52 / 68%);
+}
+
+@media only screen and (max-width: 500px) {
+    
+    .title{
+         
+         font-size: 2rem;
+         letter-spacing: 3px;
+    }
+    
+    .reviewContainer  Form{
+          
+         width: 30rem;
+        row-gap: 3rem;
+      
+    }
 }
 
 .reviewDivContainer {

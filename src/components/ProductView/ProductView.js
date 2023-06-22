@@ -1,14 +1,16 @@
 import { Suspense, useEffect, useState } from "react";
 import { Button, Divider, Typography, Rating } from "@mui/material";
-import "../ProductView/ProductView.styles.scss";
+import "../ProductView/ProductView.style.scss";
 import { useDispatch } from "react-redux";
 import { setAddItemToCart } from "../../store/cart/cart.action";
+import { useMediaQuery } from '@material-ui/core';
 import { fetchProductDetails } from "../../utils/api";
 import { Await, useLoaderData } from "react-router-dom";
 import Review from "./Review";
 
 const ProductView = () => {
   const [mainImgUrl, setmainImgUrl] = useState(null);
+  const isSmallScreen = useMediaQuery('(max-width: 500px)');
   const dispatch = useDispatch();
 
   const imageChangeHandler = (src) => {
@@ -21,6 +23,8 @@ const ProductView = () => {
     dispatch(setAddItemToCart(productData));
   };
   const loaderData = useLoaderData();
+
+
 
   useEffect(() => {
     setmainImgUrl(loaderData.productData.image[0]);
@@ -48,7 +52,7 @@ const ProductView = () => {
         <div className="mainImageContainer">
           <img src={mainImgUrl} alt="" />
         </div>
-
+      { isSmallScreen && <Divider sx={{width:{xs:'100%',md:'0'},order:{xs:'3'}}} variant="fullWidth"/>}
         <div className="rightUpperViewContainer">
           <Suspense>
             <Await resolve={loaderData.productData}>
@@ -73,13 +77,13 @@ const ProductView = () => {
                         value={productDetails.avgRatings}
                         readOnly
                         precision={0.5}
-                        sx={{ color: "black" }}
+                        sx={{ color: "black",transform:{xs:'scale(1.3)',md:'scale(1)'},marginRight:{xs:'1rem',md:'0rem'} }}
                       />
-                      <Typography variant="h6" color="gray" letterSpacing="1px">
+                      <Typography sx={{fontSize:{xs:'1.4rem',md:'1.25rem'}}}variant="h6" color="gray" letterSpacing="1px">
                         {productDetails.reviewedBy} reviews
                       </Typography>
                     </div>
-                    <Typography variant="h6">
+                    <Typography sx={{fontSize:{xs:'1.6rem',md:'1.25rem'}}}variant="h6">
                       $ {productDetails.price}
                     </Typography>
                     <Button
@@ -90,7 +94,7 @@ const ProductView = () => {
                         width: "30rem",
                         height: "4rem",
                         letterSpacing: "3px",
-                        fontSize: "1.1rem",
+                        fontSize: {md:"1.1rem",xs:'1.4rem'},
                         "&:active": { transform: "scale(0.9)" },
                       }}
                       onClick={addProductHandler.bind(null, productDetails)}
@@ -107,7 +111,7 @@ const ProductView = () => {
           <div className="itemInfoContainer">
             <Typography
               variant="h6"
-              sx={{ fontSize: "1.2rem", letterSpacing: "1px" }}
+              sx={{ fontSize: {md:"1.2rem",xs:'1.4rem'}, letterSpacing: "1px" }}
             >
               Description
             </Typography>
@@ -117,7 +121,7 @@ const ProductView = () => {
                   <Typography
                     variant="h6"
                     sx={{
-                      fontSize: "1rem",
+                      fontSize: {md:"1rem",xs:'1.2rem'},
                       letterSpacing: "1px",
                       wordSpacing: "2px",
                     }}

@@ -9,13 +9,6 @@
     border-radius: 0px;
 }
 
-/* @media only screen and (max-width: 500px) {
-            
-    .item-img{
-          
-         width: ;
-    }
-} */
 
 
 .item_details-div {
@@ -25,4 +18,12 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem
+}
+
+@media only screen and (max-width: 500px) {
+            
+    .item_details-div{
+          
+         width:120%;
+    }
 }

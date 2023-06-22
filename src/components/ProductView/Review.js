@@ -151,8 +151,8 @@ const Review = () => {
           <Typography
             sx={{
               color: "rgb(56 52 52 / 68%)",
-              letterSpacing: "2px",
-              fontSize: "25px",
+              letterSpacing: {md:"2px",xs:'3px'},
+              fontSize: {md:"25px",xs:'30px'},
               textTransform: "upperCase",
               display: "flex",
               justifyContent: "center",
@@ -200,11 +200,12 @@ const Review = () => {
           onClick={formShowHandler}
           sx={{
             background: "black",
-            fontSize: "1.2rem",
+            letterSpacing:{xs:'3px',md:'2px'},
+            fontSize: {md:"1.2rem",xs:'1.5rem'},
             "&:hover": { background: "black" },
             borderRadius: 0,
-            width: "18rem",
-            height: "4rem",
+            width: {md:"18rem",xs:'19rem'},
+            height:{md:"4rem",xs:'5rem'},
           }}
           variant="contained"
         >
@@ -231,6 +232,7 @@ const Review = () => {
               onChange={nameChangeHandler}
               onBlur={validateNameHandler}
               error={nameIsValid === false ? true : false}
+              sx={{transform:{xs:'scale(1.2)'}}}
             />
             <TextField
               id="title"
@@ -242,6 +244,7 @@ const Review = () => {
               onChange={titleChangeHandler}
               onBlur={validateTitleHandler}
               error={titleIsValid === false ? true : false}
+              sx={{transform:{xs:'scale(1.2)'}}}
             />
             <TextField
               id="description"
@@ -254,13 +257,15 @@ const Review = () => {
               onChange={descriptionChangeHandler}
               onBlur={validateDescriptionHAndler}
               error={descriptionIsValid === false ? true : false}
+              sx={{transform:{xs:'scale(1.2)'}}}
             />
             <Rating
               name="rating"
               value={starRating}
               precision={0.5}
-              sx={{ color: "black" }}
+              sx={{ color: "black" ,transform:{xs:'scale(1.3)'},marginLeft:{xs:'2rem'}}}
               onChange={ratingChangeHandler}
+      
             />
             {ratingError && (
               <Typography sx={{ color: "red", marginTop: "-1rem" }}>
@@ -272,9 +277,10 @@ const Review = () => {
                 background: "black",
                 "&:hover": { background: "black" },
                 borderRadius: 0,
-                width: "15rem",
-                height: "3rem",
-                letterSpacing: "1px",
+                width: {md:"15rem",xs:'18rem'},
+                height: {md:"3rem",xs:'4rem'},
+                fontSize:{md:'1.2rem',xs:'1.5rem'},
+                letterSpacing: {md:"1px",xs:'2px'}
               }}
               variant="contained"
               type="submit"

@@ -6,6 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
+  Divider,
 } from "@mui/material";
 import Home from '@mui/icons-material/Home';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
@@ -21,7 +22,7 @@ const ManuList = (props) => {
       onKeyDown={props.toggleDrawer}
     >
       <List>
-        <ListItem disablePadding onClick={props.onClose}>
+        <ListItem sx={{transform:{xs:'scale(1.8)',md:'scale(1)'},marginTop:{xs:'3rem',md:'0rem'}}}disablePadding onClick={props.onClose}>
           <ListItemButton
             sx={{height: "100px", display: "flex", flexDirection: "column" }}
             onClick={() => {
@@ -34,7 +35,8 @@ const ManuList = (props) => {
             <ListItemText primary="Home" style={{ textAlign: "center" }} />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={props.onClose}>
+        <Divider/>
+        <ListItem sx={{transform:{xs:'scale(1.8)'},marginTop:{xs:'3rem'}}} disablePadding onClick={props.onClose}>
           <ListItemButton
             sx={{ height: "100px", display: "flex", flexDirection: "column" }}
             onClick={() => {
@@ -47,7 +49,8 @@ const ManuList = (props) => {
             <ListItemText primary="About Us" style={{ textAlign: "center" }} />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={props.onClose}>
+        <Divider/>
+        <ListItem sx={{transform:{xs:'scale(1.8)'},marginTop:{xs:'3rem'}}} disablePadding onClick={props.onClose}>
           <ListItemButton
             sx={{ height: "100px", display: "flex", flexDirection: "column" }}
             onClick={() => {

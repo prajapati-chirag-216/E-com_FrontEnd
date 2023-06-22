@@ -119,11 +119,13 @@ const Cards = (props) => {
       spacing={8}
       sx={{
         p: { xs: "5rem", md: "0 4rem" },
+         columnGap:{xs: props.isProduct?'2rem':'0rem'},
+         marginLeft:{xs:props.isProduct?'-105px':'-64px'}
       }}
     >
       {filteredData.length !== 0 ? (
         filteredData.map((item) => (
-          <Grid  sx={{flex:1,width:{xs:'22rem',display:'flex'}}}item xs={12} sm={6} md={6} lg={4} key={item._id}>
+          <Grid  sx={{flex:1,width:{xs:'22rem',display:'flex',flexDirection:'column'},paddingLeft:{xs:props.isProduct?'30px':'64px'}}}item xs={12} sm={6} md={6} lg={4} key={item._id}>
             <Card onClick={navigateHandler.bind(null, item)} sx={style.card}>
               <img
                 className={classes["item-img"]}
@@ -170,7 +172,7 @@ const Cards = (props) => {
               <div className={classes["item_details-div"]}>
                 <Typography
                   sx={{
-                    fontSize: "1rem",
+                    fontSize:{xs:'0.8rem',md:"1rem"},
                     letterSpacing: "3px",
                     textTransform: "uppercase",
                     color: "rgb(80,80,80)",
