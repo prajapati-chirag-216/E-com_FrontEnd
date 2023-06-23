@@ -6,6 +6,7 @@ import SimpleModal from "../../../shared/components/Modal/SimpleModal";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "../../../store/cart/cart.selector";
 import ShippingModal from "./ShippingModal/ShippingModal";
+import { width } from "@mui/system";
 
 const Ticket = () => {
   const cartItems = useSelector(selectCartItems);
@@ -25,7 +26,7 @@ const Ticket = () => {
     setShowModal(false);
   };
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", width:{xs:'58rem',md:'100%'}}}>
       <SimpleModal onOpen={showModal} onClose={closeModalHandler}>
         <ShippingModal />
       </SimpleModal>

@@ -40,6 +40,12 @@
                row-gap: 2rem;
                width: 40rem;
 
+               @media only screen and (max-width: 500px) {
+            
+                    transform: scale(1.2);
+                    height: 35rem;
+               }
+
 
                .UpperPartContainer{
                  

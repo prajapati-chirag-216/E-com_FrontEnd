@@ -119,7 +119,7 @@ const SignupForm = () => {
           marginBottom="2rem"
           sx={{ userSelect: "none" }}
         >
-          Register
+          Signup
         </Typography>
         <Form className={classes["action-form"]} method="post" action="/signup">
           <TextField

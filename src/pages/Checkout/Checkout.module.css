@@ -11,11 +11,37 @@
     height: 100vh;
 }
 
+@media only screen and (max-width: 500px) {
+    
+    .left-div{
+         
+         padding: 3rem;
+    }
+   .right-div{
+     
+     
+      padding:3rem;
+ }
+   
+    
+}
+
 .right-div {
+    display: flex;
     flex: 3;
     background-color: #e7e7e7cd;
     padding: 5rem 16rem 0rem 5rem;
     box-sizing: border-box;
     border-left: 3px solid rgb(220, 220, 220);
     user-select: none;
+}
+
+@media only screen and (max-width: 500px) {
+    
+ 
+   .right-div{
+     
+     
+      padding:3rem;
+ }
 }

@@ -9,7 +9,8 @@ const StatusButton = (props) => {
       component="label"
       onClick={props.onClick}
       sx={{
-        width: matches ? "10rem" : "20rem",
+        width:  "20rem",
+        height:{xs:'4rem'},
         size: matches ? "0.7rem" : "4rem",
         padding: matches ? "0.5rem" : "1rem",
         gap: matches ? "0.5rem" : "1rem",
