@@ -130,6 +130,7 @@ const SigninForm = () => {
               padding: "0.7rem",
             }}
             onClick={!formIsValid ? validateFormHandler : () => {}}
+            disabled={isLoading === true}
           >
             {isLoading ?<CircularProgress color="inherit" size={33} />: 'SignIn'}
           </Button>
@@ -152,9 +153,12 @@ export async function action({ request }) {
   };
   try {
     response = await loginUser(userData);
-  store.dispatch(setIsLoading(false))
-
+    store.dispatch(setIsLoading(false))
   } catch (err) {
+  
+      if(err.response.statusText === "Unauthorized"){
+         store.dispatch(setIsLoading(false))
+      }
     return err;
   }
   return response;

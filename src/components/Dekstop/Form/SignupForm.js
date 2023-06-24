@@ -209,6 +209,7 @@ const SignupForm = () => {
               padding: "0.7rem",
             }}
             onClick={!formIsValid ? validateFormHandler : () => {}}
+            disabled={isLoading === true}
           >
            {isLoading?<CircularProgress color="inherit" size={33} />:'SignUp'}
           </Button>
@@ -247,6 +248,9 @@ export async function action({ request }) {
     response = await signupUser(userData);
     store.dispatch(setIsLoading(false))
   } catch (err) {
+    if(err.response.statusText === "Unauthorized"){
+      store.dispatch(setIsLoading(false))
+   }
     return { inValidEmail: true };
   }
   return response;
