@@ -248,9 +248,9 @@ export async function action({ request }) {
     response = await signupUser(userData);
     store.dispatch(setIsLoading(false))
   } catch (err) {
-    if(err.response.statusText === "Unauthorized"){
+    // if(err.response.statusText === "Unauthorized"){
       store.dispatch(setIsLoading(false))
-   }
+  //  }
     return { inValidEmail: true };
   }
   return response;

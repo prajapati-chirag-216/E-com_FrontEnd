@@ -156,9 +156,9 @@ export async function action({ request }) {
     store.dispatch(setIsLoading(false))
   } catch (err) {
   
-      if(err.response.statusText === "Unauthorized"){
+      // if(err.response.statusText === "Unauthorized"){
          store.dispatch(setIsLoading(false))
-      }
+      // }
     return err;
   }
   return response;
