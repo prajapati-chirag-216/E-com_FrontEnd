@@ -1,16 +1,21 @@
 import { Suspense, useEffect, useState } from "react";
 import { Button, Divider, Typography, Rating } from "@mui/material";
 import "../ProductView/ProductView.style.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAddItemToCart } from "../../store/cart/cart.action";
 import { useMediaQuery } from '@material-ui/core';
 import { fetchProductDetails } from "../../utils/api";
 import { Await, useLoaderData } from "react-router-dom";
 import Review from "./Review";
+import { setIsLoading } from "../../store/ui/ui.action";
+import { selectIsLoading } from "../../store/ui/ui.selector";
+import LoadingSpinner from "../Dekstop/UI/LoadingSpinner";
+import {store} from '../../store/store'
 
 const ProductView = () => {
   const [mainImgUrl, setmainImgUrl] = useState(null);
   const isSmallScreen = useMediaQuery('(max-width: 500px)');
+  const isLoading = useSelector(selectIsLoading)
   const dispatch = useDispatch();
 
   const imageChangeHandler = (src) => {
@@ -32,8 +37,9 @@ const ProductView = () => {
   return (
     <div className="container">
       <div className="UpperViewContainer">
+        {isLoading && <LoadingSpinner/>}
         <div className="sideIconContainer">
-          <Suspense>
+          <Suspense>  
             <Await resolve={loaderData.productData}>
               {(productDetails) =>
                 productDetails.image.map((image, index) => (
@@ -147,11 +153,13 @@ export async function loader() {
   const url = window.location.href;
   const urlArray = url.split("/");
   const id = urlArray[urlArray.length - 1];
+  store.dispatch(setIsLoading(true))
   try {
     const productData = await fetchProductDetails(id);
     response = {
       productData,
     };
+    store.dispatch(setIsLoading(false))
   } catch (err) {
     throw err;
   }

@@ -4,6 +4,11 @@ import React, { Suspense, useState } from "react";
 import Cards from "../Cards/Cards";
 import { fetchCategories } from "../../../utils/api";
 import { Await, useLoaderData } from "react-router-dom";
+import {store} from '../../../store/store'
+import { setIsLoading } from "../../../store/ui/ui.action";
+import { useSelector } from "react-redux";
+import { selectIsLoading } from "../../../store/ui/ui.selector";
+import LoadingSpinner from "../UI/LoadingSpinner";
 const textCss = {
   fontWeight: "bold",
   fontSize: {md:"6rem",xs:'3rem'},
@@ -18,6 +23,8 @@ const textCss = {
 };
 const Categories = () => {
   const loaderData = useLoaderData();
+  const isLoading = useSelector(selectIsLoading)
+
   return (
     <Box
       sx={{
@@ -56,6 +63,7 @@ const Categories = () => {
         </Typography>
       </Box>
       <Suspense>
+        {/* {isLoading && <LoadingSpinner/>} */}
         <Await resolve={loaderData}>
           {(categories) => <Cards location="/product" data={categories} />}
         </Await>
@@ -66,7 +74,10 @@ const Categories = () => {
 export async function loader() {
   let response;
   try {
+
+    // store.dispatch(setIsLoading(true));
     response = await fetchCategories();
+    // store.dispatch(setIsLoading(false))
   } catch (err) {
     throw err;
   }

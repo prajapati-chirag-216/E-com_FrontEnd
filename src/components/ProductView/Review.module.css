@@ -60,6 +60,13 @@
         row-gap: 3rem;
       
     }
+
+    .reviewListContainer{
+
+        align-items: center;
+    }
+
+
 }
 
 .reviewDivContainer {
@@ -69,4 +76,19 @@
     row-gap: 1rem;
     padding: 2rem;
     width: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+
+    .reviewDivContainer{
+
+        width:50%;
+         
+    }
+
+    .reviewDivContainer p{
+
+         overflow-wrap: break-word;
+    }
+
 }
