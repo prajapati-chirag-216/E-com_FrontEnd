@@ -8,6 +8,7 @@ import {
   IconButton,
   OutlinedInput,
   InputAdornment,
+  CircularProgress
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Form, NavLink, useActionData, useNavigate } from "react-router-dom";
@@ -18,12 +19,17 @@ import {
   passwordReducer,
   phoneNoReducer,
 } from "../../../shared/Reducers/InputReducers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../../../utils/api";
 import { textFeildStyle } from "../../../utils/function";
+import { selectIsLoading } from "../../../store/ui/ui.selector";
+import { setIsLoading } from "../../../store/ui/ui.action";
+import {store} from '../../../store/store'
+
 
 const SignupForm = () => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading)
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -204,7 +210,7 @@ const SignupForm = () => {
             }}
             onClick={!formIsValid ? validateFormHandler : () => {}}
           >
-            Signup
+           {isLoading?<CircularProgress color="inherit" size={33} />:'SignUp'}
           </Button>
           <Typography
             align="center"
@@ -227,6 +233,8 @@ const SignupForm = () => {
   );
 };
 export async function action({ request }) {
+
+  store.dispatch(setIsLoading(true))
   let response;
   const formData = await request.formData();
   const userData = {
@@ -237,6 +245,7 @@ export async function action({ request }) {
   };
   try {
     response = await signupUser(userData);
+    store.dispatch(setIsLoading(false))
   } catch (err) {
     return { inValidEmail: true };
   }

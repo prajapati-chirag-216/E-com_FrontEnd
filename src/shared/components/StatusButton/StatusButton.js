@@ -24,7 +24,7 @@ const StatusButton = (props) => {
       }}
       disabled={props.isLoading.status}
     >
-      {props.isLoading.status ? (
+      {props.isLoading? (
         <CircularProgress color="inherit" size={33} />
       ) : (
         props.children

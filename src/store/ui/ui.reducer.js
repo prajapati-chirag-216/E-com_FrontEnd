@@ -9,6 +9,7 @@ const UI_INITIAL_STATE = {
     message: "",
   },
   modelState: false,
+  isLoading:false,
   user: null,
   success: { status: false, for: "" },
 };

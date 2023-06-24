@@ -37,7 +37,6 @@ const ProductView = () => {
   return (
     <div className="container">
       <div className="UpperViewContainer">
-        {isLoading && <LoadingSpinner/>}
         <div className="sideIconContainer">
           <Suspense>  
             <Await resolve={loaderData.productData}>
@@ -153,13 +152,13 @@ export async function loader() {
   const url = window.location.href;
   const urlArray = url.split("/");
   const id = urlArray[urlArray.length - 1];
-  store.dispatch(setIsLoading(true))
+
   try {
     const productData = await fetchProductDetails(id);
     response = {
       productData,
     };
-    store.dispatch(setIsLoading(false))
+    
   } catch (err) {
     throw err;
   }

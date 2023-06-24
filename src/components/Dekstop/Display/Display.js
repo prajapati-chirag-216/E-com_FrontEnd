@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import SliderImages from "./SliderImages";
 import { fetchDisplayImage } from "../../../utils/api";
@@ -12,17 +12,18 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 const Display = () => {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState([]);
-  const isLoading = useSelector(selectIsLoading)
+  // const isLoading = useSelector(selectIsLoading)
+  const [isLoading,setIsLoading] = useState(false)
   const dispatch  = useDispatch();
 
   useEffect(() => {
     (async () => {
       try {
-           
-        dispatch(setIsLoading(true))
+        
+        setIsLoading(true)
         const res = await fetchDisplayImage();
-         dispatch(setIsLoading(false));
         setImages(res.data);
+        setIsLoading(false);
       } catch (err) {
         throw err;
       }
@@ -39,6 +40,9 @@ const Display = () => {
   }, [index, images]);
 
   return (
+    <Fragment>
+
+      {isLoading && <LoadingSpinner/>}
     <Box
     className='upperPartHomePageContainer'
       sx={{
@@ -49,7 +53,6 @@ const Display = () => {
         overflow: "hidden",
       }}
     >
-      {isLoading && <LoadingSpinner/>}
       {images.length !== 0 && (
         <SliderImages
           className='displayImageContainer'
@@ -61,6 +64,7 @@ const Display = () => {
         />
       )}
     </Box>
+    </Fragment>
   );
 };
 export async function loader() {
