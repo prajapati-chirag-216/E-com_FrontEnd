@@ -1,7 +1,17 @@
 .footer {
     margin-top: 5rem;
     user-select: none;
+    
 
+}
+
+
+@media only screen and (max-width: 500px) {
+            
+    .footer{
+
+         width: 50rem;
+    }
 }
 
 .div {
@@ -24,6 +34,14 @@ li {
     color: gray;
     text-transform: capitalize;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 500px) {
+            
+    li{
+
+         font-size: 25px;
+    }
 }
 
 li:hover {
@@ -58,4 +76,19 @@ span {
     letter-spacing: 1px;
     color: gray;
     line-height: 2rem;
+}
+
+
+@media only screen and (max-width: 500px) {
+            
+    .description-p{
+
+         width: 45rem;
+    }
+    
+    .corporateLinks > li{
+          
+         font-size: 25px;
+    
+    }
 }

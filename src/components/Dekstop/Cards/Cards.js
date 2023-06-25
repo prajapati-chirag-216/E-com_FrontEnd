@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Card, Grid, CardContent, Button, Typography } from "@mui/material";
 import classes from "./Cards.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,12 +9,14 @@ import {
 } from "../../../store/catagories/catagories.action";
 import { setAddItemToCart } from "../../../store/cart/cart.action";
 import { setProductDetails } from "../../../store/product/product.action";
-import { selectSearchField } from "../../../store/ui/ui.selector";
+import { selectIsLoading, selectSearchField } from "../../../store/ui/ui.selector";
 import { fetchDataByName } from "../../../utils/api";
+import { setIsLoading } from "../../../store/ui/ui.action";
+import LoadingSpinner from "../UI/LoadingSpinner";
 const style = {
   card: {
-    minWidth: { xs: "20rem", sm: "20rem", md: "25rem" },
-    height: "40rem",
+    width: { xs: "23rem", md: "35rem" },
+    height: {xs:'30rem',md:'40rem'},
     display: "flex",
     flexDirection: "column",
     border: "1px solid rgb(190, 190, 190)",
@@ -73,12 +75,16 @@ const Cards = (props) => {
 
   const [data, setData] = useState(props.data);
   const [filteredData, setfilteredData] = useState(props.data);
+  const isLoading = useSelector(selectIsLoading)
 
   useEffect(() => {
+  
+    dispatch(setIsLoading(false))
     setData(props.data);
   }, [props.data]);
 
   useEffect(() => {
+    dispatch(setIsLoading(false))
     setfilteredData(data);
   }, [data]);
 
@@ -92,9 +98,11 @@ const Cards = (props) => {
         let filteredData;
         filteredData = await fetchDataByName(searchByNameString, props.data);
         setfilteredData(filteredData);
+       
       }
     };
-
+    
+    
     getFilteredData();
   }, [searchByNameString]);
 
@@ -114,16 +122,21 @@ const Cards = (props) => {
   };
 
   return (
+    <Fragment>
+   
     <Grid
-      container
-      spacing={8}
-      sx={{
-        p: { xs: "0 3rem", sm: "0 2rem", md: "0 4rem" },
-      }}
+    container
+    spacing={8}
+    sx={{
+      p: { xs: "5rem", md: "0 4rem" },
+      columnGap:{xs: props.isProduct?'2rem':'0rem'},
+      marginLeft:{xs:props.isProduct?'-105px':'-64px'}
+    }}
     >
+          {isLoading && <LoadingSpinner/>}
       {filteredData.length !== 0 ? (
         filteredData.map((item) => (
-          <Grid item xs={12} sm={6} md={6} lg={4} key={item._id}>
+          <Grid  sx={{flex:1,width:{xs:'22rem',display:'flex',flexDirection:'column'},paddingLeft:{xs:props.isProduct?'30px':'64px'}}}item xs={12} sm={6} md={6} lg={4} key={item._id}>
             <Card onClick={navigateHandler.bind(null, item)} sx={style.card}>
               <img
                 className={classes["item-img"]}
@@ -170,7 +183,7 @@ const Cards = (props) => {
               <div className={classes["item_details-div"]}>
                 <Typography
                   sx={{
-                    fontSize: "1rem",
+                    fontSize:{xs:'0.8rem',md:"1rem"},
                     letterSpacing: "3px",
                     textTransform: "uppercase",
                     color: "rgb(80,80,80)",
@@ -198,6 +211,7 @@ const Cards = (props) => {
         >{`No Search Result for ${searchByNameString}`}</Typography>
       )}
     </Grid>
+    </Fragment>
   );
 };
 export default Cards;

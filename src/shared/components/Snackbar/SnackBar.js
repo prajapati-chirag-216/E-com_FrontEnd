@@ -46,7 +46,8 @@ const SimpleSnackBar = () => {
           onClose={handleClose}
           severity={snackBarDetails.severity}
           sx={{
-            width: "100%",
+            width: {md:"100%",xs:'70%'},
+            height:{md:'100%',xs:'4rem'},
             padding: "0.5rem 1.2rem",
             fontSize: "1.1rem",
             letterSpacing: "1px",

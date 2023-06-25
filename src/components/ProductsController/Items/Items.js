@@ -18,6 +18,8 @@ import {
   setSortByOldDate,
   setSortByPopularity,
 } from "../../../store/filter/filter.action";
+import {store} from '../../../store/store'
+import { setIsLoading } from "../../../store/ui/ui.action";
 
 const Items = () => {
   const dispatch = useDispatch();
@@ -74,6 +76,7 @@ export async function loader(string) {
   const url = window.location.href;
   const urlArray = url.split("/");
   const catagoryId = urlArray[urlArray.length - 1];
+  store.dispatch(setIsLoading(true))
 
   try {
     if (typeof string === "object") {

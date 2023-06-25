@@ -13,7 +13,13 @@
       color: gray;
       text-decoration: underline;
     }
+    h3 {
+      @media only screen and (max-width: 500px) {
+        font-size: 0.9rem;
+      }
+    }
   }
+
   .MessageFormContainer {
     display: flex;
     flex-direction: column;
@@ -27,6 +33,11 @@
         flex-direction: column;
         row-gap: 2rem;
         width: 40rem;
+
+        @media only screen and (max-width: 500px) {
+          transform: scale(1.2);
+          height: 35rem;
+        }
 
         .UpperPartContainer {
           display: flex;

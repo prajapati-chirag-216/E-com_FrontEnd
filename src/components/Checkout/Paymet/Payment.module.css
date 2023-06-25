@@ -30,7 +30,15 @@
     padding: 1rem;
     background-color: #f7f7f7;
     display: flex;
-    gap: 4rem;
+    gap: 23rem;
+}
+
+@media only screen and (max-width: 500px) {
+    .headerContainer{
+
+         gap: 9rem;
+    }
+     
 }
 
 .headerIcons {

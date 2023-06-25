@@ -233,6 +233,7 @@ const ContactUs = () => {
               fullWidth
               sx={{
                 padding: "1rem",
+                fontSize: { xs: "1.4rem", md: "1rem" },
                 backgroundColor: "black",
                 "&:hover": {
                   backgroundColor: "black",

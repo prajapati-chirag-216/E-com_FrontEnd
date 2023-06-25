@@ -146,9 +146,9 @@ const Payment = () => {
           </Typography>
 
           <div className={classes["headerIcons"]}>
-            <img src="visa.svg" />
-            <img src="mastercard.svg" />
-            <img src="american-express.svg" />
+            <img src="/visa.svg" />
+            <img src="/mastercard.svg"/>     
+            <img src="/american-express.svg" />
           </div>
         </div>
 
@@ -173,7 +173,7 @@ const Payment = () => {
             InputProps={{
               endAdornment: cardNoIsValid && (
                 <div>
-                  <img src="visa.svg" />
+                  <img src="/visa.svg" />
                 </div>
               ),
             }}

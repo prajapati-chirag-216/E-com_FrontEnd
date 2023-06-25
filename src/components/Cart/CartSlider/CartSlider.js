@@ -10,6 +10,7 @@ import { selectCartItems } from "../../../store/cart/cart.selector";
 
 const CartSlider = (props) => {
   const cartItems = useSelector(selectCartItems);
+  const navigate = useNavigate();
 
   return (
     <div
@@ -62,11 +63,14 @@ const CartSlider = (props) => {
           return <CartItem key={product._id} product={product} />;
         })}
       </div>
-      <a href="/checkout" className={classes["button-div"]}>
+      <div className={classes["button-div"]}>
         <Button
           variant="contained"
           fullWidth
           sx={{
+            height:{xs:'4.5rem'},
+            transform:{xs:'scale(1.3)',md:'scale(1)'},
+            width:{xs:'22rem',md:'30rem'},
             padding: "1rem",
             backgroundColor: "black",
             "&:hover": {
@@ -75,10 +79,11 @@ const CartSlider = (props) => {
             borderRadius: "0rem",
           }}
           disabled={cartItems.length === 0}
+          onClick={()=>navigate('/checkout')}
         >
           Go to Checkout
         </Button>
-      </a>
+      </div>
     </div>
   );
 };

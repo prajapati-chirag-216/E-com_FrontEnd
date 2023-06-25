@@ -13,6 +13,7 @@ import {
   setRemoveItemFromCart,
 } from "../../../store/cart/cart.action";
 import { useNavigate } from "react-router-dom";
+import { setSnackBar } from "../../../store/ui/ui.action";
 
 const MyCart = () => {
   const cartItems = useSelector(selectCartItems);
@@ -30,6 +31,20 @@ const MyCart = () => {
 
   const removeItemhandler = (product) => {
     dispatch(setClearItemFromCart(cartItems, product));
+  };
+
+  const handleCheckoutNavigation = (link) => {
+    if (cartItems.length === 0) {
+      dispatch(
+        setSnackBar({
+          status: true,
+          severity: "info",
+          message: "Your cart is empty",
+        })
+      );
+    } else {
+      navigate(link);
+    }
   };
 
   return (
@@ -80,7 +95,7 @@ const MyCart = () => {
                     sx={{
                       textTransform: "uppercase",
                       letterSpacing: "1px",
-                      fontSize: "1.3rem",
+                      fontSize: { md: "1.3rem", xs: "0.8rem" },
                       color: "rgb(80,80,80)",
                     }}
                   >
@@ -90,7 +105,7 @@ const MyCart = () => {
                     sx={{
                       textTransform: "uppercase",
                       letterSpacing: "1px",
-                      fontSize: "1rem",
+                      fontSize: { md: "1rem", xs: "0.7rem" },
                     }}
                   >
                     {item.description.split(".")[0]}..
@@ -182,7 +197,7 @@ const MyCart = () => {
               float: "right",
             }}
             variant="contained"
-            onClick={() => navigate("/checkout")}
+            onClick={() => handleCheckoutNavigation("/checkout")}
           >
             Checkout
           </Button>

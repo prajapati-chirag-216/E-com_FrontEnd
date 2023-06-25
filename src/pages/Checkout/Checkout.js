@@ -55,7 +55,8 @@ const Checkout = () => {
     <Box
       sx={{
         display: "flex",
-        width: "100vw",
+        width: {md:"100vw",xs:'40rem'},
+        flexDirection:{xs:'column-reverse',md:'row'},
         height: "auto",
       }}
     >

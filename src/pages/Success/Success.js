@@ -57,6 +57,7 @@ const Success = () => {
       <Container
         maxWidth="sm"
         sx={{
+          transform: { xs: "scale(0.9)", md: "scale(1.4)" },
           boxShadow: "2px 2px 8px",
           padding: matches ? "1.5rem" : "2rem",
           userSelect: "none",

@@ -1,6 +1,17 @@
 .action-div {
     padding: 3rem;
     padding-bottom: 5rem;
+
+}
+
+@media only screen and (max-width: 500px) {
+    
+    .action-div{
+
+         width: 20rem;
+         padding: 1rem;
+    }
+    
 }
 
 .action-form>a {

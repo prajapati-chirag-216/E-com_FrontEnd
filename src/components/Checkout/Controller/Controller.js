@@ -22,13 +22,13 @@ const Controller = (props) => {
   const total = useSelector(selectNewCartTotal);
   const order = useSelector(selectOrderInfo);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState({ status: false });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmitAction = async () => {
     if (!props.formIsValid) {
       return props.onValidateForm();
     }
-    setIsLoading({ status: true });
+    setIsLoading(true);
     if (props.informationDetails) {
       dispatch(setOrderInfo(props.informationDetails));
     } else if (props.shippingMethod) {
@@ -52,7 +52,7 @@ const Controller = (props) => {
       dispatch(setOrderInfo({}));
     }
     props.onNextPage();
-    setIsLoading({ status: false });
+    setIsLoading(false);
   };
   return (
     <div className={classes["controll-div"]}>
@@ -71,7 +71,7 @@ const Controller = (props) => {
           },
         }}
       >
-        {isLoading.status ? "" : `${props.continueTo}`}
+        {isLoading? "" : `${props.continueTo}`}
       </StatusButton>
     </div>
   );

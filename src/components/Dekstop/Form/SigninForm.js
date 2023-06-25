@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useReducer, useState } from "react";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography ,CircularProgress} from "@mui/material";
 import { Form, NavLink, useActionData, useNavigate } from "react-router-dom";
 import classes from "./ActionForm.module.css";
 import {
@@ -7,12 +7,16 @@ import {
   passwordReducer,
 } from "../../../shared/Reducers/InputReducers";
 import { loginUser } from "../../../utils/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUpdateCart } from "../../../store/cart/cart.action";
-import { setSnackBar } from "../../../store/ui/ui.action";
+import { setIsLoading, setSnackBar } from "../../../store/ui/ui.action";
 import { textFeildStyle } from "../../../utils/function";
+import StatusButton from "../../../shared/components/StatusButton/StatusButton";
+import { selectIsLoading } from "../../../store/ui/ui.selector";
+import {store} from '../../../store/store'
 const SigninForm = () => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading)
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     value: "",
@@ -126,8 +130,9 @@ const SigninForm = () => {
               padding: "0.7rem",
             }}
             onClick={!formIsValid ? validateFormHandler : () => {}}
+            disabled={isLoading === true}
           >
-            SignIn
+            {isLoading ?<CircularProgress color="inherit" size={33} />: 'SignIn'}
           </Button>
           <NavLink to="/forgotPassword" className={classes.link}>
             Forgot Password?
@@ -140,6 +145,7 @@ const SigninForm = () => {
 
 export async function action({ request }) {
   let response;
+  store.dispatch(setIsLoading(true))
   const formData = await request.formData();
   const userData = {
     email: formData.get("email"),
@@ -147,7 +153,12 @@ export async function action({ request }) {
   };
   try {
     response = await loginUser(userData);
+    store.dispatch(setIsLoading(false))
   } catch (err) {
+  
+      // if(err.response.statusText === "Unauthorized"){
+         store.dispatch(setIsLoading(false))
+      // }
     return err;
   }
   return response;

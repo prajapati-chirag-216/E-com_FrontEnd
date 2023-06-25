@@ -6,8 +6,11 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
+  Divider,
 } from "@mui/material";
-import { Inbox, Dashboard, Category, Inventory2 } from "@mui/icons-material";
+import Home from '@mui/icons-material/Home';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import GroupsIcon from '@mui/icons-material/Groups';
 import { useNavigate } from "react-router-dom";
 const ManuList = (props) => {
   const navigate = useNavigate();
@@ -19,58 +22,48 @@ const ManuList = (props) => {
       onKeyDown={props.toggleDrawer}
     >
       <List>
-        <ListItem disablePadding onClick={props.onClose}>
+        <ListItem sx={{transform:{xs:'scale(1.8)',md:'scale(1)'},marginTop:{xs:'3rem',md:'0rem'}}}disablePadding onClick={props.onClose}>
+          <ListItemButton
+            sx={{height: "100px", display: "flex", flexDirection: "column" }}
+            onClick={() => {
+              navigate("/home");
+            }}
+          >
+            <ListItemIcon style={{ justifyContent: "center" ,transform:'scale(1.2)'}}>
+              <Home fontSize="large" />
+            </ListItemIcon>
+            <ListItemText primary="Home" style={{ textAlign: "center" }} />
+          </ListItemButton>
+        </ListItem>
+        <Divider/>
+        <ListItem sx={{transform:{xs:'scale(1.8)'},marginTop:{xs:'3rem'}}} disablePadding onClick={props.onClose}>
           <ListItemButton
             sx={{ height: "100px", display: "flex", flexDirection: "column" }}
             onClick={() => {
-              navigate("/user");
+              navigate("/aboutus");
             }}
           >
             <ListItemIcon style={{ justifyContent: "center" }}>
-              <Dashboard fontSize="large" />
+              < GroupsIcon fontSize="large" />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" style={{ textAlign: "center" }} />
+            <ListItemText primary="About Us" style={{ textAlign: "center" }} />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={props.onClose}>
+        <Divider/>
+        <ListItem sx={{transform:{xs:'scale(1.8)'},marginTop:{xs:'3rem'}}} disablePadding onClick={props.onClose}>
           <ListItemButton
             sx={{ height: "100px", display: "flex", flexDirection: "column" }}
             onClick={() => {
-              navigate("/user/customer");
+              navigate("/contactus");
             }}
           >
             <ListItemIcon style={{ justifyContent: "center" }}>
-              <Category fontSize="large" />
+              < QuestionAnswerIcon  fontSize="large" />
             </ListItemIcon>
-            <ListItemText primary="Customer" style={{ textAlign: "center" }} />
+            <ListItemText primary="Contact Us" style={{ textAlign: "center" }} />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={props.onClose}>
-          <ListItemButton
-            sx={{ height: "100px", display: "flex", flexDirection: "column" }}
-            onClick={() => {
-              navigate("/user/product");
-            }}
-          >
-            <ListItemIcon style={{ justifyContent: "center" }}>
-              <Inventory2 fontSize="large" />
-            </ListItemIcon>
-            <ListItemText primary="Product" style={{ textAlign: "center" }} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding onClick={props.onClose}>
-          <ListItemButton
-            sx={{ height: "100px", display: "flex", flexDirection: "column" }}
-            onClick={() => {
-              navigate("/user/order");
-            }}
-          >
-            <ListItemIcon style={{ justifyContent: "center" }}>
-              <Inbox fontSize="large" />
-            </ListItemIcon>
-            <ListItemText primary="Order" style={{ textAlign: "center" }} />
-          </ListItemButton>
-        </ListItem>
+  
       </List>
     </Box>
   );

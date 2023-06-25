@@ -13,19 +13,20 @@ const Footer = () => {
   return (
     <div className={classes["footer"]}>
       <Divider variant="fullWidth" />
-      <Grid container spacing={4} padding="6rem 4rem 2rem 4rem">
+      <Grid container spacing={4} sx={{padding:{xs:'3rem 1rem 1rem 3rem',md:'6rem 4rem 2rem 4rem'},flexDirection:{xs:'column',md:'row'}}} >
         <Grid item xs={2}>
-          <Box sx={{ padding: "1rem" }}>
+          <Box sx={{ padding:{md:"1rem"},width:{xs:'10rem'} }}>
             <Typography
               sx={{
                 textTransform: "uppercase",
                 letterSpacing: "2px",
                 marginBottom: "2rem",
+                  fontSize:{xs:'25px'}
               }}
             >
               Corporate
             </Typography>
-            <ul>
+            <ul className="corporateLinks">
               <li onClick={handleLinkChangeHandler.bind(null, "/aboutus")}>
                 About us
               </li>
@@ -35,17 +36,18 @@ const Footer = () => {
           </Box>
         </Grid>
         <Grid item xs={2}>
-          <Box sx={{ padding: "1rem" }}>
+          <Box sx={{padding:{md:"1rem" },width:{xs:'10rem'}}}>
             <Typography
               sx={{
                 textTransform: "uppercase",
                 letterSpacing: "2px",
                 marginBottom: "2rem",
+                fontSize:{xs:'25px'}
               }}
             >
               support
             </Typography>
-            <ul>
+            <ul className="supportLinks"> 
               <li onClick={handleLinkChangeHandler.bind(null, "/contactus")}>
                 Contact us
               </li>
@@ -54,12 +56,13 @@ const Footer = () => {
           </Box>
         </Grid>
         <Grid item xs={4}>
-          <Box sx={{ padding: "1rem" }}>
+          <Box sx={{ padding: {md:"1rem" }}}>
             <Typography
               sx={{
                 textTransform: "uppercase",
                 letterSpacing: "2px",
                 marginBottom: "2rem",
+                fontSize:{xs:'25px'}
               }}
             >
               About the shop
@@ -84,17 +87,19 @@ const Footer = () => {
         <Grid item xs={4}>
           <Box
             sx={{
-              padding: "1rem",
-              paddingLeft: "5rem",
+              padding: {md:"1rem" },
+              paddingLeft: {md:"5rem" },
               display: "flex",
               flexDirection: "column",
               gap: "1.2rem",
+              width:{xs:'25rem'}
             }}
           >
             <Typography
               sx={{
                 textTransform: "uppercase",
                 letterSpacing: "2px",
+                fontSize:{xs:'1.3rem'}
               }}
             >
               NEWSLETTER
@@ -107,7 +112,7 @@ const Footer = () => {
             />
             <Button
               sx={{
-                fontSize: "1rem",
+                fontSize: {md:"1rem",xs:'1.3rem'},
                 padding: "1rem",
                 letterSpacing: "3px",
                 fontWeight: "bold",

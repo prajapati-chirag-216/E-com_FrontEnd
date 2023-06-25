@@ -1,18 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import SliderImages from "./SliderImages";
 import { fetchDisplayImage } from "../../../utils/api";
 import { Divider } from "@mui/material";
+import './display.style.scss'
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoading } from "../../../store/ui/ui.selector";
+import { setIsLoading } from "../../../store/ui/ui.action";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 const Display = () => {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState([]);
+  // const isLoading = useSelector(selectIsLoading)
+  const [isLoading,setIsLoading] = useState(false)
+  const dispatch  = useDispatch();
 
   useEffect(() => {
     (async () => {
       try {
+        
+        setIsLoading(true)
         const res = await fetchDisplayImage();
         setImages(res.data);
+        setIsLoading(false);
       } catch (err) {
         throw err;
       }
@@ -29,9 +40,14 @@ const Display = () => {
   }, [index, images]);
 
   return (
+    <Fragment>
+
+      {isLoading && <LoadingSpinner/>}
     <Box
+    className='upperPartHomePageContainer'
       sx={{
-        width: "100vw",
+        display:'flex',
+        // width: "100vw",
         height: "100vh",
         position: "relative",
         overflow: "hidden",
@@ -39,6 +55,7 @@ const Display = () => {
     >
       {images.length !== 0 && (
         <SliderImages
+          className='displayImageContainer'
           img={images[index].image}
           index={index}
           text={images[index].text}
@@ -47,6 +64,7 @@ const Display = () => {
         />
       )}
     </Box>
+    </Fragment>
   );
 };
 export async function loader() {

@@ -32,6 +32,7 @@ import { selectCartItems } from "../../../store/cart/cart.selector";
 import { useNavigate } from "react-router-dom";
 import { setSnackBar } from "../../../store/ui/ui.action";
 import { setSearchField } from "../../../store/ui/ui.action";
+import "./mainNavigation.style.scss";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -40,12 +41,13 @@ const Search = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(2),
+  marginRight: theme.spacing(4),
   marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
+  width: "17rem",
+  height: "45px",
+  [theme.breakpoints.up("xs")]: {
     marginLeft: theme.spacing(2),
-    width: "auto",
+    // width: "17rem",
   },
 }));
 
@@ -66,9 +68,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
-    width: "13rem",
-    // [theme.breakpoints.up("md")]: {
-    //   width: "20ch",
+    width: "17rem",
+    // [theme.breakpoints.up("sm")]: {
+    //   width: "2rem",
     // },
   },
 }));
@@ -98,6 +100,8 @@ const MainNavigation = () => {
         throw err;
       }
     })();
+
+    console.log(1);
   }, []);
 
   useEffect(() => {
@@ -165,6 +169,7 @@ const MainNavigation = () => {
   const openCartHandler = () => dispatch(setIsCartOpen(true));
 
   const navigateHandler = () => {
+    console.log(1);
     navigate("/signup");
   };
 
@@ -209,165 +214,181 @@ const MainNavigation = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-          onClick={handleProfilePage.bind(null, "/myProfile")}
-        ></IconButton>
-        <p>My Profile</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-          onClick={logoutHandler}
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>logout</p>
-      </MenuItem>
+      {userProfile ? (
+        <div>
+          <MenuItem>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            ></IconButton>
+            <p onClick={handleProfilePage.bind(null, "/myProfile")}>
+              My Profile
+            </p>
+          </MenuItem>
+          <MenuItem>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <p onClick={logoutHandler}>logout</p>
+          </MenuItem>
+        </div>
+      ) : (
+        <MenuItem>
+          <IconButton
+            size="large"
+            aria-label="show 17 new notifications"
+            color="inherit"
+          ></IconButton>
+          <p onClick={navigateHandler}>Signup/Signin</p>
+        </MenuItem>
+      )}
     </Menu>
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <CartDropdown status={cartState} onClose={closeCartHandler} />
+    <div style={{ display: "flex" }}>
+      <Box sx={{ flexGrow: 1 }}>
+        <CartDropdown status={cartState} onClose={closeCartHandler} />
 
-      <AppBar
-        position="static"
-        style={{
-          backgroundColor: "black",
-          position: "relative",
-          zIndex: 2,
-          padding: "1rem",
-        }}
-      >
-        <Toolbar>
-          {matches && <Drawer />}
-          {showSearchBar ? (
-            <Search
-              onChange={(event) => dispatch(setSearchField(event.target.value))}
-            >
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search Category or Product"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-          ) : (
-            <div style={{ width: "296px" }} />
-          )}
+        <AppBar
+          position="static"
+          style={{
+            backgroundColor: "black",
+            position: "relative",
+            zIndex: 2,
+            padding: "1rem",
+          }}
+        >
+          <Toolbar>
+            {matches && <Drawer />}
 
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "2rem",
-            }}
-          >
-            <Typography
-              variant="h3"
-              letterSpacing="5px"
-              // textTransform="uppercase"
-              fontFamily="'Times New Roman', Times, serif"
-              // fontWeight="bold"
-            >
-              shop
-              <span
-                style={{
-                  fontFamily: "Times New Roman",
-                  fontWeight: "bold",
-                  fontSize: "70px",
-                  color: "white",
-                }}
-              >
-                Z
-              </span>
-              ee
-            </Typography>
-            <Tabs />
-          </Box>
+            <div className="leftPartContainer">
+              {showSearchBar ? (
+                <Search
+                  onChange={(event) =>
+                    dispatch(setSearchField(event.target.value))
+                  }
+                >
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search Category or Product"
+                    inputProps={{ "aria-label": "search" }}
+                  />
+                </Search>
+              ) : (
+                <div style={{ width: "296px" }} />
+              )}
+              <div className="leftMiddlePartContainer">
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "2rem",
+                  }}
+                >
+                  <Typography
+                    variant="h3"
+                    letterSpacing="5px"
+                    // textTransform="uppercase"
+                    fontFamily="'Times New Roman', Times, serif"
+                    // fontWeight="bold"
+                  >
+                    shop<span>Z</span>ee
+                  </Typography>
+                  {/* <Tabs /> */}
+                </Box>
 
-          <Box
-            sx={{
-              display: {
-                xs: "none",
-                md: "flex",
-                gap: "2rem",
-              },
-            }}
-          >
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={openCartHandler}
-              color="inherit"
-            >
-              <div>
-                <h6 style={{ margin: "0px", height: "22px", color: "#cf8282" }}>
-                  {" "}
-                  {itemCount}
-                </h6>
-                <ShoppingCart fontSize="large" margin-bottom="1rem" />
+                <Tabs />
               </div>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={userProfile ? handleProfileMenuOpen : navigateHandler}
-              color="inherit"
+            </div>
+
+            <Box
+              className="rightPartContainer"
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                gap: "0.5rem",
+                display: {
+                  md: "flex",
+                  gap: "3rem",
+                },
               }}
             >
-              <AccountCircle fontSize="large" />
-              <Typography
-                align="right"
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={openCartHandler}
+                color="inherit"
+              >
+                <div>
+                  <h6
+                    style={{ margin: "0px", height: "22px", color: "#cf8282" }}
+                  >
+                    {" "}
+                    {itemCount}
+                  </h6>
+                  <ShoppingCart fontSize="large" margin-bottom="1rem" />
+                </div>
+              </IconButton>
+              <IconButton
+                className="profileIconContainer"
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={userProfile ? handleProfileMenuOpen : navigateHandler}
+                color="inherit"
                 sx={{
-                  color: "white",
-                  textTransform: "capitalize",
-                  letterSpacing: "1px",
+                  xs: "none",
+                  md: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  gap: "0.5rem",
                 }}
               >
-                {userProfile ? `Hello, ${userProfile.name}` : "Signup"}
-              </Typography>
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
+                <AccountCircle fontSize="large" />
+                <Typography
+                  align="right"
+                  sx={{
+                    color: "white",
+                    textTransform: "capitalize",
+                    letterSpacing: "1px",
+                  }}
+                >
+                  {userProfile ? `Hello, ${userProfile.name}` : "Signup"}
+                </Typography>
+              </IconButton>
+            </Box>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        {renderMobileMenu}
+        {renderMenu}
+      </Box>
+    </div>
   );
 };
 

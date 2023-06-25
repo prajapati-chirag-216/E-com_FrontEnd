@@ -1,25 +1,31 @@
 import { formateData, formateDate } from "../../utils/function";
 
 export const nameReducer = (state, action) => {
+  let newVal;
+
+  if (action.val !== undefined) {
+    newVal = action.val;
+
+    newVal = newVal.replace(/[^a-zA-Z]+/g, "").replace(/\d/g, "");
+  }
+
   if (action.type === "INPUT_FETCH") {
     return {
-      value: action.val,
+      value: newVal,
       isValid:
-        action.val.trim().length == 0
-          ? null
-          : action.val.trim().length > 5 && action.val.trim().length <= 10,
+        newVal.length == 0 ? null : newVal.length > 2 && newVal.length <= 15,
     };
   }
   if (action.type === "USER_INPUT") {
     return {
-      value: action.val,
-      isValid: action.val.trim().length > 5 && action.val.trim().length <= 10,
+      value: newVal,
+      isValid: newVal.length > 2 && newVal.length <= 15,
     };
   }
   if (action.type === "INPUT_BLUR") {
     return {
-      value: state.value,
-      isValid: state.value.trim().length > 5 && state.value.trim().length <= 10,
+      value: state.value.trim(),
+      isValid: state.value.trim().length > 2 && state.value.trim().length <= 15,
     };
   }
   return { value: "", isValid: null };
@@ -107,44 +113,57 @@ export const phoneNoReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 export const generalReducer = (state, action) => {
+  let newVal;
+
+  if (action.val !== undefined) {
+    newVal = action.val;
+
+    newVal = newVal.replace(/[^a-z A-Z]+/g, "");
+  }
+
   if (action.type === "INPUT_FETCH") {
     return {
-      value: action.val,
+      value: newVal,
       isValid:
-        action.val.trim().length == 0
-          ? null
-          : action.val.length > 0 && action.val.length < 30,
+        newVal.length == 0 ? null : newVal.length > 3 && newVal.length < 300,
     };
   }
   if (action.type === "USER_INPUT") {
     return {
-      value: action.val,
-      isValid: action.val.length > 0 && action.val.length < 30,
+      value: newVal,
+      isValid: newVal.length > 3 && newVal.length < 300,
     };
   }
   if (action.type === "INPUT_BLUR") {
     return {
       value: state.value,
-      isValid: state.value.length > 0 && state.value.length < 30,
+      isValid: state.value.length > 3 && state.value.length < 300,
     };
   }
   return { value: "", isValid: null };
 };
 export const pinCodeReducer = (state, action) => {
+  let newVal;
+
+  if (action.val !== undefined) {
+    newVal = action.val;
+
+    newVal = newVal.replace(/\D/g, "");
+  }
+
   if (action.type === "INPUT_FETCH") {
     return {
-      value: action.val.trim(),
-      isValid:
-        action.val.trim().length == 0 ? null : action.val.trim().length === 6,
+      value: newVal,
+      isValid: newVal.length == 0 ? null : newVal.length === 6,
     };
   }
   if (action.type === "USER_INPUT") {
-    if (action.val.trim().length === 7) {
+    if (newVal.length === 7) {
       return { value: state.value.trim(), isValid: true };
     }
     return {
-      value: action.val.trim(),
-      isValid: action.val.trim().length === 6,
+      value: newVal,
+      isValid: newVal.length === 6,
     };
   }
   if (action.type === "INPUT_BLUR") {
@@ -183,13 +202,21 @@ export const cardNoReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 export const cvvReducer = (state, action) => {
+  let newVal;
+
+  if (action.val !== undefined) {
+    newVal = action.val;
+
+    console.log(newVal, "de");
+
+    newVal = newVal.replace(/\s/g, "").replace(/\D/g, "");
+  }
+
   if (action.type === "INPUT_FETCH") {
     return {
-      value: action.val.trim(),
+      value: newVal,
       isValid:
-        action.val.trim().length == 0
-          ? null
-          : action.val.trim().length >= 3 && action.val.trim().length <= 4,
+        newVal.length == 0 ? null : newVal.length >= 3 && newVal.length <= 4,
     };
   }
   if (action.type === "USER_INPUT") {
@@ -197,8 +224,8 @@ export const cvvReducer = (state, action) => {
       return { value: state.value.trim(), isValid: true };
     }
     return {
-      value: action.val.trim(),
-      isValid: action.val.trim().length >= 3 && action.val.trim().length <= 4,
+      value: newVal,
+      isValid: newVal.length >= 3 && newVal.length <= 4,
     };
   }
   if (action.type === "INPUT_BLUR") {

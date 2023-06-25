@@ -1,13 +1,15 @@
 .item-img {
     display: flex;
     column-gap: 2rem;
-    width: 100%;
+    width: 110%;
     height: 100%;
     object-fit: cover;
     transition: all 3s ease-out;
     transform: scale(1);
     border-radius: 0px;
 }
+
+
 
 .item_details-div {
     margin-top: 1rem;
@@ -16,4 +18,12 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem
+}
+
+@media only screen and (max-width: 500px) {
+            
+    .item_details-div{
+          
+         width:120%;
+    }
 }

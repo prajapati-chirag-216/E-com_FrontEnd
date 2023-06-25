@@ -4,9 +4,14 @@ import React, { Suspense, useState } from "react";
 import Cards from "../Cards/Cards";
 import { fetchCategories } from "../../../utils/api";
 import { Await, useLoaderData } from "react-router-dom";
+import {store} from '../../../store/store'
+import { setIsLoading } from "../../../store/ui/ui.action";
+import { useSelector } from "react-redux";
+import { selectIsLoading } from "../../../store/ui/ui.selector";
+import LoadingSpinner from "../UI/LoadingSpinner";
 const textCss = {
   fontWeight: "bold",
-  fontSize: "6rem",
+  fontSize: {md:"6rem",xs:'3rem'},
   color: "black",
   WebkitTextStroke: "2px black",
   WebkitTextFillColor: "white",
@@ -18,10 +23,12 @@ const textCss = {
 };
 const Categories = () => {
   const loaderData = useLoaderData();
+  const isLoading = useSelector(selectIsLoading)
+
   return (
     <Box
       sx={{
-        width: "100vw",
+        width: {xs:'60rem',md:'100vw'},
         display: "flex",
         flexDirection: "column",
         gap: "4rem",
@@ -30,11 +37,12 @@ const Categories = () => {
     >
       <Box
         sx={{
+          width:{xs:'60rem',md:'100vw'},
           display: "flex",
-          flexDirection: { sm: "column", md: "row" },
+          flexDirection: 'row',
           justifyContent: "center",
           alignItems: "center",
-          gap: { sm: "1rem", md: "3rem" },
+          gap: { xs: "2rem", md: "3rem" },
         }}
       >
         <Typography variant="h1" sx={textCss}>
@@ -55,6 +63,7 @@ const Categories = () => {
         </Typography>
       </Box>
       <Suspense>
+        {/* {isLoading && <LoadingSpinner/>} */}
         <Await resolve={loaderData}>
           {(categories) => <Cards location="/product" data={categories} />}
         </Await>
@@ -65,7 +74,10 @@ const Categories = () => {
 export async function loader() {
   let response;
   try {
+
+    // store.dispatch(setIsLoading(true));
     response = await fetchCategories();
+    // store.dispatch(setIsLoading(false))
   } catch (err) {
     throw err;
   }
