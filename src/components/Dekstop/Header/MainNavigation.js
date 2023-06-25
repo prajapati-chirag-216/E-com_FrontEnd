@@ -98,8 +98,6 @@ const MainNavigation = () => {
         throw err;
       }
     })();
-
-    console.log(1);
   }, []);
 
   useEffect(() => {

@@ -5,22 +5,5 @@
 
   .tabPanelContainer {
     width: 100rem;
-    overflow-y: scroll;
   }
-}
-.tabPanelContainer::-webkit-scrollbar {
-  width: 7px;
-}
-
-.tabPanelContainer::-webkit-scrollbar-track {
-  background-color: rgb(240, 240, 240);
-}
-
-.tabPanelContainer::-webkit-scrollbar-thumb {
-  border-radius: 20px;
-  background: #817d7d44;
-}
-
-.tabPanelContainer::-webkit-scrollbar-thumb:hover {
-  background: #9c9c9c;
 }

@@ -169,6 +169,19 @@ export const makeOrder = async (orderObj) => {
     throw err;
   }
 };
+export const fetchOrder = async (orderId) => {
+  try {
+    const config = {
+      method: "GET",
+      url: `/getOrder/${orderId}`,
+      withCredentials: true,
+    };
+    const response = await AxiosInstance(config);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
 export const getAccessToken = async () => {
   try {
     const config = {

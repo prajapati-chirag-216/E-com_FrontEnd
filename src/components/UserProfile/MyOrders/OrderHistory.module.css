@@ -1,0 +1,140 @@
+.myOrder-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 4rem;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    box-sizing: border-box;
+}
+
+.myOrder-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem
+}
+
+.order-container {
+    width: 100%;
+    height: 35rem;
+    background-color: rgba(244, 240, 240, 0.362);
+    box-shadow: 0px 0px 8px rgba(199, 195, 195, 0.515);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 1rem;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    padding: 0.5rem;
+    position: relative;
+}
+
+.order-header>div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.order-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    flex: 4;
+    overflow-y: scroll;
+}
+
+.item-container {
+    width: 100%;
+    height: 8rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.item-image {
+    flex: 1.8;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    scale: 95%;
+}
+
+.item-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(133, 133, 133, 0.15);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.item-image>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-details {
+    flex: 4;
+    padding: 0rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item-details>div {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 0.5rem;
+}
+
+.controller-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0rem 0.5rem 0rem;
+}
+
+.controller-container>div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .myOrder-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.myOrder-container::-webkit-scrollbar-track {
+    background-color: rgb(240, 240, 240);
+}
+
+.myOrder-container::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #76767644;
+}
+
+.myOrder-container::-webkit-scrollbar-thumb:hover {
+    background: #d1d1d1;
+} */
+
+.order-details::-webkit-scrollbar {
+    width: 5px;
+}
+
+.order-details::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #aba6a644;
+}
+
+.order-details::-webkit-scrollbar-thumb:hover {
+    background: #d1d1d1;
+}

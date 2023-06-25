@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSnackBar } from "../store/ui/ui.action";
 import { selectCartItems } from "../store/cart/cart.selector";
 
-const ProtectedRoutes = () => {
+const ProtectedRoutes = (props) => {
   const dispatch = useDispatch();
   const loaderData = useLoaderData();
   const cartItems = useSelector(selectCartItems);
@@ -19,7 +19,7 @@ const ProtectedRoutes = () => {
           severity: "info",
         })
       );
-    } else if (cartItems.length === 0) {
+    } else if (!props.isProfilePage && cartItems.length === 0) {
       dispatch(
         setSnackBar({
           status: true,
@@ -33,7 +33,7 @@ const ProtectedRoutes = () => {
     <Suspense fallback={<LoadingSpinner />}>
       <Await resolve={loaderData}>
         {(data) =>
-          data?.userProfile && cartItems.length !== 0 ? (
+          data?.userProfile ? (
             <Outlet />
           ) : (
             <Navigate to={!data?.userProfile ? "/login" : "/home"} />
@@ -46,7 +46,7 @@ const ProtectedRoutes = () => {
 export async function loader() {
   let res;
   try {
-    res = fetchUserProfile();
+    res = await fetchUserProfile();
   } catch (err) {
     throw err;
   }

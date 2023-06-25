@@ -66,83 +66,87 @@ const MyCart = () => {
           Total
         </Typography>
       </div>
-      <Divider sx={{ width: "80%", marginBottom: "0.5rem" }} />
-      {cartItems.map((item) => {
-        return (
-          <div className="myCartItemContainer" key={item._id}>
-            <div className="itemDetailsContainer">
-              <div className="itemImgContainer">
-                <img src={item.image[0]} />
-              </div>
-              <div className="itemTextContainer">
-                <Typography
-                  sx={{
-                    textTransform: "uppercase",
-                    letterSpacing: "1px",
-                    fontSize: "1.3rem",
-                    color: "rgb(80,80,80)",
-                  }}
-                >
-                  {item.name}
-                </Typography>
-                <Typography
-                  sx={{
-                    textTransform: "uppercase",
-                    letterSpacing: "1px",
-                    fontSize: "1rem",
-                  }}
-                >
-                  {item.description.split(".")[0]}..
-                </Typography>
+      <Divider sx={{ width: "80%", marginBottom: "0.2rem" }} />
+      <div className="items-box">
+        {cartItems.map((item) => {
+          return (
+            <div className="myCartItemContainer" key={item._id}>
+              <div className="itemDetailsContainer">
+                <div className="itemImgContainer">
+                  <img src={item.image[0]} />
+                </div>
+                <div className="itemTextContainer">
+                  <Typography
+                    sx={{
+                      textTransform: "uppercase",
+                      letterSpacing: "1px",
+                      fontSize: "1.3rem",
+                      color: "rgb(80,80,80)",
+                    }}
+                  >
+                    {item.name}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      textTransform: "uppercase",
+                      letterSpacing: "1px",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    {item.description.split(".")[0]}..
+                  </Typography>
 
+                  <Typography
+                    sx={{
+                      letterSpacing: "1px",
+                      fontSize: "1.2rem",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    $ {item.price}
+                  </Typography>
+                </div>
+              </div>
+
+              <div className="itemQuntityContainer">
+                <div className="itemQuntityController">
+                  <RemoveIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={decreaseItemhandler.bind(null, item)}
+                  />
+                  <input value={item.quntity} readOnly type="number" min="0" />
+                  <AddIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={increaseItemhandler.bind(null, item)}
+                  />
+                </div>
+                <div className="remove-btn">
+                  <span onClick={removeItemhandler.bind(null, item)}>
+                    remove
+                  </span>
+                  <Divider
+                    sx={{
+                      marginTop: "0.3rem",
+                      borderColor: "rgb(67, 67, 67)",
+                      transition: "all 800ms",
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="totalPriceContainer">
                 <Typography
                   sx={{
                     letterSpacing: "1px",
                     fontSize: "1.2rem",
-                    marginTop: "1rem",
                   }}
                 >
-                  $ {item.price}
+                  $ {item.price * item.quntity}
                 </Typography>
               </div>
             </div>
-
-            <div className="itemQuntityContainer">
-              <div className="itemQuntityController">
-                <RemoveIcon
-                  style={{ cursor: "pointer" }}
-                  onClick={decreaseItemhandler.bind(null, item)}
-                />
-                <input value={item.quntity} readOnly type="number" min="0" />
-                <AddIcon
-                  style={{ cursor: "pointer" }}
-                  onClick={increaseItemhandler.bind(null, item)}
-                />
-              </div>
-              <div className="remove-btn">
-                <span onClick={removeItemhandler.bind(null, item)}>remove</span>
-                <Divider
-                  sx={{
-                    marginTop: "0.3rem",
-                    borderColor: "rgb(67, 67, 67)",
-                    transition: "all 800ms",
-                  }}
-                />
-              </div>
-            </div>
-            <div className="totalPriceContainer">
-              <Typography
-                sx={{
-                  letterSpacing: "1px",
-                  fontSize: "1.2rem",
-                }}
-              >
-                $ {item.price * item.quntity}
-              </Typography>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       <Divider sx={{ width: "80%", marginTop: "0.5rem" }} />
       <div className="cartControllerContainer">
         <div className="noteContainer">

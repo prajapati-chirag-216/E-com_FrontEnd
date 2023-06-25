@@ -165,9 +165,6 @@ const Information = () => {
       type: "INPUT_FETCH",
       val: orderInfo?.shippingAddress?.pinNumber || "",
     });
-    return () => {
-      console.log("informationDetails ", informationDetails);
-    };
   }, []);
 
   const validateFormHandler = async (event) => {

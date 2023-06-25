@@ -43,10 +43,9 @@ const Controller = (props) => {
 
       order.orderedItems = newCartItems;
       order.totalPrice = total;
-
+      console.log(order);
       try {
         await makeOrder(order);
-        dispatch(setEmptyCart([]));
       } catch (err) {
         throw err;
       }

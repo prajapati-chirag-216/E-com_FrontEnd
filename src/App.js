@@ -38,6 +38,7 @@ import ProtectedRoutes, {
 import Information from "./components/Checkout/Information/Information";
 import Shipping from "./components/Checkout/Shipping/Shipping";
 import Payment from "./components/Checkout/Paymet/Payment";
+import OrderStatus from "./components/UserProfile/MyOrders/OrderStatus";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -59,7 +60,7 @@ const router = createBrowserRouter(
           <PrivateRoutes message="Access denied! You don't have permissions for this page." />
         }
       >
-        <Route path="/success" element={<Success />} />
+        <Route path="/success" element={<Success forPasswordReset={true} />} />
       </Route>
       <Route
         element={
@@ -85,7 +86,10 @@ const router = createBrowserRouter(
         <Route path="/home" element={<Dashboard />} loader={categoryLoader} />
         <Route
           element={
-            <ProtectedRoutes message="Access denied! You don't have permissions for this page." />
+            <ProtectedRoutes
+              isProfilePage={true}
+              message="Access denied! You don't have permissions for this page."
+            />
           }
           loader={profileLoader}
         >
@@ -103,6 +107,7 @@ const router = createBrowserRouter(
           loader={productViewLoader}
         />
         <Route path="/cart" element={<MyCart />} />
+        <Route path="/orderStatus/:id" element={<OrderStatus />} />
       </Route>
     </Route>
   )

@@ -157,8 +157,9 @@ const Review = () => {
         REVIEWS
       </Typography>
       <div className={classes["reviewListContainer"]}>
-        {isLoading && <LoadingSpinner />}
-        {reviews.length === 0 ? (
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : reviews.length === 0 ? (
           <Typography
             sx={{
               color: "rgb(56 52 52 / 68%)",

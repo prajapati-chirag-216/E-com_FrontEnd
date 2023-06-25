@@ -17,6 +17,7 @@ axios.interceptors.response.use(
   },
   async (error) => {
     const originalConfig = error.config;
+    console.log("error ", error);
     if (
       error.response?.status === 403 &&
       error.response?.data?.refreshTokenDecoded &&
@@ -29,6 +30,7 @@ axios.interceptors.response.use(
       error.response?.status === 401 ||
       error.response?.status === 409
     ) {
+      console.log("Came");
       store.dispatch(
         setSnackBar({
           status: true,

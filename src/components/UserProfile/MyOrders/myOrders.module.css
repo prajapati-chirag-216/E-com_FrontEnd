@@ -1,0 +1,26 @@
+.order-container {
+    height: 60rem;
+    padding-right: 1rem;
+}
+
+/* 
+.show-scrollbar {
+    overflow-y: scroll;
+}
+
+.order-container::-webkit-scrollbar {
+    width: 7px;
+}
+
+.order-container::-webkit-scrollbar-track {
+    background-color: rgb(240, 240, 240);
+}
+
+.order-container::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #817d7d44;
+}
+
+.order-container::-webkit-scrollbar-thumb:hover {
+    background: #9c9c9c;
+} */
