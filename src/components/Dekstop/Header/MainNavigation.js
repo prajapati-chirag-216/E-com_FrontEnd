@@ -101,7 +101,7 @@ const MainNavigation = () => {
       }
     })();
 
-    console.log(1);
+    console.log(userProfile);
   }, []);
 
   useEffect(() => {
@@ -266,11 +266,11 @@ const MainNavigation = () => {
             padding: "1rem",
           }}
         >
-          <Toolbar>
+          <Toolbar className="mainNavigationContainer">
             {matches && <Drawer />}
 
             <div className="leftPartContainer">
-              {showSearchBar ? (
+              {showSearchBar && (
                 <Search
                   onChange={(event) =>
                     dispatch(setSearchField(event.target.value))
@@ -284,9 +284,8 @@ const MainNavigation = () => {
                     inputProps={{ "aria-label": "search" }}
                   />
                 </Search>
-              ) : (
-                <div style={{ width: "296px" }} />
               )}
+
               <div className="leftMiddlePartContainer">
                 <Box
                   sx={{
@@ -298,6 +297,7 @@ const MainNavigation = () => {
                   }}
                 >
                   <Typography
+                    className="webLgogContainer"
                     variant="h3"
                     letterSpacing="5px"
                     // textTransform="uppercase"
@@ -306,7 +306,6 @@ const MainNavigation = () => {
                   >
                     shop<span>Z</span>ee
                   </Typography>
-                  {/* <Tabs /> */}
                 </Box>
 
                 <Tabs />
