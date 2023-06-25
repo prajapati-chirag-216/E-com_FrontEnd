@@ -7,15 +7,12 @@ import {
   IconButton,
   Typography,
   InputBase,
-  Badge,
   MenuItem,
   Menu,
   useMediaQuery,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { addCartItems, fetchUserProfile, logoutUser } from "../../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,16 +38,17 @@ const Search = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(4),
+  marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "17rem",
-  height: "45px",
-  [theme.breakpoints.up("xs")]: {
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  padding: "0.3rem 0rem",
+  [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(2),
-    // width: "17rem",
+    width: "auto",
   },
 }));
-
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
@@ -100,8 +98,6 @@ const MainNavigation = () => {
         throw err;
       }
     })();
-
-    console.log(userProfile);
   }, []);
 
   useEffect(() => {
@@ -270,7 +266,7 @@ const MainNavigation = () => {
             {matches && <Drawer />}
 
             <div className="leftPartContainer">
-              {showSearchBar && (
+              {showSearchBar ? (
                 <Search
                   onChange={(event) =>
                     dispatch(setSearchField(event.target.value))
@@ -284,8 +280,9 @@ const MainNavigation = () => {
                     inputProps={{ "aria-label": "search" }}
                   />
                 </Search>
+              ) : (
+                <div style={{ width: "296px" }} />
               )}
-
               <div className="leftMiddlePartContainer">
                 <Box
                   sx={{

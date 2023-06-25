@@ -25,7 +25,7 @@ import ViewProductsController from "./pages/ProdutsView/ProductsViewController";
 import { loader as categoryLoader } from "./components/Dekstop/Category/Categories";
 import { loader as productLoader } from "./components/ProductsController/Items/Items";
 import { loader as productViewLoader } from "./components/ProductView/ProductView";
-import Signup from "./pages/Deshboard/Signup";
+import Signup from "./pages/Signup";
 import Checkout from "./pages/Checkout/Checkout";
 import MyCart from "./components/Cart/MyCart/mycart.component";
 import "./App.css";

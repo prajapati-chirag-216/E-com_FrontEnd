@@ -1,0 +1,21 @@
+.LoginPageHeaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 2rem;
+
+  @media only screen and (max-width: 500px) {
+    top: 4rem;
+  }
+
+  span {
+    font-size: 7rem;
+    -webkit-text-stroke: 2px black;
+    -webkit-text-fill-color: white;
+
+    @media only screen and (max-width: 500px) {
+      font-size: 5rem;
+    }
+  }
+}

@@ -27,14 +27,14 @@
     width: 40rem;
     flex-direction: column;
     row-gap: 2rem;
-    
+
 
 }
 
 .reviewListContainer {
     width: 80rem;
     height: 50rem;
-    background-color: rgb(245, 241, 242);
+    background-color: rgba(248, 244, 244, 0.9);
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
@@ -69,21 +69,21 @@
 }
 
 @media only screen and (max-width: 500px) {
-    
-    .title{
-         
-         font-size: 2rem;
-         letter-spacing: 3px;
-    }
-    
-    .reviewContainer  Form{
-          
-         width: 30rem;
-        row-gap: 3rem;
-      
+
+    .title {
+
+        font-size: 2rem;
+        letter-spacing: 3px;
     }
 
-    .reviewListContainer{
+    .reviewContainer Form {
+
+        width: 30rem;
+        row-gap: 3rem;
+
+    }
+
+    .reviewListContainer {
 
         align-items: center;
     }
@@ -102,15 +102,15 @@
 
 @media only screen and (max-width: 500px) {
 
-    .reviewDivContainer{
+    .reviewDivContainer {
 
-        width:50%;
-         
+        width: 50%;
+
     }
 
-    .reviewDivContainer p{
+    .reviewDivContainer p {
 
-         overflow-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
 }
