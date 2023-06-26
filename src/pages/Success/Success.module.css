@@ -8,13 +8,10 @@
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
-    position: relative;
     z-index: 10;
 }
 
-#world{
-
-
+#world {
     position: absolute;
     width: 100%;
     height: 100vh;
@@ -22,9 +19,7 @@
     padding: 0;
     overflow: none;
     visibility: visible;
-   
-
- }
+}
 
 .header {
     font-family: Merriweather, serif;

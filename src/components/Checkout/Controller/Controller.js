@@ -43,10 +43,8 @@ const Controller = (props) => {
 
       order.orderedItems = newCartItems;
       order.totalPrice = total;
-
       try {
         await makeOrder(order);
-        
       } catch (err) {
         throw err;
       }
@@ -72,7 +70,7 @@ const Controller = (props) => {
           },
         }}
       >
-        {isLoading? "" : `${props.continueTo}`}
+        {isLoading ? "" : `${props.continueTo}`}
       </StatusButton>
     </div>
   );

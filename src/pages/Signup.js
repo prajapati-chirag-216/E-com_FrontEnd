@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import SigninForm from "../components/Dekstop/Form/SigninForm";
+import SignupForm from "../components/Dekstop/Form/SignupForm";
 import { Container } from "@mui/system";
 import Logo from "../components/Logo/Logo";
-const SignIn = () => {
+const Signup = () => {
   return (
     <Fragment>
       <Logo />
@@ -10,14 +10,14 @@ const SignIn = () => {
         maxWidth="sm"
         sx={{
           transform: { xs: "scale(0.9)", md: "scale(1)" },
-          marginTop: "8rem",
+          marginTop: "3rem",
           boxShadow: "2px 2px 8px",
         }}
       >
-        <SigninForm />
+        <SignupForm />
       </Container>
     </Fragment>
   );
 };
 
-export default SignIn;
+export default Signup;

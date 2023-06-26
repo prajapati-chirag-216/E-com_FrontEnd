@@ -1,8 +1,7 @@
 import { formateData, formateDate } from "../../utils/function";
 
 export const nameReducer = (state, action) => {
-
-let newVal;
+  let newVal;
 
 if(action.val !== undefined){
 
@@ -17,9 +16,7 @@ if(action.val !== undefined){
     return {
       value: newVal,
       isValid:
-      newVal.length == 0
-          ? null
-          : newVal.length > 2 && newVal.length <= 15,
+        newVal.length == 0 ? null : newVal.length > 2 && newVal.length <= 15,
     };
   }
   if (action.type === "USER_INPUT") {
@@ -119,23 +116,19 @@ export const phoneNoReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 export const generalReducer = (state, action) => {
-
   let newVal;
 
-if(action.val !== undefined){
-  newVal = action.val
+  if (action.val !== undefined) {
+    newVal = action.val;
 
   newVal =  newVal.replace(/\d/g,'')
 }
-
 
   if (action.type === "INPUT_FETCH") {
     return {
       value: newVal,
       isValid:
-      newVal.length == 0
-          ? null
-          : newVal.length > 3 && newVal.length < 300,
+        newVal.length == 0 ? null : newVal.length > 3 && newVal.length < 300,
     };
   }
   if (action.type === "USER_INPUT") {
@@ -153,23 +146,18 @@ if(action.val !== undefined){
   return { value: "", isValid: null };
 };
 export const pinCodeReducer = (state, action) => {
-
   let newVal;
 
-  if(action.val !== undefined){
+  if (action.val !== undefined) {
+    newVal = action.val;
 
-      newVal = action.val;
-
-      newVal = newVal.replace(/\D/g,'');
+    newVal = newVal.replace(/\D/g, "");
   }
-
-
 
   if (action.type === "INPUT_FETCH") {
     return {
       value: newVal,
-      isValid:
-      newVal.length == 0 ? null : newVal.length === 6,
+      isValid: newVal.length == 0 ? null : newVal.length === 6,
     };
   }
   if (action.type === "USER_INPUT") {
@@ -217,26 +205,19 @@ export const cardNoReducer = (state, action) => {
   return { value: "", isValid: null };
 };
 export const cvvReducer = (state, action) => {
-
   let newVal;
 
-  if(action.val !== undefined){
+  if (action.val !== undefined) {
+    newVal = action.val;
 
-     newVal = action.val;
-
-     console.log(newVal,'de')
-
-    newVal = newVal.replace(/\s/g,'').replace(/\D/g,'');
+    newVal = newVal.replace(/\s/g, "").replace(/\D/g, "");
   }
-
 
   if (action.type === "INPUT_FETCH") {
     return {
-      value:newVal,
+      value: newVal,
       isValid:
-      newVal.length == 0
-          ? null
-          :newVal.length >= 3 && newVal.length <= 4,
+        newVal.length == 0 ? null : newVal.length >= 3 && newVal.length <= 4,
     };
   }
   if (action.type === "USER_INPUT") {
@@ -281,6 +262,34 @@ export const expiryDateReducer = (state, action) => {
     return {
       value: state.value,
       isValid: isValid,
+    };
+  }
+  return { value: "", isValid: null };
+};
+
+export const descriptionReducer = (state, action) => {
+  if (action.type === "INPUT_FETCH") {
+    return {
+      value: action.val,
+      isValid:
+        action.val.trim().length == 0
+          ? null
+          : action.val.length >= 40 && action.val.length <= 400,
+    };
+  }
+  if (action.type === "USER_INPUT") {
+    return {
+      value:
+        action.val.startsWith(" ") || action.val.endsWith("  ")
+          ? action.val.trim() + " "
+          : action.val,
+      isValid: action.val.length >= 40 && action.val.length <= 400,
+    };
+  }
+  if (action.type === "INPUT_BLUR") {
+    return {
+      value: state.value,
+      isValid: state.value.length >= 40 && state.value.length <= 400,
     };
   }
   return { value: "", isValid: null };

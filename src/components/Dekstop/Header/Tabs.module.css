@@ -3,30 +3,25 @@
     font-size: 1.1rem;
     letter-spacing: 2px;
     cursor: pointer;
-    color: white;
+    color: rgb(171, 171, 171);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     transition: all 100ms;
+    user-select: none;
 }
 
 .tabs:nth-child(1):hover {
-    color: rgb(202, 203, 203);
-    transform: scale(0.9);
+    color: white;
 }
 
 .tabs:nth-child(2):hover {
-    color: rgb(202, 203, 203);
-    transform: scale(0.9);
-}
-.tabs:nth-child(3):hover {
-    color: rgb(202, 203, 203);
-    transform: scale(0.9);
-}
-.tabs:nth-child(4):hover {
-    color: rgb(202, 203, 203);
-    transform: scale(0.9);
+    color: white
 }
 
-.tabs:active {
-    color: rgb(202, 203, 203);
-    transform: scale(0.9);
+.tabs:nth-child(3):hover {
+    color: white
+}
+
+.active-tab {
+    transition: all 100ms;
+    color: white
 }

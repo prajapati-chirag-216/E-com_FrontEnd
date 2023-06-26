@@ -8,7 +8,7 @@ import {
   IconButton,
   OutlinedInput,
   InputAdornment,
-  CircularProgress
+  CircularProgress,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Form, NavLink, useActionData, useNavigate } from "react-router-dom";
@@ -24,12 +24,11 @@ import { signupUser } from "../../../utils/api";
 import { textFeildStyle } from "../../../utils/function";
 import { selectIsLoading } from "../../../store/ui/ui.selector";
 import { setIsLoading } from "../../../store/ui/ui.action";
-import {store} from '../../../store/store'
-
+import { store } from "../../../store/store";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading)
+  const isLoading = useSelector(selectIsLoading);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -211,7 +210,11 @@ const SignupForm = () => {
             onClick={!formIsValid ? validateFormHandler : () => {}}
             disabled={isLoading === true}
           >
-           {isLoading?<CircularProgress color="inherit" size={33} />:'SignUp'}
+            {isLoading ? (
+              <CircularProgress color="inherit" size={33} />
+            ) : (
+              "SignUp"
+            )}
           </Button>
           <Typography
             align="center"
@@ -234,8 +237,7 @@ const SignupForm = () => {
   );
 };
 export async function action({ request }) {
-
-  store.dispatch(setIsLoading(true))
+  store.dispatch(setIsLoading(true));
   let response;
   const formData = await request.formData();
   const userData = {
@@ -246,11 +248,11 @@ export async function action({ request }) {
   };
   try {
     response = await signupUser(userData);
-    store.dispatch(setIsLoading(false))
+    store.dispatch(setIsLoading(false));
   } catch (err) {
     // if(err.response.statusText === "Unauthorized"){
-      store.dispatch(setIsLoading(false))
-  //  }
+    store.dispatch(setIsLoading(false));
+    //  }
     return { inValidEmail: true };
   }
   return response;

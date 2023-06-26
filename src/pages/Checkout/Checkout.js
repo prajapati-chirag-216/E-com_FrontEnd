@@ -3,14 +3,12 @@ import { Box, Typography } from "@mui/material";
 import classes from "./Checkout.module.css";
 import SimpleStepper from "../../components/Checkout/Stepper/SimpleStepper";
 import Ticket from "../../components/Checkout/Ticket/Ticket";
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectOrderInfo } from "../../store/Order/order.selector";
-import { selectCartItems } from "../../store/cart/cart.selector";
 import { setSuccess } from "../../store/ui/ui.action";
 
 const Checkout = () => {
-  const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
   const orderInfo = useSelector(selectOrderInfo);
   const location = useLocation();
@@ -51,9 +49,6 @@ const Checkout = () => {
     } else if (location.pathname.endsWith("/payment")) {
       setCurrentPage(2);
     }
-    return () => {
-      console.log("leave");
-    };
   }, []);
 
   return (

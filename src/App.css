@@ -2,15 +2,24 @@ body {
   margin: 0;
 
 
-  
+
 }
-@media   (max-width: 500px) {
-           
 
-  body{
+@media (max-width: 500px) {
 
-      zoom: 1;
+
+  body {
+
+    zoom: 1;
   }
-  
-   
+
+
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }

@@ -165,7 +165,7 @@ const OrderTable = ({ orderData }) => {
   useEffect(() => {
     setRows(
       orderData.orderedItems?.map((order) => ({
-        product: order.productId.name,
+        product: order.productId?.name,
         Image: (
           <img
             width="50px"

@@ -12,7 +12,6 @@ const ProtectedRoutes = (props) => {
   const cartItems = useSelector(selectCartItems);
   useEffect(() => {
     if (!loaderData.userProfile) {
-      console.log(loaderData.userProfile)
       dispatch(
         setSnackBar({
           status: true,
@@ -20,7 +19,7 @@ const ProtectedRoutes = (props) => {
           severity: "info",
         })
       );
-    } else if ( !props.isProfilePage  && cartItems.length === 0) {
+    } else if (!props.isProfilePage && cartItems.length === 0) {
       dispatch(
         setSnackBar({
           status: true,
@@ -47,9 +46,7 @@ const ProtectedRoutes = (props) => {
 export async function loader() {
   let res;
   try {
-
     res = await fetchUserProfile();
-    console.log(res,'ge')
   } catch (err) {
     throw err;
   }

@@ -25,7 +25,7 @@ import ViewProductsController from "./pages/ProdutsView/ProductsViewController";
 import { loader as categoryLoader } from "./components/Dekstop/Category/Categories";
 import { loader as productLoader } from "./components/ProductsController/Items/Items";
 import { loader as productViewLoader } from "./components/ProductView/ProductView";
-import Signup from "./pages/Deshboard/Signup";
+import Signup from "./pages/Signup";
 import Checkout from "./pages/Checkout/Checkout";
 import MyCart from "./components/Cart/MyCart/mycart.component";
 import "./App.css";
@@ -38,6 +38,7 @@ import ProtectedRoutes, {
 import Information from "./components/Checkout/Information/Information";
 import Shipping from "./components/Checkout/Shipping/Shipping";
 import Payment from "./components/Checkout/Paymet/Payment";
+import OrderStatus from "./components/UserProfile/MyOrders/OrderStatus";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -85,7 +86,10 @@ const router = createBrowserRouter(
         <Route path="/home" element={<Dashboard />} loader={categoryLoader} />
         <Route
           element={
-            <ProtectedRoutes isProfilePage={true} message="Access denied! You don't have permissions for this page." />
+            <ProtectedRoutes
+              isProfilePage={true}
+              message="Access denied! You don't have permissions for this page."
+            />
           }
           loader={profileLoader}
         >
@@ -103,13 +107,13 @@ const router = createBrowserRouter(
           loader={productViewLoader}
         />
         <Route path="/cart" element={<MyCart />} />
+        <Route path="/orderStatus/:id" element={<OrderStatus />} />
       </Route>
     </Route>
   )
 );
 
 function App() {
-
   return <RouterProvider router={router} />;
 }
 

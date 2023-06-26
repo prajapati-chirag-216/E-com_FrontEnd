@@ -60,7 +60,7 @@ export async function resetPassword(userData) {
 }
 export async function fetchDisplayImage() {
   const config = {
-    url: `/admin/fetchDisplayImage`,
+    url: `/fetchDisplayImage`,
   };
   const response = await AxiosInstance(config);
   return response;
@@ -100,6 +100,7 @@ export const postReview = async (id, reviewObj) => {
     method: "POST",
     url: `/productreview/${id}`,
     data: reviewObj,
+    withCredentials: true,
   };
   const response = await AxiosInstance(config);
   return { ...response, status: 200 };
@@ -160,6 +161,19 @@ export const makeOrder = async (orderObj) => {
       method: "POST",
       url: `/postOrder`,
       data: orderObj,
+      withCredentials: true,
+    };
+    const response = await AxiosInstance(config);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+export const fetchOrder = async (orderId) => {
+  try {
+    const config = {
+      method: "GET",
+      url: `/getOrder/${orderId}`,
       withCredentials: true,
     };
     const response = await AxiosInstance(config);

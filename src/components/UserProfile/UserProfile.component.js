@@ -1,10 +1,10 @@
+import { useState } from "react";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-import { Tabs, Tab, Typography, Box } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 import MyOrders from "./MyOrders/myOrders.component";
 import PropTypes from "prop-types";
-import { Fragment, useState } from "react";
 import "./userprofile.styles.scss";
 import MyProfile from "./MyProfile/myprofile.component";
 import AccountSettings from "./AccountSettings/AccountSetting";
@@ -20,12 +20,7 @@ function TabPanel(props) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-          {/* <Typography>{children}</Typography> */}
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -45,7 +40,7 @@ const UserProfile = () => {
 
   return (
     <div className="profileTabsContainer">
-      <Box sx={{ bgcolor: "background.paper", display: "flex", height: 900 }}>
+      <Box sx={{ bgcolor: "background.paper", display: "flex" }}>
         <Tabs
           orientation="vertical"
           variant="scrollable"

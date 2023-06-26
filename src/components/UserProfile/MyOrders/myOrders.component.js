@@ -1,9 +1,10 @@
+import React from "react";
 import { fetchUserOrders } from "../../../utils/api";
-import * as React from "react";
 import { useState, useEffect } from "react";
-import { Box, Container, Typography } from "@mui/material";
-import OrderTable from "./orderTable";
+import { Container, Typography } from "@mui/material";
 import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
+import classes from "./myOrders.module.css";
+import OrderHistory from "./OrderHistory";
 
 const MyOrders = () => {
   const [userOrder, setUserOrder] = useState();
@@ -19,7 +20,6 @@ const MyOrders = () => {
         throw err;
       }
     };
-
     run();
   }, []);
   if (isLoading) {
@@ -36,11 +36,9 @@ const MyOrders = () => {
     );
   }
   return (
-    <div>
+    <div className={classes["order-container"]}>
       {userOrder?.success && !isLoading ? (
-        userOrder?.data?.map((order) => {
-          return <OrderTable key={order._id} orderData={order || []} />;
-        })
+        <OrderHistory orderData={userOrder?.data || []} />
       ) : (
         <Container
           sx={{
