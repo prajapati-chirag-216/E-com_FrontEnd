@@ -9,7 +9,7 @@ if(action.val !== undefined){
   
      newVal = action.val;
   
-    newVal = newVal.replace(/[^a-zA-Z]+/g,'').replace(/\d/g,'');
+    newVal = newVal.replace(/[^a-z A-Z]+/g,'').replace(/\d/g,'');
 
 }
 
@@ -125,7 +125,7 @@ export const generalReducer = (state, action) => {
 if(action.val !== undefined){
   newVal = action.val
 
-  newVal =  newVal.replace(/[^a-z A-Z]+/g,'')
+  newVal =  newVal.replace(/\d/g,'')
 }
 
 
