@@ -165,7 +165,6 @@ const MainNavigation = () => {
   const openCartHandler = () => dispatch(setIsCartOpen(true));
 
   const navigateHandler = () => {
-    console.log(1);
     navigate("/signup");
   };
 

@@ -60,7 +60,7 @@ export async function resetPassword(userData) {
 }
 export async function fetchDisplayImage() {
   const config = {
-    url: `/admin/fetchDisplayImage`,
+    url: `/fetchDisplayImage`,
   };
   const response = await AxiosInstance(config);
   return response;

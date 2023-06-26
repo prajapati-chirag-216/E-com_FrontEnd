@@ -207,8 +207,6 @@ export const cvvReducer = (state, action) => {
   if (action.val !== undefined) {
     newVal = action.val;
 
-    console.log(newVal, "de");
-
     newVal = newVal.replace(/\s/g, "").replace(/\D/g, "");
   }
 
