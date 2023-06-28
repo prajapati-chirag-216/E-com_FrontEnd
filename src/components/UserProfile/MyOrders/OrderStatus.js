@@ -137,11 +137,12 @@ const OrderStatus = () => {
     };
     fetch()
       .then((res) => {
-        const totalQuantity = res.data.orderedItems.reduce(
+      
+        const totalQuantity = res[0].orderedItems.reduce(
           (totalQuantity, item) => totalQuantity + item.quntity,
           0
         );
-        setOrderDetails({ ...res.data, totalQuantity });
+        setOrderDetails({ ...res[0], totalQuantity });
       })
       .catch((err) => {
         throw err;
