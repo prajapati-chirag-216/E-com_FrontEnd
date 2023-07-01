@@ -1,4 +1,4 @@
-// import Dashboard from "./pages/Deshboard/Deshboard";
+import Dashboard from "./pages/Deshboard/Deshboard";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -42,7 +42,7 @@ import OrderStatus from "./components/UserProfile/MyOrders/OrderStatus";
 import { lazy, Suspense } from "react";
 import LoadingSpinner from "./components/Dekstop/UI/LoadingSpinner";
 
-const  Dashboard = lazy(()=>import('./pages/Deshboard/Deshboard'))
+// const  Dashboard = lazy(()=>import('./pages/Deshboard/Deshboard'))
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -121,9 +121,9 @@ const router = createBrowserRouter(
 
 function App() {
   return(
-    <Suspense fallback={<LoadingSpinner/>} >
+    // <Suspense fallback={<LoadingSpinner/>} >
        <RouterProvider router={router} />
-      </Suspense>
+      // </Suspense>
   )
 }
 
