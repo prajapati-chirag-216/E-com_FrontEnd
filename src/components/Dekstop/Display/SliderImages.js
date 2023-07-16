@@ -1,8 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect ,useState} from "react";
 import { motion } from "framer-motion";
 import { Button, Typography } from "@mui/material";
 import { fetchSingleCategoryByName } from "../../../utils/api";
 import  "./SliderImages.style.scss";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const transition = { type: "twin", duration: 1 };
 
@@ -17,20 +18,45 @@ const SliderImages = (props) => {
     } catch (err) {}
   };
 
+const [isLoaded,setIsloaded] = useState(false);
+
+//  useEffect(()=>{
+
+ 
+//   const imageElement = document.getElementById('imageElement');
+
+//   const actualImgSrc = imageElement.getAttribute('data-src');
+
+//   const actualImage = new Image();
+
+//   actualImage.src = actualImgSrc;
+
+//   actualImage.onload = () =>{
+     
+//       setIsloaded(true)
+//   }
+
+//  },[isLoaded])
+
   return (
     <Fragment>
       <div className="img-container">
-        <motion.img
+      
+       <motion.img
+        onLoad={()=>setIsloaded(true)}
+          id='imageElement'
           key={props.index}
           initial={{ opacity: 0, x: 1000 }}
           transition={transition}
           exit={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
-          src={props.img}
+          data-src={props.img}
+          src={isLoaded ? props.img : props.blurImg}
           // src='https://res.cloudinary.com/dzpuekeql/image/upload/v1684587879/bagni9injjvd4t53oq6h.jpg'
           alt="unable to load"
           className="motion-img"
         />
+  
       </div>
       <motion.div
         key={props.text}
@@ -42,6 +68,7 @@ const SliderImages = (props) => {
         <Typography
           variant="h4"
           sx={{
+            color:'ghostwhite',
             letterSpacing: "1px",
             wordSpacing: "5px",
             textTransform: "uppercase",

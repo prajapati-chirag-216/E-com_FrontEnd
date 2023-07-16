@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useReducer, useState } from "react";
 import { Button, TextField, Typography ,CircularProgress} from "@mui/material";
 import { Form, NavLink, useActionData, useNavigate } from "react-router-dom";
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import classes from "./ActionForm.module.css";
 import {
   emailReducer,
@@ -132,7 +133,7 @@ const SigninForm = () => {
             onClick={!formIsValid ? validateFormHandler : () => {}}
             disabled={isLoading === true}
           >
-            {isLoading ?<CircularProgress color="inherit" size={33} />: 'SignIn'}
+            {isLoading ?<CircularProgress color="inherit" size={33} />:<span style={{color:'white',display:'flex',alignItems:'center'}}>Login <TrendingFlatIcon style={{marginLeft:'1rem',color:'white',fontSize:'40px'}}/></span>}
           </Button>
           <NavLink to="/forgotPassword" className={classes.link}>
             Forgot Password?

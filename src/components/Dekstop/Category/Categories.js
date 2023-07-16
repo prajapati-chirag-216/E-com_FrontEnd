@@ -9,6 +9,7 @@ import { setIsLoading } from "../../../store/ui/ui.action";
 import { useSelector } from "react-redux";
 import { selectIsLoading } from "../../../store/ui/ui.selector";
 import LoadingSpinner from "../UI/LoadingSpinner";
+import { genrateBlurImage } from "../../../utils/function";
 const textCss = {
   fontWeight: "bold",
   fontSize: {md:"6rem",xs:'3rem'},
@@ -73,14 +74,28 @@ const Categories = () => {
 };
 export async function loader() {
   let response;
+  let newData;
   try {
 
     // store.dispatch(setIsLoading(true));
     response = await fetchCategories();
+
+    newData =  response?.map((catObj) =>{
+
+      console.log(catObj,'ew')
+       
+         const hashUrl = genrateBlurImage(catObj.blurhash)
+
+         return ({
+           ...catObj,
+           blurImg:hashUrl
+         })
+    })
+
     // store.dispatch(setIsLoading(false))
   } catch (err) {
     throw err;
   }
-  return response;
+  return newData;
 }
 export default Categories;

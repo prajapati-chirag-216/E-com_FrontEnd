@@ -1,7 +1,8 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Card, Grid, CardContent, Button, Typography } from "@mui/material";
 import classes from "./Cards.module.css";
 import { useDispatch, useSelector } from "react-redux";
+
 
 import {
   setCatagoryId,
@@ -19,6 +20,7 @@ const style = {
     height: {xs:'30rem',md:'40rem'},
     display: "flex",
     flexDirection: "column",
+    boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 8px',
     border: "1px solid rgb(190, 190, 190)",
     borderBottom: "none",
     borderRadius: "0px",
@@ -75,7 +77,11 @@ const Cards = (props) => {
 
   const [data, setData] = useState(props.data);
   const [filteredData, setfilteredData] = useState(props.data);
-  const isLoading = useSelector(selectIsLoading)
+   const isLoading = useSelector(selectIsLoading)
+   const [isLoaded,setIsLoaded] = useState(false)
+   const imageElementRef = useRef(null);
+  const actualImgSrc = imageElementRef.current?.getAttribute('data-src');
+  console.log(actualImgSrc)
 
   useEffect(() => {
   
@@ -89,6 +95,8 @@ const Cards = (props) => {
   }, [data]);
 
   const searchByNameString = useSelector(selectSearchField);
+
+ 
 
   useEffect(() => {
     const getFilteredData = async () => {
@@ -129,18 +137,27 @@ const Cards = (props) => {
     spacing={8}
     sx={{
       p: { xs: "5rem", md: "0 4rem" },
-      columnGap:{xs: props.isProduct?'2rem':'0rem'},
+      columnGap:{xs: props.isProduct?'2rem':'0rem',md:'0rem'},
       marginLeft:{xs:props.isProduct?'-105px':'-64px'}
     }}
     >
           {isLoading && <LoadingSpinner/>}
       {filteredData.length !== 0 ? (
-        filteredData.map((item) => (
-          <Grid  sx={{flex:1,width:{xs:'22rem',display:'flex',flexDirection:'column'},paddingLeft:{xs:props.isProduct?'30px':'64px'}}}item xs={12} sm={6} md={6} lg={4} key={item._id}>
+        filteredData.map((item) =>        {
+
+          console.log(item,'on')
+
+       return (   <Grid  sx={{flex:1,width:{xs:'22rem',display:'flex',flexDirection:'column'},paddingLeft:{xs:props.isProduct?'30px':'64px'}}}item xs={12} sm={6} md={6} lg={4} key={item._id}>
             <Card onClick={navigateHandler.bind(null, item)} sx={style.card}>
+              
               <img
+                onLoad={()=>{
+                   setIsLoaded(true)
+                }}
+                ref={imageElementRef}
+                id='listImages'
                 className={classes["item-img"]}
-                src={props.isProduct ? item.image[0] : item.image}
+                src={props.isProduct ? isLoaded ? item.image[0].imageLink : item.image[0].blurImg :  isLoaded ? item.image : item.blurImg}
                 alt=""
               />
 
@@ -199,7 +216,8 @@ const Cards = (props) => {
               </div>
             )}
           </Grid>
-        ))
+          
+       )})
       ) : (
         <Typography
           sx={{
