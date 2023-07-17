@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectSnackBar } from "../../../store/ui/ui.selector";
 import { setSnackBar } from "../../../store/ui/ui.action";
 import MuiAlert from "@mui/material/Alert";
-import { Typography } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 
 function TransitionLeft(props) {
   return <Slide {...props} direction="left" />;
@@ -16,6 +16,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const SimpleSnackBar = () => {
+  const matches = useMediaQuery("(max-width:400px)");
   const snackBarDetails = useSelector(selectSnackBar);
   const dispatch = useDispatch();
 
@@ -31,7 +32,7 @@ const SimpleSnackBar = () => {
   return (
     <div>
       <Snackbar
-        open={snackBarDetails.status}
+        open={!snackBarDetails.status}
         onClose={handleClose}
         anchorOrigin={{
           vertical: "top",
@@ -46,8 +47,8 @@ const SimpleSnackBar = () => {
           onClose={handleClose}
           severity={snackBarDetails.severity}
           sx={{
-            width: {md:"100%",xs:'70%'},
-            height:{md:'100%',xs:'4rem'},
+            width: { md: "100%", xs: "50%", sm: "100%" },
+            height: { md: "100%", xs: "4rem" },
             padding: "0.5rem 1.2rem",
             fontSize: "1.1rem",
             letterSpacing: "1px",
@@ -62,7 +63,7 @@ const SimpleSnackBar = () => {
               color: "whitesmoke",
             }}
           >
-            {snackBarDetails.message}
+            {snackBarDetails.message || "somthing went wrong "}
           </Typography>
         </Alert>
       </Snackbar>

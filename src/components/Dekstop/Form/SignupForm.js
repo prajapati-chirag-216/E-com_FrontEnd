@@ -211,7 +211,11 @@ const SignupForm = () => {
             disabled={isLoading === true}
           >
             {isLoading ? (
-              <CircularProgress color="inherit" size={33} />
+              <CircularProgress
+                color="inherit"
+                size={33}
+                sx={{ color: "black" }}
+              />
             ) : (
               "SignUp"
             )}

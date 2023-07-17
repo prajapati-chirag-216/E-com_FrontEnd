@@ -39,6 +39,9 @@ import Information from "./components/Checkout/Information/Information";
 import Shipping from "./components/Checkout/Shipping/Shipping";
 import Payment from "./components/Checkout/Paymet/Payment";
 import OrderStatus from "./components/UserProfile/MyOrders/OrderStatus";
+import MyProfile from "./components/UserProfile/MyProfile/myprofile.component";
+import MyOrders from "./components/UserProfile/MyOrders/myOrders.component";
+import AccountSettings from "./components/UserProfile/AccountSettings/AccountSetting";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -93,7 +96,11 @@ const router = createBrowserRouter(
           }
           loader={profileLoader}
         >
-          <Route path="/myProfile" element={<UserProfile />} />
+          <Route path="/myProfile" element={<UserProfile />}>
+            <Route index element={<MyProfile />} />
+            <Route path="orders" element={<MyOrders />} />
+            <Route path="account" element={<AccountSettings />} />
+          </Route>
         </Route>
         <Route
           path="/product/:id"

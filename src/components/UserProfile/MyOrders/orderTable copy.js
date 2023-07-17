@@ -20,7 +20,7 @@ import DoorBackIcon from "@mui/icons-material/DoorBack";
 import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
-import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -219,7 +219,7 @@ const OrderTable = ({ orderData }) => {
           marginTop: "3rem",
         }}
       >
-        <LoadingSpinner />
+        <CircularProgress sx={{ color: "black" }} />
       </Container>
     );
   return (

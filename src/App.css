@@ -1,20 +1,14 @@
 body {
   margin: 0;
-
-
-
+  padding: 0;
+  width: 100vw;
 }
 
-@media (max-width: 500px) {
-
-
+/* @media (max-width: 500px) {
   body {
-
     zoom: 1;
   }
-
-
-}
+} */
 
 body::-webkit-scrollbar {
   display: none;

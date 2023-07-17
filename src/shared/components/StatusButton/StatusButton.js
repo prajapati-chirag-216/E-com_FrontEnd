@@ -9,8 +9,8 @@ const StatusButton = (props) => {
       component="label"
       onClick={props.onClick}
       sx={{
-        width:  "20rem",
-        height:{xs:'4rem'},
+        width: "20rem",
+        height: { xs: "4rem" },
         size: matches ? "0.7rem" : "4rem",
         padding: matches ? "0.5rem" : "1rem",
         gap: matches ? "0.5rem" : "1rem",
@@ -24,8 +24,8 @@ const StatusButton = (props) => {
       }}
       disabled={props.isLoading.status}
     >
-      {props.isLoading? (
-        <CircularProgress color="inherit" size={33} />
+      {props.isLoading ? (
+        <CircularProgress color="inherit" size={33} sx={{ color: "white" }} />
       ) : (
         props.children
       )}

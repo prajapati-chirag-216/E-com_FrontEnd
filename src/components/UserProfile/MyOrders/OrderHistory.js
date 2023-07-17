@@ -1,24 +1,22 @@
 import React, { Fragment, useEffect, useState } from "react";
 import classes from "./OrderHistory.module.css";
-import { Box, Button, Divider, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 const OrderHistory = (props) => {
+  const matches = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
   const navigateHandler = (id) => navigate(`/orderStatus/${id}`);
   const [totalQuantity, setTotalQuantity] = useState([]);
   useEffect(() => {
-    window.addEventListener("DOMContentLoaded", function () {
-      var container = document.getElementById(`myOrder-container`);
-      function toggleScrollbar() {
-        if (container.scrollHeight > container.clientHeight)
-          container.classList.add("show-scrollbar");
-        else container.classList.remove("show-scrollbar");
-      }
-      toggleScrollbar();
-      window.addEventListener("resize", toggleScrollbar);
-    });
     const quantity = props.orderData.map((order) =>
       order.orderedItems.reduce(
         (totalQuantity, item) => totalQuantity + item.quntity,
@@ -59,7 +57,7 @@ const OrderHistory = (props) => {
           },
 
           "&::-webkit-scrollbar-track": {
-            backgroundColor: " rgb(240, 240, 240)",
+            backgroundColor: "rgb(240, 240, 240)",
           },
           "&::-webkit-scrollbar-thumb": {
             borderRadius: "20px",
@@ -72,7 +70,7 @@ const OrderHistory = (props) => {
       >
         <Grid container spacing={4} sx={{ height: "48rem" }}>
           {props.orderData.map((order, index) => (
-            <Grid item xs={4} key={order._id}>
+            <Grid item xs={6} md={6} sm={12} lg={4} key={order._id}>
               <div className={classes["order-container"]}>
                 <div className={classes["order-header"]}>
                   <div>
@@ -122,7 +120,7 @@ const OrderHistory = (props) => {
                           sx={{
                             color: "rgb(50,50,50)",
                             letterSpacing: "1px",
-                            fontSize: "1.2rem",
+                            fontSize: !matches ? "1.2rem" : "1.1rem",
                           }}
                         >
                           {itemData.productId.name}
@@ -130,17 +128,21 @@ const OrderHistory = (props) => {
                         <Typography
                           sx={{
                             letterSpacing: "0.5px",
-                            fontSize: "1.1rem",
+                            fontSize: !matches ? "1.1rem" : "1rem",
                           }}
                         >
-                          {itemData.productId.description.slice(0, 50)}..
+                          {itemData.productId.description.slice(
+                            0,
+                            !matches ? 50 : 35
+                          )}
+                          ..
                         </Typography>
                         <div>
                           <Typography
                             sx={{
                               color: "rgb(50,50,50)",
                               letterSpacing: "1px",
-                              fontSize: "1.2rem",
+                              fontSize: !matches ? "1.2rem" : "1.1rem",
                             }}
                           >
                             ${itemData.productId.price}
@@ -149,7 +151,7 @@ const OrderHistory = (props) => {
                             sx={{
                               color: "rgb(50,50,50)",
                               letterSpacing: "1px",
-                              fontSize: "1.2rem",
+                              fontSize: !matches ? "1.2rem" : "1.1rem",
                             }}
                           >
                             Qty: {itemData.quntity}

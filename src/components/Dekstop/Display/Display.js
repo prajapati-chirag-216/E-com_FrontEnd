@@ -2,25 +2,20 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import SliderImages from "./SliderImages";
 import { fetchDisplayImage } from "../../../utils/api";
-import { Divider } from "@mui/material";
-import './display.style.scss'
+import "./display.style.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoading } from "../../../store/ui/ui.selector";
-import { setIsLoading } from "../../../store/ui/ui.action";
-import LoadingSpinner from "../UI/LoadingSpinner";
-
+import CircularProgress from "@mui/material/CircularProgress";
 const Display = () => {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState([]);
   // const isLoading = useSelector(selectIsLoading)
-  const [isLoading,setIsLoading] = useState(false)
-  const dispatch  = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
       try {
-        
-        setIsLoading(true)
+        setIsLoading(true);
         const res = await fetchDisplayImage();
         setImages(res.data);
         setIsLoading(false);
@@ -41,29 +36,36 @@ const Display = () => {
 
   return (
     <Fragment>
-
-      {isLoading && <LoadingSpinner/>}
-    <Box
-    className='upperPartHomePageContainer'
-      sx={{
-        display:'flex',
-        // width: "100vw",
-        height: "100vh",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {images.length !== 0 && (
-        <SliderImages
-          className='displayImageContainer'
-          img={images[index].image}
-          index={index}
-          text={images[index].text}
-          label={images[index].label}
-          categoryname={images[index].categoryName}
-        />
-      )}
-    </Box>
+      <Box
+        className="upperPartHomePageContainer"
+        sx={{
+          display: "flex",
+          // width: "100vw",
+          height: "100vh",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        {isLoading && (
+          <CircularProgress
+            sx={{
+              color: "black",
+              margin: "auto",
+              scale: "1.5",
+            }}
+          />
+        )}
+        {images.length !== 0 && (
+          <SliderImages
+            className="displayImageContainer"
+            img={images[index].image}
+            index={index}
+            text={images[index].text}
+            label={images[index].label}
+            categoryname={images[index].categoryName}
+          />
+        )}
+      </Box>
     </Fragment>
   );
 };

@@ -12,7 +12,8 @@ import DoorBackIcon from "@mui/icons-material/DoorBack";
 import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
-import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import { useLocation } from "react-router-dom";
 import { fetchOrder } from "../../../utils/api";
 import classes from "./OrderStatus.module.css";
@@ -156,7 +157,7 @@ const OrderStatus = () => {
           marginTop: "3rem",
         }}
       >
-        <LoadingSpinner />
+        <CircularProgress sx={{ color: "black" }} />
       </Container>
     );
   return (

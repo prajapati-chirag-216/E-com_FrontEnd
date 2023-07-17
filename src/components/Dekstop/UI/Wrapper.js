@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Outlet } from "react-router-dom";
 import SimpleSnackBar from "../../../shared/components/Snackbar/SnackBar";
 const Wrapper = () => {

@@ -1,9 +1,30 @@
 .profileTabsContainer {
   display: flex;
-  justify-content: flex-start;
   height: 100vh;
+  width: 100vw;
 
   .tabPanelContainer {
-    width: 100rem;
+    // width: 90vw;
+    flex: 5;
+
+    padding: 0rem 3rem 0rem 1rem;
+    box-sizing: border-box;
+    @media (max-width: 1400px) {
+      min-height: 10rem;
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 1400px) {
+    flex-direction: column;
+    width: 95vw;
+    height: max-content;
+    align-items: center;
+  }
+  @media (max-width: 1000px) {
+    width: 100vw;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
   }
 }

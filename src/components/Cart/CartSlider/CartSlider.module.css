@@ -11,7 +11,7 @@
   top: 0;
   right: 0;
   z-index: 10;
-  transition: all 500ms;
+  transition: all 700ms;
   overflow: hidden;
 }
 
@@ -46,5 +46,21 @@
   flex: 3;
   display: flex;
   justify-content: center;
+  /* align-items: center; */
+}
 
+@media (max-width:768px) {
+  .cart-dropdown-container {
+    width: 93%;
+  }
+
+  .hide {
+    transform: translateY(-80rem);
+    /* transform: translateX(35rem); */
+  }
+
+  .button-div {
+    flex: 2;
+    align-items: center;
+  }
 }
