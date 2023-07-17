@@ -236,7 +236,7 @@ const OrderStatus = () => {
                   className={classes["item-data-container"]}
                 >
                   <div className={classes["item-img"]}>
-                    <img src={item.productId.image[0]} />
+                    <img src={item.productId.image[0].imageLink} />
                   </div>
                   <div className={classes["item-details"]}>
                     <Typography

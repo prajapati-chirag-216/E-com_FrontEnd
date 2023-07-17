@@ -15,11 +15,16 @@ import SimpleModal from "../../SimpleModel/Model";
 import UpdateInfoForm from "./Form/updatePersonalInfo";
 import "./myprofile.styles.scss";
 import { selectModelState, selectUser } from "../../../store/ui/ui.selector";
+import { logoutUser,addCartItems } from "../../../utils/api";
+import { setClearCart } from "../../../store/cart/cart.action";
+import { selectCartItems } from "../../../store/cart/cart.selector";
+import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
   const dispatch = useDispatch();
-
+  const cartItems = useSelector(selectCartItems)
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
 
   const showModel = useSelector(selectModelState);
 
@@ -29,6 +34,28 @@ const MyProfile = () => {
 
   const closeModelHandler = () => {
     dispatch(setModelState(false));
+  };
+
+  const logoutHandler = async () => {
+    
+    try {
+      await addCartItems(cartItems);
+      await logoutUser();
+    } catch (err) {
+      throw err;
+    }
+    dispatch(setClearCart());
+    dispatch(
+      setSnackBar({
+        status: true,
+        severity: "success",
+        message: "Logged out successfully",
+      })
+    );
+   
+    window.history.replaceState({}, document.title, "/login");
+
+    navigate("/login", { replace: true });
   };
 
   useEffect(() => {
@@ -80,6 +107,7 @@ const MyProfile = () => {
           </Typography>
         </div>
         <Button
+          onClick={logoutHandler}
           sx={{
             backgroundColor: "black",
             color: "white",

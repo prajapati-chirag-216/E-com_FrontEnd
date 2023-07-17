@@ -29,34 +29,34 @@ import Success from "./pages/Success/Success";
 import Wrapper from "./components/Dekstop/UI/Wrapper";
 // const  Layout = lazy(()=>import( "./components/Dekstop/UI/Layout"))
 // const SignIn = lazy(()=>import("./pages/SignIn"))
-// const ProductsController= lazy(()=>import( "./pages/Products/ProductsController"))
-// const ViewProductsController= lazy(()=>import( "./pages/ProdutsView/ProductsViewController"))
 // const Signup= lazy(()=>import( "./pages/Signup"))
-// const Checkout= lazy(()=>import( "./pages/Checkout/Checkout"))
 // const MyCart= lazy(()=>import( "./components/Cart/MyCart/mycart.component"))
 // const ContactUs= lazy(()=>import( "./components/ContactUs/contactUs.component"))
-// const AboutUs= lazy(()=>import( "./components/AboutUs/AboutUs.component"))
-// const UserProfile= lazy(()=>import( "./components/UserProfile/UserProfile.component"))
-// const Information = lazy(()=>import( "./components/Checkout/Information/Information"))
-// const  Shipping =  lazy(()=>import("./components/Checkout/Shipping/Shipping"))
-// const Payment =  lazy(()=>import("./components/Checkout/Paymet/Payment"))
 // const  OrderStatus = lazy(()=> import("./components/UserProfile/MyOrders/OrderStatus"))
 // const Dashboard = lazy(() => import('./pages/Deshboard/Deshboard'))
 import  Layout from  "./components/Dekstop/UI/Layout"
 import SignIn  from "./pages/SignIn"
-import ProductsController from "./pages/Products/ProductsController"
-import ViewProductsController from  "./pages/ProdutsView/ProductsViewController"
+// import ProductsController from "./pages/Products/ProductsController"
+// import ViewProductsController from  "./pages/ProdutsView/ProductsViewController"
 import Signup  from "./pages/Signup"
-import Checkout from "./pages/Checkout/Checkout"
+// import Checkout from "./pages/Checkout/Checkout"
 import MyCart from "./components/Cart/MyCart/mycart.component"
 import ContactUs from "./components/ContactUs/contactUs.component"
-import AboutUs from "./components/AboutUs/AboutUs.component"
-import UserProfile from "./components/UserProfile/UserProfile.component"
-import Information from  "./components/Checkout/Information/Information"
-import  Shipping from"./components/Checkout/Shipping/Shipping"
-import Payment from "./components/Checkout/Paymet/Payment"
+// import AboutUs from "./components/AboutUs/AboutUs.component"
+// import UserProfile from "./components/UserProfile/UserProfile.component"
+// import Information from  "./components/Checkout/Information/Information"
+// import  Shipping from"./components/Checkout/Shipping/Shipping"
+// import Payment from "./components/Checkout/Paymet/Payment"
 import  OrderStatus from "./components/UserProfile/MyOrders/OrderStatus"
 import Dashboard from './pages/Deshboard/Deshboard'
+const Checkout= lazy(()=>import( "./pages/Checkout/Checkout"))
+const ProductsController= lazy(()=>import( "./pages/Products/ProductsController"))
+const ViewProductsController= lazy(()=>import( "./pages/ProdutsView/ProductsViewController"))
+const AboutUs= lazy(()=>import( "./components/AboutUs/AboutUs.component"))
+const UserProfile= lazy(()=>import( "./components/UserProfile/UserProfile.component"))
+const Information = lazy(()=>import( "./components/Checkout/Information/Information"))
+const  Shipping =  lazy(()=>import("./components/Checkout/Shipping/Shipping"))
+const Payment =  lazy(()=>import("./components/Checkout/Paymet/Payment"))
 
 
 const router = createBrowserRouter(
@@ -96,24 +96,24 @@ const router = createBrowserRouter(
         loader={profileLoader}
       >
         <Route path="/checkout/" element={
-          // <Suspense fallback={<LoadingSpinner />}>
-          // </Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
             <Checkout />
+          </Suspense>
         }>
           <Route index element={
-            // <Suspense fallback={<LoadingSpinner />}>
-            // </Suspense>
+            <Suspense fallback={<LoadingSpinner />}>
               <Information />
+            </Suspense>
           } />
           <Route path="shipping" element={
-            // <Suspense fallback={<LoadingSpinner />}>
-            // </Suspense>
+            <Suspense fallback={<LoadingSpinner />}>
               <Shipping />
+            </Suspense>
           } />
           <Route path="payment" element={
-            // <Suspense fallback={<LoadingSpinner />}>
-            // </Suspense>
+            <Suspense fallback={<LoadingSpinner />}>
               <Payment />
+            </Suspense>
           } />
         </Route>
       </Route>
@@ -139,9 +139,9 @@ const router = createBrowserRouter(
           }
         />
         <Route path="/aboutus" element={
-          // <Suspense fallback={<LoadingSpinner />}>
-          // </Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
             <AboutUs />
+          </Suspense>
         } />
 
         <Route path="/home" element={
@@ -160,26 +160,26 @@ const router = createBrowserRouter(
           loader={profileLoader}
         >
           <Route path="/myProfile" element={
-            // <Suspense fallback={<LoadingSpinner />}>
-            // </Suspense>
+            <Suspense fallback={<LoadingSpinner />}>
               <UserProfile />
+            </Suspense>
           } />
         </Route>
         <Route
           path="/product/:id"
           element={
-            // <Suspense fallback={<LoadingSpinner />}>
-            // </Suspense>
+            <Suspense fallback={<LoadingSpinner />}>
               <ProductsController />
+            </Suspense>
           }
           loader={productLoader}
         />
         <Route
           path="/viewproduct/:id"
           element={
-            // <Suspense fallback={<LoadingSpinner />}>
-            // </Suspense>
+            <Suspense fallback={<LoadingSpinner />}>
               <ViewProductsController />
+            </Suspense>
           }
           action={reviewAction}
           loader={productViewLoader}

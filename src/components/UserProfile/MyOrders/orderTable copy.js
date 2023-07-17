@@ -171,7 +171,7 @@ const OrderTable = ({ orderData }) => {
             width="50px"
             height="50px"
             style={{ objectFit: "cover" }}
-            src={order.productId.image[0]}
+            src={order.productId.image[0].imageLink}
           />
         ),
         Quantity: order.quntity,

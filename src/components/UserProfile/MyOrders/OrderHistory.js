@@ -115,7 +115,7 @@ const OrderHistory = (props) => {
                       className={classes["item-container"]}
                     >
                       <div className={classes["item-image"]}>
-                        <img src={itemData.productId.image[0]} />
+                        <img src={itemData.productId.image[0].imageLink} />
                       </div>
                       <div className={classes["item-details"]}>
                         <Typography
