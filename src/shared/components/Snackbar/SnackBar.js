@@ -16,7 +16,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const SimpleSnackBar = () => {
-  const matches = useMediaQuery("(max-width:400px)");
   const snackBarDetails = useSelector(selectSnackBar);
   const dispatch = useDispatch();
 
@@ -32,7 +31,7 @@ const SimpleSnackBar = () => {
   return (
     <div>
       <Snackbar
-        open={!snackBarDetails.status}
+        open={snackBarDetails.status}
         onClose={handleClose}
         anchorOrigin={{
           vertical: "top",
@@ -63,7 +62,7 @@ const SimpleSnackBar = () => {
               color: "whitesmoke",
             }}
           >
-            {snackBarDetails.message || "somthing went wrong "}
+            {snackBarDetails.message}
           </Typography>
         </Alert>
       </Snackbar>

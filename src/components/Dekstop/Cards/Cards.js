@@ -79,7 +79,6 @@ const Cards = (props) => {
   const [data, setData] = useState(props.data);
   const [filteredData, setfilteredData] = useState(props.data);
   const isLoading = useSelector(selectIsLoading);
-  const isLoading = useSelector(selectIsLoading);
   const [isLoaded, setIsLoaded] = useState(false);
   const imageElementRef = useRef(null);
   const actualImgSrc = imageElementRef.current?.getAttribute("data-src");
@@ -139,96 +138,109 @@ const Cards = (props) => {
       >
         {isLoading && <CircularProgress sx={{ color: "black" }} />}
         {filteredData.length !== 0 ? (
-          filteredData.map((item) =>        {
+          filteredData.map((item) => {
+            console.log(item, "on");
 
-            console.log(item,'on')
-
-       return (   <Grid
-              sx={{
-                flex: 1,
-                width: {
-                  xs: "22rem",
-                  display: "flex",
-                  flexDirection: "column",
-                },
-                paddingLeft: { xs: props.isProduct ? "30px" : "64px" },
-              }}
-              item
-              xs={12}
-              sm={6}
-              md={6}
-              lg={4}
-              key={item._id}
-            >
-              <Card onClick={navigateHandler.bind(null, item)} sx={style.card}>
-              
-                <img
-                onLoad={()=>{
-                   setIsLoaded(true)
-                }}
-                ref={imageElementRef}
-                id='listImages'
-                  className={classes["item-img"]}
-                  src={props.isProduct ? isLoaded ? item.image[0].imageLink : item.image[0].blurImg :  isLoaded ? item.image : item.blurImg}
-                  alt=""
-                />
-
-                <CardContent
-                  sx={{
-                    position: "absolute",
-                    right: "2rem",
-                    bottom: "1rem",
+            return (
+              <Grid
+                sx={{
+                  flex: 1,
+                  width: {
+                    xs: "22rem",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "2rem",
-                    zIndex: 10,
-                  }}
+                  },
+                  paddingLeft: { xs: props.isProduct ? "30px" : "64px" },
+                }}
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={4}
+                key={item._id}
+              >
+                <Card
+                  onClick={navigateHandler.bind(null, item)}
+                  sx={style.card}
                 >
-                  <Typography
-                    align="right"
+                  <img
+                    onLoad={() => {
+                      setIsLoaded(true);
+                    }}
+                    ref={imageElementRef}
+                    id="listImages"
+                    className={classes["item-img"]}
+                    src={
+                      props.isProduct
+                        ? isLoaded
+                          ? item.image[0].imageLink
+                          : item.image[0].blurImg
+                        : isLoaded
+                        ? item.image
+                        : item.blurImg
+                    }
+                    alt=""
+                  />
+
+                  <CardContent
                     sx={{
-                      letterSpacing: "3px",
-                      color: "white",
-                      textTransform: "uppercase",
-                      fontSize: "2rem",
+                      position: "absolute",
+                      right: "2rem",
+                      bottom: "1rem",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "2rem",
+                      zIndex: 10,
                     }}
                   >
-                    {item.name}
-                  </Typography>
-                  <Button
-                    onClick={(event) => {
-                      if (props.isProduct) {
-                        event.stopPropagation();
-                      }
-                      changeitemIdHandler(item);
-                    }}
-                    sx={style.button}
-                  >
-                    {props.isProduct ? "Add To Cart" : "Shop Now"}
-                  </Button>
-                </CardContent>
-              </Card>
-              {props.isProduct && (
-                <div className={classes["item_details-div"]}>
-                  <Typography
-                    sx={{
-                      fontSize: { xs: "0.8rem", md: "1rem" },
-                      letterSpacing: "3px",
-                      textTransform: "uppercase",
-                      color: "rgb(80,80,80)",
-                      width: "fit-content",
-                      textAlign: "center",
-                    }}
-                  >
-                    {item.description.split(".")[0]}
-                  </Typography>
-                  <Typography sx={{ fontSize: "1.2rem", letterSpacing: "1px" }}>
-                    $ {item.price}
-                  </Typography>
-                </div>
-              )}
-            </Grid>
-          ))
+                    <Typography
+                      align="right"
+                      sx={{
+                        letterSpacing: "3px",
+                        color: "white",
+                        textTransform: "uppercase",
+                        fontSize: "2rem",
+                      }}
+                    >
+                      {item.name}
+                    </Typography>
+                    <Button
+                      onClick={(event) => {
+                        if (props.isProduct) {
+                          event.stopPropagation();
+                        }
+                        changeitemIdHandler(item);
+                      }}
+                      sx={style.button}
+                    >
+                      {props.isProduct ? "Add To Cart" : "Shop Now"}
+                    </Button>
+                  </CardContent>
+                </Card>
+                {props.isProduct && (
+                  <div className={classes["item_details-div"]}>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "0.8rem", md: "1rem" },
+                        letterSpacing: "3px",
+                        textTransform: "uppercase",
+                        color: "rgb(80,80,80)",
+                        width: "fit-content",
+                        textAlign: "center",
+                      }}
+                    >
+                      {item.description.split(".")[0]}
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: "1.2rem", letterSpacing: "1px" }}
+                    >
+                      $ {item.price}
+                    </Typography>
+                  </div>
+                )}
+              </Grid>
+            );
+          })
         ) : (
           <Typography
             sx={{
@@ -240,74 +252,6 @@ const Cards = (props) => {
           >{`No Search Result for ${searchByNameString}`}</Typography>
         )}
       </Grid>
-              <CardContent
-                sx={{
-                  position: "absolute",
-                  right: "2rem",
-                  bottom: "1rem",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "2rem",
-                  zIndex: 10,
-                }}
-              >
-                <Typography
-                  align="right"
-                  sx={{
-                    letterSpacing: "3px",
-                    color: "white",
-                    textTransform: "uppercase",
-                    fontSize: "2rem",
-                  }}
-                >
-                  {item.name}
-                </Typography>
-                <Button
-                  onClick={(event) => {
-                    if (props.isProduct) {
-                      event.stopPropagation();
-                    }
-                    changeitemIdHandler(item);
-                  }}
-                  sx={style.button}
-                >
-                  {props.isProduct ? "Add To Cart" : "Shop Now"}
-                </Button>
-              </CardContent>
-            </Card>
-            {props.isProduct && (
-              <div className={classes["item_details-div"]}>
-                <Typography
-                  sx={{
-                    fontSize:{xs:'0.8rem',md:"1rem"},
-                    letterSpacing: "3px",
-                    textTransform: "uppercase",
-                    color: "rgb(80,80,80)",
-                    width: "fit-content",
-                    textAlign: "center",
-                  }}
-                >
-                  {item.description.split(".")[0]}
-                </Typography>
-                <Typography sx={{ fontSize: "1.2rem", letterSpacing: "1px" }}>
-                  $ {item.price}
-                </Typography>
-              </div>
-            )}
-          </Grid>
-          
-       )})
-      ) : (
-        <Typography
-          sx={{
-            fontSize: "1.5rem",
-            letterSpacing: "3px",
-            margin: "10rem auto",
-            color: "darkgray",
-          }}
-        >{`No Search Result for ${searchByNameString}`}</Typography>
-      )}
-    </Grid>
     </Fragment>
   );
 };

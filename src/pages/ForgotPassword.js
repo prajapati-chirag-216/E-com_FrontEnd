@@ -1,13 +1,15 @@
-import React from "react";
+import React, { Fragment } from "react";
 import FormContainer from "../components/Dekstop/UI/FormContainer";
 import ForgotPasswordForm from "../components/Dekstop/Form/ForgotPasswordForm";
 import Logo from "../components/Logo/Logo";
 const ForgotPassword = () => {
   return (
-    <FormContainer>
+    <Fragment>
       <Logo />
-      <ForgotPasswordForm />
-    </FormContainer>
+      <FormContainer>
+        <ForgotPasswordForm />
+      </FormContainer>
+    </Fragment>
   );
 };
 
