@@ -138,11 +138,12 @@ const OrderStatus = () => {
     };
     fetch()
       .then((res) => {
-        const totalQuantity = res.data.orderedItems.reduce(
+      
+        const totalQuantity = res[0].orderedItems.reduce(
           (totalQuantity, item) => totalQuantity + item.quntity,
           0
         );
-        setOrderDetails({ ...res.data, totalQuantity });
+        setOrderDetails({ ...res[0], totalQuantity });
       })
       .catch((err) => {
         throw err;
@@ -236,7 +237,7 @@ const OrderStatus = () => {
                   className={classes["item-data-container"]}
                 >
                   <div className={classes["item-img"]}>
-                    <img src={item.productId.image[0]} />
+                    <img src={item.productId.image[0].imageLink} />
                   </div>
                   <div className={classes["item-details"]}>
                     <Typography

@@ -3,11 +3,14 @@ import { formateData, formateDate } from "../../utils/function";
 export const nameReducer = (state, action) => {
   let newVal;
 
-  if (action.val !== undefined) {
-    newVal = action.val;
+if(action.val !== undefined){
 
-    newVal = newVal.replace(/[^a-zA-Z]+/g, "").replace(/\d/g, "");
-  }
+  
+     newVal = action.val;
+  
+    newVal = newVal.replace(/[^a-z A-Z]+/g,'').replace(/\d/g,'');
+
+}
 
   if (action.type === "INPUT_FETCH") {
     return {
@@ -118,8 +121,8 @@ export const generalReducer = (state, action) => {
   if (action.val !== undefined) {
     newVal = action.val;
 
-    newVal = newVal.replace(/[^a-z A-Z]+/g, "");
-  }
+  newVal =  newVal.replace(/\d/g,'')
+}
 
   if (action.type === "INPUT_FETCH") {
     return {

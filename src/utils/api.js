@@ -177,6 +177,7 @@ export const fetchOrder = async (orderId) => {
       withCredentials: true,
     };
     const response = await AxiosInstance(config);
+    console.log(response)
     return response;
   } catch (err) {
     throw err;

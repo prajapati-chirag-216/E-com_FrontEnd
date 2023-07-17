@@ -8,14 +8,21 @@ import { fetchProductDetails } from "../../utils/api";
 import { Await, useLoaderData } from "react-router-dom";
 import Review from "./Review";
 import { selectIsLoading } from "../../store/ui/ui.selector";
+import LoadingSpinner from "../Dekstop/UI/LoadingSpinner";
+import { store } from "../../store/store";
+import { genrateBlurImage } from "../../utils/function";
 
 const ProductView = () => {
   const [mainImgUrl, setmainImgUrl] = useState(null);
+  const [mainBlurUrl, setMainBlurUrl] = useState(null);
   const isSmallScreen = useMediaQuery("(max-width: 500px)");
+  const [isLoaded, setIsLoaded] = useState(false);
+  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
 
-  const imageChangeHandler = (src) => {
+  const imageChangeHandler = (src, blurUrl) => {
     setmainImgUrl(src);
+    setMainBlurUrl(blurUrl);
   };
   const addProductHandler = (productData) => {
     const sound = new Audio("/click_sound.mp3");
@@ -26,7 +33,8 @@ const ProductView = () => {
   const loaderData = useLoaderData();
 
   useEffect(() => {
-    setmainImgUrl(loaderData.productData.image[0]);
+    setmainImgUrl(loaderData.productData.image[0].imageLink);
+    setMainBlurUrl(loaderData.productData.image[0].blurImg);
   }, []);
   return (
     <div className="container">
@@ -35,21 +43,40 @@ const ProductView = () => {
           <Suspense>
             <Await resolve={loaderData.productData}>
               {(productDetails) =>
-                productDetails.image.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={imageChangeHandler.bind(null, image)}
-                  >
-                    <img src={image} alt="" />
-                  </button>
-                ))
+                productDetails.image.map((image, index) => {
+                  console.log(image, "io");
+                  return (
+                    <button
+                      style={{
+                        boxShadow:
+                          "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
+                      }}
+                      key={index}
+                      onClick={imageChangeHandler.bind(
+                        null,
+                        image.imageLink,
+                        image.blurImg
+                      )}
+                    >
+                      <img
+                        onLoad={() => setIsLoaded(true)}
+                        src={isLoaded ? image.imageLink : image.blurImg}
+                        alt=""
+                      />
+                    </button>
+                  );
+                })
               }
             </Await>
           </Suspense>
         </div>
 
         <div className="mainImageContainer">
-          <img src={mainImgUrl} alt="" />
+          <img
+            onLoad={() => setIsLoaded(true)}
+            src={isLoaded ? mainImgUrl : mainBlurUrl}
+            alt=""
+          />
         </div>
         {isSmallScreen && (
           <Divider
@@ -163,12 +190,28 @@ const ProductView = () => {
 
 export async function loader() {
   let response;
+
   const url = window.location.href;
   const urlArray = url.split("/");
   const id = urlArray[urlArray.length - 1];
 
   try {
-    const productData = await fetchProductDetails(id);
+    let productData = await fetchProductDetails(id);
+
+    const newImgData = productData.image.map((imgObj) => {
+      const blurUrl = genrateBlurImage(imgObj.blurhash);
+
+      return {
+        ...imgObj,
+        blurImg: blurUrl,
+      };
+    });
+
+    productData = {
+      ...productData,
+      image: newImgData,
+    };
+
     response = {
       productData,
     };

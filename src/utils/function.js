@@ -1,6 +1,42 @@
 import { getAccessToken } from "../utils/api";
 import { setAccessToken } from "../store/ui/ui.action";
 import { store } from "../store/store";
+import { decode } from "blurhash";
+
+
+export const genrateBlurImage = (hash) =>{
+
+
+   const width = 32;
+   const height = 32;
+   const punch = 1;
+
+
+//  new Promise((resolve,reject)=>{
+
+//    try{
+     const pixels = decode(hash,width,height,punch);
+  
+     const imageData = new ImageData(pixels,width,height);
+  
+     const canvas = document.createElement('canvas');
+  
+     canvas.width = width;
+     canvas.height = height;
+  
+     const context = canvas.getContext('2d');
+  
+     context.putImageData(imageData,0,0);
+     
+    return canvas.toDataURL();
+
+  //  }
+
+//  })
+   
+}
+
+
 export function cookieParser() {
   const data = {};
   document.cookie.split(";").map((ele) => {

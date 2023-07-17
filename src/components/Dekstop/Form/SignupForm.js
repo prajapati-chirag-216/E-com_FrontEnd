@@ -11,6 +11,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { Form, NavLink, useActionData, useNavigate } from "react-router-dom";
 import classes from "./ActionForm.module.css";
 import {
@@ -25,6 +26,7 @@ import { textFeildStyle } from "../../../utils/function";
 import { selectIsLoading } from "../../../store/ui/ui.selector";
 import { setIsLoading } from "../../../store/ui/ui.action";
 import { store } from "../../../store/store";
+import { color } from "framer-motion";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -217,7 +219,7 @@ const SignupForm = () => {
                 sx={{ color: "black" }}
               />
             ) : (
-              "SignUp"
+              <span style={{color:'white',display:'flex',alignItems:'center'}}>SignUp <TrendingFlatIcon style={{marginLeft:'1rem',color:'white',fontSize:'40px'}}/></span>
             )}
           </Button>
           <Typography

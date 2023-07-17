@@ -164,14 +164,14 @@ const OrderTable = ({ orderData }) => {
   const [rows, setRows] = useState([]);
   useEffect(() => {
     setRows(
-      orderData.orderedItems?.map((order) => ({
-        product: order.productId?.name,
+      orderData.length !== 0 ?orderData.map((order) => ({
+        product: order.orderedItems?.productId.name,
         Image: (
           <img
             width="50px"
             height="50px"
             style={{ objectFit: "cover" }}
-            src={order.productId.image[0]}
+            src={order.productId.image[0].imageLink}
           />
         ),
         Quantity: order.quntity,
@@ -180,7 +180,7 @@ const OrderTable = ({ orderData }) => {
         Phone: orderData.contactInformation.phoneNumber,
         "Shipping Address": orderData.shippingAddress.address,
         "Ordered At": new Date(orderData.createdAt).toLocaleString(),
-      }))
+      })):[]
     );
   }, [orderData]);
 

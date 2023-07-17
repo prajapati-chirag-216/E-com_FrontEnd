@@ -20,6 +20,7 @@ import {
 } from "../../../store/filter/filter.action";
 import {store} from '../../../store/store'
 import { setIsLoading } from "../../../store/ui/ui.action";
+import { genrateBlurImage } from "../../../utils/function";
 
 const Items = () => {
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ const Items = () => {
 };
 export async function loader(string) {
   let response;
+  let newData;
 
   const url = window.location.href;
   const urlArray = url.split("/");
@@ -84,10 +86,34 @@ export async function loader(string) {
     } else {
       response = await fetchFilteredProducts(catagoryId, string);
     }
+
+   newData =  response?.map((product)=>{
+
+    const newImageData =   product.image.map((imageObj) =>{
+
+          const blurUrl = genrateBlurImage(imageObj.blurhash);
+
+          return({
+            ...imageObj,
+            blurImg:blurUrl
+          })
+          
+      })
+
+      return({
+        ...product,
+        image:newImageData
+      })
+
+   })
+     
+
+   console.log(newData,'newData')
+
   } catch (err) {
     throw err;
   }
 
-  return response;
+  return newData;
 }
 export default Items;

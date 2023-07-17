@@ -18,6 +18,7 @@ const CartItem = (props) => {
   const cartItems = useSelector(selectCartItems);
   const inputRef = useRef();
   const [itemQuantity, setItemQuantity] = useState(quntity);
+   
 
   const increaseQuantityHandler = () => {
     dispatch(setAddItemToCart(props.product));
@@ -38,7 +39,7 @@ const CartItem = (props) => {
   return (
     <div className={classes["cart-item-container"]}>
       <div className={classes["img-container"]}>
-        <img src={image[0]} alt={`${name}`} />
+        <img src={image[0].imageLink} alt={`${name}`} />
       </div>
       <div className={classes["item-details"]}>
         <div className={classes["item-description"]}>

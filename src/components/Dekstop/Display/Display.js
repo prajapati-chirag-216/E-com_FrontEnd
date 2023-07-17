@@ -5,6 +5,8 @@ import { fetchDisplayImage } from "../../../utils/api";
 import "./display.style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
+import { genrateBlurImage } from "../../../utils/function";
+import { red } from "@mui/material/colors";
 const Display = () => {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState([]);
@@ -17,7 +19,17 @@ const Display = () => {
       try {
         setIsLoading(true);
         const res = await fetchDisplayImage();
-        setImages(res.data);
+        const newData = res?.data.map((imageObj) => {
+          const blurUrl = genrateBlurImage(imageObj.blurhash);
+
+          return {
+            ...imageObj,
+            blurImg: blurUrl,
+          };
+        });
+        console.log(newData, "wuibef");
+        // genrateBlurImage()
+        setImages(newData);
         setIsLoading(false);
       } catch (err) {
         throw err;
@@ -58,6 +70,7 @@ const Display = () => {
         {images.length !== 0 && (
           <SliderImages
             className="displayImageContainer"
+            blurImg={images[index].blurImg}
             img={images[index].image}
             index={index}
             text={images[index].text}

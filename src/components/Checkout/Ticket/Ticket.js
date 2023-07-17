@@ -50,7 +50,7 @@ const Ticket = () => {
                 <span className={classes["quantity-badge"]}>
                   {item.quntity}
                 </span>
-                <img src={item.image[0]} />
+                <img src={item.image[0].imageLink} />
               </div>
               <div className={classes["item_details-container"]}>
                 <Typography
