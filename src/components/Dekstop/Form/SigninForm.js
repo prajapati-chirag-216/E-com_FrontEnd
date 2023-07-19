@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useReducer, useState } from "react";
-import { Button, TextField, Typography ,CircularProgress} from "@mui/material";
+import { Button, TextField, Typography, CircularProgress } from "@mui/material";
 import { Form, NavLink, useActionData, useNavigate } from "react-router-dom";
-import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
+import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import classes from "./ActionForm.module.css";
 import {
   emailReducer,
@@ -14,10 +14,10 @@ import { setIsLoading, setSnackBar } from "../../../store/ui/ui.action";
 import { textFeildStyle } from "../../../utils/function";
 import StatusButton from "../../../shared/components/StatusButton/StatusButton";
 import { selectIsLoading } from "../../../store/ui/ui.selector";
-import {store} from '../../../store/store'
+import { store } from "../../../store/store";
 const SigninForm = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading)
+  const isLoading = useSelector(selectIsLoading);
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     value: "",
@@ -133,7 +133,11 @@ const SigninForm = () => {
             onClick={!formIsValid ? validateFormHandler : () => {}}
             disabled={isLoading === true}
           >
-            {isLoading ?<CircularProgress color="inherit" size={33} />:<span style={{color:'white',display:'flex',alignItems:'center'}}>Login <TrendingFlatIcon style={{marginLeft:'1rem',color:'white',fontSize:'40px'}}/></span>}
+            {isLoading ? (
+              <CircularProgress color="inherit" size={33} />
+            ) : (
+              "SignIn"
+            )}
           </Button>
           <NavLink to="/forgotPassword" className={classes.link}>
             Forgot Password?
@@ -146,7 +150,7 @@ const SigninForm = () => {
 
 export async function action({ request }) {
   let response;
-  store.dispatch(setIsLoading(true))
+  store.dispatch(setIsLoading(true));
   const formData = await request.formData();
   const userData = {
     email: formData.get("email"),
@@ -154,12 +158,11 @@ export async function action({ request }) {
   };
   try {
     response = await loginUser(userData);
-    store.dispatch(setIsLoading(false))
+    store.dispatch(setIsLoading(false));
   } catch (err) {
-  
-      // if(err.response.statusText === "Unauthorized"){
-         store.dispatch(setIsLoading(false))
-      // }
+    // if(err.response.statusText === "Unauthorized"){
+    store.dispatch(setIsLoading(false));
+    // }
     return err;
   }
   return response;

@@ -68,9 +68,9 @@ const CartSlider = (props) => {
           variant="contained"
           fullWidth
           sx={{
-            height:{xs:'4.5rem'},
-            transform:{xs:'scale(1.3)',md:'scale(1)'},
-            width:{xs:'22rem',md:'30rem'},
+            height: { xs: "3.5rem" },
+            transform: { xs: "scale(1.2)", md: "scale(1)" },
+            width: { xs: "22rem", md: "30rem" },
             padding: "1rem",
             backgroundColor: "black",
             "&:hover": {
@@ -79,7 +79,7 @@ const CartSlider = (props) => {
             borderRadius: "0rem",
           }}
           disabled={cartItems.length === 0}
-          onClick={()=>navigate('/checkout')}
+          onClick={() => navigate("/checkout")}
         >
           Go to Checkout
         </Button>

@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import { addCartItems, fetchUserProfile, logoutUser } from "../../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { ShoppingCart } from "@mui/icons-material";
@@ -157,9 +156,6 @@ const MainNavigation = () => {
     navigate("/login", { replace: true });
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
   const closeCartHandler = () => dispatch(setIsCartOpen(false));
 
   const openCartHandler = () => dispatch(setIsCartOpen(true));
@@ -248,23 +244,26 @@ const MainNavigation = () => {
   );
 
   return (
-    <div style={{ display: "flex" }}>
-      <Box sx={{ flexGrow: 1 }}>
-        <CartDropdown status={cartState} onClose={closeCartHandler} />
+    // <div style={{ display: "flex" }}>
+    <Box sx={{ flexGrow: 1, width: "100%", background: "pink" }}>
+      <CartDropdown status={cartState} onClose={closeCartHandler} />
 
-        <AppBar
-          position="static"
-          style={{
-            backgroundColor: "black",
-            position: "relative",
-            zIndex: 2,
-            padding: "1rem",
-          }}
-        >
-          <Toolbar className="mainNavigationContainer">
-            {matches && <Drawer />}
-
-            <div className="leftPartContainer">
+      <AppBar
+        position="static"
+        style={{
+          backgroundColor: "black",
+          position: "relative",
+          zIndex: 2,
+          paddingTop: !matches ? "1rem" : "0.5rem",
+          paddingBottom: !matches ? "1rem" : "0.5rem",
+          paddingLeft: "0rem",
+          paddingRight: "0rem",
+        }}
+      >
+        <Toolbar className="mainNavigationContainer">
+          {matches && <Drawer />}
+          <div className="leftContainer">
+            <div className="searchContainer">
               {showSearchBar ? (
                 <Search
                   onChange={(event) =>
@@ -280,110 +279,109 @@ const MainNavigation = () => {
                   />
                 </Search>
               ) : (
-                <div style={{ width: "296px" }} />
+                <div style={{ width: "360px" }} />
               )}
-              <div className="leftMiddlePartContainer">
-                <Box
-                  sx={{
-                    flexGrow: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "2rem",
-                  }}
-                >
-                  <Typography
-                    className="webLgogContainer"
-                    variant="h3"
-                    letterSpacing="5px"
-                    // textTransform="uppercase"
-                    fontFamily="'Times New Roman', Times, serif"
-                    // fontWeight="bold"
-                  >
-                    shop<span>Z</span>ee
-                  </Typography>
-                </Box>
-
-                <Tabs />
-              </div>
             </div>
-
-            <Box
-              className="rightPartContainer"
-              sx={{
-                display: {
-                  md: "flex",
-                  gap: "3rem",
-                },
-              }}
-            >
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={openCartHandler}
-                color="inherit"
-              >
-                <div>
-                  <h6
-                    style={{ margin: "0px", height: "22px", color: "#cf8282" }}
-                  >
-                    {" "}
-                    {itemCount}
-                  </h6>
-                  <ShoppingCart fontSize="large" margin-bottom="1rem" />
-                </div>
-              </IconButton>
-              <IconButton
-                className="profileIconContainer"
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={userProfile ? handleProfileMenuOpen : navigateHandler}
-                color="inherit"
+            <div className="leftPartContainer">
+              {/* <div className="leftMiddlePartContainer"> */}
+              <Box
                 sx={{
-                  xs: "none",
-                  md: "flex",
+                  flexGrow: 1,
+                  display: "flex",
                   flexDirection: "column",
-                  justifyContent: "flex-end",
-                  gap: "0.5rem",
+                  alignItems: "center",
+                  gap: "2rem",
                 }}
               >
-                <AccountCircle fontSize="large" />
                 <Typography
-                  align="right"
-                  sx={{
-                    color: "white",
-                    textTransform: "capitalize",
-                    letterSpacing: "1px",
-                  }}
+                  className="webLgogContainer"
+                  variant="h2"
+                  letterSpacing={!matches ? "5px" : "3px"}
+                  // textTransform="uppercase"
+                  fontFamily="'Times New Roman', Times, serif"
+                  // fontWeight="bold"
+                  sx={{ fontSize: !matches ? "auto" : "3rem" }}
                 >
-                  {userProfile ? `Hello, ${userProfile.name}` : "Signup"}
+                  shop<span>Z</span>ee
                 </Typography>
-              </IconButton>
-            </Box>
-            <Box sx={{ display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
+              </Box>
+
+              <Tabs />
+              {/* </div> */}
+            </div>
+          </div>
+          <Box
+            className="rightPartContainer"
+            sx={{
+              display: {
+                md: "flex",
+                gap: "3rem",
+                overflow: "hidden",
+              },
+            }}
+          >
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={openCartHandler}
+              color="inherit"
+            >
+              <div>
+                <h6 style={{ margin: "0px", height: "22px", color: "#cf8282" }}>
+                  {" "}
+                  {itemCount}
+                </h6>
+                <ShoppingCart
+                  fontSize="large"
+                  margin-bottom="1rem"
+                  sx={{ fontSize: !matches ? "auto" : "2rem" }}
+                />
+              </div>
+            </IconButton>
+            <IconButton
+              className="profileIconContainer"
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={userProfile ? handleProfileMenuOpen : navigateHandler}
+              color="inherit"
+              sx={{
+                xs: "none",
+                md: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                gap: "0.5rem",
+              }}
+            >
+              <AccountCircle
+                fontSize="large"
+                sx={{ fontSize: !matches ? "auto" : "1.8rem" }}
+              />
+              <Typography
+                align="right"
+                sx={{
+                  color: "white",
+                  textTransform: "capitalize",
+                  letterSpacing: !matches ? "1px" : "0.5px",
+                  wordBreak: "break-all",
+                  fontSize: !matches ? "auto" : "1rem",
+                }}
               >
-                <MoreIcon />
-              </IconButton>
-            </Box>
-          </Toolbar>
-        </AppBar>
-        {renderMobileMenu}
-        {renderMenu}
-      </Box>
-    </div>
+                {userProfile ? `Hello, ${userProfile.name}` : "Signup"}
+              </Typography>
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
+    </Box>
+    // </div>
   );
 };
 

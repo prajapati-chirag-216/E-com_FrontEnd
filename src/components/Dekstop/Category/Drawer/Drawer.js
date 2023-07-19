@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import ManuList from "./ManuList";
 import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
+import { IconButton, useMediaQuery } from "@mui/material";
 
 const Drawer = (props) => {
+  // const matches=useMediaQuery("(max-width")
   const [drawerState, setDrawerState] = useState(false);
 
   const toggleDrawerHandler = () => {
@@ -17,7 +18,7 @@ const Drawer = (props) => {
   return (
     <React.Fragment>
       <IconButton
-        size="large"
+        size="small"
         edge="start"
         color="inherit"
         aria-label="open drawer"

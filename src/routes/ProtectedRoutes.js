@@ -1,10 +1,10 @@
 import React, { Fragment, Suspense, useEffect, useState } from "react";
 import { Await, Navigate, Outlet, useLoaderData } from "react-router-dom";
 import { fetchUserProfile } from "../utils/api";
-import LoadingSpinner from "../components/Dekstop/UI/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import { setSnackBar } from "../store/ui/ui.action";
 import { selectCartItems } from "../store/cart/cart.selector";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ProtectedRoutes = (props) => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const ProtectedRoutes = (props) => {
     }
   }, []);
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={<CircularProgress sx={{ color: "black" }} />}>
       <Await resolve={loaderData}>
         {(data) =>
           data?.userProfile ? (

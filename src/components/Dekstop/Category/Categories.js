@@ -4,15 +4,13 @@ import React, { Suspense, useState } from "react";
 import Cards from "../Cards/Cards";
 import { fetchCategories } from "../../../utils/api";
 import { Await, useLoaderData } from "react-router-dom";
-import {store} from '../../../store/store'
-import { setIsLoading } from "../../../store/ui/ui.action";
 import { useSelector } from "react-redux";
 import { selectIsLoading } from "../../../store/ui/ui.selector";
-import LoadingSpinner from "../UI/LoadingSpinner";
+import CircularProgress from "@mui/material/CircularProgress";
 import { genrateBlurImage } from "../../../utils/function";
 const textCss = {
   fontWeight: "bold",
-  fontSize: {md:"6rem",xs:'3rem'},
+  fontSize: { md: "6rem", xs: "3rem" },
   color: "black",
   WebkitTextStroke: "2px black",
   WebkitTextFillColor: "white",
@@ -24,12 +22,12 @@ const textCss = {
 };
 const Categories = () => {
   const loaderData = useLoaderData();
-  const isLoading = useSelector(selectIsLoading)
+  const isLoading = useSelector(selectIsLoading);
 
   return (
     <Box
       sx={{
-        width: {xs:'60rem',md:'100vw'},
+        width: { xs: "60rem", md: "100vw" },
         display: "flex",
         flexDirection: "column",
         gap: "4rem",
@@ -38,9 +36,9 @@ const Categories = () => {
     >
       <Box
         sx={{
-          width:{xs:'60rem',md:'100vw'},
+          width: { xs: "60rem", md: "100vw" },
           display: "flex",
-          flexDirection: 'row',
+          flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
           gap: { xs: "2rem", md: "3rem" },
@@ -64,7 +62,7 @@ const Categories = () => {
         </Typography>
       </Box>
       <Suspense>
-        {/* {isLoading && <LoadingSpinner/>} */}
+        {/* {isLoading && <CircularProgress sx={{color:"black"}}/>} */}
         <Await resolve={loaderData}>
           {(categories) => <Cards location="/product" data={categories} />}
         </Await>
@@ -76,21 +74,19 @@ export async function loader() {
   let response;
   let newData;
   try {
-
     // store.dispatch(setIsLoading(true));
     response = await fetchCategories();
 
-    newData =  response?.map((catObj) =>{
+    newData = response?.map((catObj) => {
+      console.log(catObj, "ew");
 
-      console.log(catObj,'ew')
-       
-         const hashUrl = genrateBlurImage(catObj.blurhash)
+      const hashUrl = genrateBlurImage(catObj.blurhash);
 
-         return ({
-           ...catObj,
-           blurImg:hashUrl
-         })
-    })
+      return {
+        ...catObj,
+        blurImg: hashUrl,
+      };
+    });
 
     // store.dispatch(setIsLoading(false))
   } catch (err) {

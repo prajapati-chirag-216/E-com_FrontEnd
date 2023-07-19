@@ -1,4 +1,11 @@
-import { Divider, Typography, TextField, Button, Box } from "@mui/material";
+import {
+  Divider,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  useMediaQuery,
+} from "@mui/material";
 import "./account.styles.scss";
 import { useEffect, useReducer, useState } from "react";
 import { updatePassword } from "../../../utils/api";
@@ -86,11 +93,13 @@ const AccountSettings = () => {
         gap: "1rem",
         padding: "1rem",
         marginTop: "1.5rem",
+        width: "100%",
       }}
     >
       <div className="headerContainer">
         <Typography
           sx={{
+            textAlign: "center",
             fontSize: "1.8rem",
             letterSpacing: "1px",
             color: "black",

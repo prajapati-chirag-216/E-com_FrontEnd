@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectSnackBar } from "../../../store/ui/ui.selector";
 import { setSnackBar } from "../../../store/ui/ui.action";
 import MuiAlert from "@mui/material/Alert";
-import { Typography } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 
 function TransitionLeft(props) {
   return <Slide {...props} direction="left" />;
@@ -46,8 +46,8 @@ const SimpleSnackBar = () => {
           onClose={handleClose}
           severity={snackBarDetails.severity}
           sx={{
-            width: {md:"100%",xs:'70%'},
-            height:{md:'100%',xs:'4rem'},
+            width: { md: "100%", xs: "50%", sm: "100%" },
+            height: { md: "100%", xs: "4rem" },
             padding: "0.5rem 1.2rem",
             fontSize: "1.1rem",
             letterSpacing: "1px",

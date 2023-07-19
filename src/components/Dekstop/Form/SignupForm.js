@@ -213,7 +213,11 @@ const SignupForm = () => {
             disabled={isLoading === true}
           >
             {isLoading ? (
-              <CircularProgress color="inherit" size={33} />
+              <CircularProgress
+                color="inherit"
+                size={33}
+                sx={{ color: "black" }}
+              />
             ) : (
               <span style={{color:'white',display:'flex',alignItems:'center'}}>SignUp <TrendingFlatIcon style={{marginLeft:'1rem',color:'white',fontSize:'40px'}}/></span>
             )}

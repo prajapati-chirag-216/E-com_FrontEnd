@@ -21,9 +21,9 @@
 }
 
 @media only screen and (max-width: 500px) {
-            
-    .item_details-div{
-          
-         width:20rem;
+
+    .item_details-div {
+
+        width: 120%;
     }
 }

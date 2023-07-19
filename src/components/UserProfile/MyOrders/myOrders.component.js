@@ -2,10 +2,9 @@ import React from "react";
 import { fetchUserOrders } from "../../../utils/api";
 import { useState, useEffect } from "react";
 import { Container, Typography } from "@mui/material";
-import LoadingSpinner from "../../Dekstop/UI/LoadingSpinner";
 import classes from "./myOrders.module.css";
 import OrderHistory from "./OrderHistory";
-
+import CircularProgress from "@mui/material/CircularProgress";
 const MyOrders = () => {
   const [userOrder, setUserOrder] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -28,10 +27,18 @@ const MyOrders = () => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "3rem",
+          marginTop: "20%",
+          marginBottom: "20%",
+          position: "relative",
         }}
       >
-        <LoadingSpinner />
+        <CircularProgress
+          sx={{
+            color: "black",
+            margin: "auto",
+            scale: "1.2",
+          }}
+        />
       </Container>
     );
   }
@@ -48,7 +55,7 @@ const MyOrders = () => {
           }}
         >
           {isLoading ? (
-            <LoadingSpinner />
+            <CircularProgress sx={{ color: "black" }} />
           ) : (
             <Typography
               style={{

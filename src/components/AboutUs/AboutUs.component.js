@@ -1,9 +1,10 @@
-import { Typography, Button, Box, Divider } from "@mui/material";
+import { Typography, Button, Box, Divider, useMediaQuery } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import classes from "./AboutUs.module.css";
 import { useState } from "react";
 const AboutUs = () => {
+  const matches = useMediaQuery("(max-width:800px)");
   const handleLinkChange = (link) => {
     window.open(link, "_blank");
   };
@@ -20,7 +21,7 @@ const AboutUs = () => {
         flexDirection: "column",
         gap: "2rem",
         marginTop: "2rem",
-        width: "85%",
+        width: !matches ? "85%" : "90%",
         padding: "2rem",
       }}
     >
@@ -42,6 +43,7 @@ const AboutUs = () => {
           sx={{
             width: "100%",
             display: "flex",
+            flexDirection: !matches ? "row" : "column",
             justifyContent: "space-between",
             gap: "5rem",
           }}
@@ -137,7 +139,7 @@ const AboutUs = () => {
           sx={{
             width: "100%",
             display: "flex",
-            flexDirection: "row-reverse",
+            flexDirection: !matches ? "row-reverse" : "column",
             gap: "5rem",
           }}
         >

@@ -9,9 +9,8 @@
   user-select: none;
 
   @media only screen and (max-width: 500px) {
-    
-   gap: 2rem;
-}
+    gap: 2rem;
+  }
 
   .titleContainer {
     display: flex;
@@ -58,31 +57,26 @@
     box-sizing: border-box;
 
     @media only screen and (max-width: 500px) {
-    
       transform: scale(1.1);
-    gap: 3rem;
-
-}
+      gap: 3rem;
+    }
     .itemDetailsContainer {
       flex: 5;
       display: flex;
       gap: 1rem;
       @media only screen and (max-width: 500px) {
-    
-       flex: none;
-  }
+        flex: none;
+      }
       .itemImgContainer {
         flex: 1;
         height: 11rem;
         position: relative;
 
         @media only screen and (max-width: 500px) {
-    
-            width: 6rem;
-        flex: none;
-        height: 9rem;
-          
-      }
+          width: 6rem;
+          flex: none;
+          height: 9rem;
+        }
 
         &::after {
           content: "";
@@ -110,29 +104,22 @@
         gap: 0.5rem;
 
         @media only screen and (max-width: 500px) {
-    
-          width: 11rem;  
-         transform: scale(0.9);
-        flex: none;
-         
-     } 
-        
-         > p{
-            
+          width: 11rem;
+          transform: scale(0.9);
+          flex: none;
+        }
+
+        > p {
           @media only screen and (max-width: 500px) {
-    
-              font-size: 0.9rem;
-       } 
-             
-         }
-          
-          p{
-            @media only screen and (max-width: 500px) {
-    
-              font-size: 0.8rem;
-       } 
-             
+            font-size: 0.9rem;
           }
+        }
+
+        p {
+          @media only screen and (max-width: 500px) {
+            font-size: 0.8rem;
+          }
+        }
       }
     }
     .itemQuntityContainer {
@@ -141,10 +128,9 @@
       flex-direction: column;
 
       @media only screen and (max-width: 500px) {
-    
         transform: scale(0.8);
-        flex:none;
- }
+        flex: none;
+      }
       .itemQuntityController {
         width: 70%;
         align-self: center;
@@ -156,9 +142,8 @@
         padding: 0.5rem;
 
         @media only screen and (max-width: 500px) {
-    
-            padding: 1rem;
-   }
+          padding: 1rem;
+        }
 
         input {
           background: transparent;
@@ -189,9 +174,8 @@
         cursor: pointer;
         overflow: hidden;
         @media only screen and (max-width: 500px) {
-    
           transform: scale(1.3);
- }
+        }
         span {
           color: rgb(67, 67, 67);
           font-size: 0.9rem;
@@ -222,16 +206,13 @@
     justify-content: space-between;
 
     @media only screen and (max-width: 500px) {
-    
       width: 90%;
+    }
 
- }
-    
     .noteContainer {
-
       @media only screen and (max-width: 500px) {
-            width: 22rem;
-            transform: scale(0.9);
+        width: 22rem;
+        transform: scale(0.9);
       }
 
       textarea {
@@ -248,8 +229,7 @@
 
         @media only screen and (max-width: 500px) {
           width: 100%;
-         
-    }
+        }
         &:focus,
         &:active {
           outline: none;

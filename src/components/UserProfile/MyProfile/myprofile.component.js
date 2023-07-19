@@ -1,10 +1,10 @@
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import { Box, Grid, TextField, Typography, useMediaQuery } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { Divider, Button } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
-import { fetchUserProfile } from "../../../utils/api";
+import { addCartItems, fetchUserProfile, logoutUser } from "../../../utils/api";
 import {
   setModelState,
   setSnackBar,
@@ -15,17 +15,16 @@ import SimpleModal from "../../SimpleModel/Model";
 import UpdateInfoForm from "./Form/updatePersonalInfo";
 import "./myprofile.styles.scss";
 import { selectModelState, selectUser } from "../../../store/ui/ui.selector";
-import { logoutUser,addCartItems } from "../../../utils/api";
 import { setClearCart } from "../../../store/cart/cart.action";
 import { selectCartItems } from "../../../store/cart/cart.selector";
 import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
+  const matches = useMediaQuery("(max-width:500px)");
   const dispatch = useDispatch();
-  const cartItems = useSelector(selectCartItems)
+  const cartItems = useSelector(selectCartItems);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
-
   const showModel = useSelector(selectModelState);
 
   const handleShowModel = () => {
@@ -37,7 +36,6 @@ const MyProfile = () => {
   };
 
   const logoutHandler = async () => {
-    
     try {
       await addCartItems(cartItems);
       await logoutUser();
@@ -52,7 +50,7 @@ const MyProfile = () => {
         message: "Logged out successfully",
       })
     );
-   
+
     window.history.replaceState({}, document.title, "/login");
 
     navigate("/login", { replace: true });
@@ -72,6 +70,24 @@ const MyProfile = () => {
 
     run();
   }, []);
+  // const logoutHandler = async () => {
+  //   try {
+  //     await addCartItems(cartItems);
+  //     await logoutUser();
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  //   dispatch(setClearCart());
+  //   dispatch(
+  //     setSnackBar({
+  //       status: true,
+  //       severity: "success",
+  //       message: "Logged out successfully",
+  //     })
+  //   );
+  //   window.history.replaceState({}, document.title, "/login");
+  //   navigate("/login", { replace: true });
+  // };
 
   return (
     <Box
@@ -81,6 +97,7 @@ const MyProfile = () => {
         gap: "2rem",
         padding: "1rem",
         marginTop: "1.5rem",
+        width: "100%",
       }}
     >
       {showModel && (
@@ -101,13 +118,12 @@ const MyProfile = () => {
           >
             Personal Information
           </Typography>
-          <Typography sx={{ width: "40rem" }}>
+          <Typography sx={{ maxWidth: "40rem", wordBreak: "break-word" }}>
             Manage your personal information including Phone number and email
             address where you can be connected
           </Typography>
         </div>
         <Button
-          onClick={logoutHandler}
           sx={{
             backgroundColor: "black",
             color: "white",
@@ -118,6 +134,7 @@ const MyProfile = () => {
             },
             float: "right",
           }}
+          onClick={logoutHandler}
         >
           Sign out
         </Button>
@@ -130,7 +147,10 @@ const MyProfile = () => {
           <Grid container gap={3}>
             <Grid
               item
-              xs={4}
+              lg={3}
+              md={4}
+              sm={6}
+              xs={12}
               sx={{
                 borderRadius: "1rem",
                 border: "1px solid rgb(213, 213, 213)",
@@ -157,7 +177,10 @@ const MyProfile = () => {
             </Grid>
             <Grid
               item
-              xs={4}
+              lg={3}
+              md={4}
+              sm={6}
+              xs={12}
               sx={{
                 borderRadius: "1rem",
                 border: "1px solid rgb(213, 213, 213)",
@@ -184,7 +207,10 @@ const MyProfile = () => {
             </Grid>
             <Grid
               item
-              xs={4}
+              lg={3}
+              md={4}
+              sm={6}
+              xs={12}
               sx={{
                 borderRadius: "1rem",
                 border: "1px solid rgb(213, 213, 213)",
@@ -215,7 +241,7 @@ const MyProfile = () => {
               background: "black",
               "&:hover": { background: "black" },
               borderRadius: 0,
-              width: "20rem",
+              width: !matches ? "20rem" : "100%",
               padding: "1rem",
               letterSpacing: "3px",
               fontSize: "1.1rem",
