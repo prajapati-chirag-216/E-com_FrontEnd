@@ -136,7 +136,8 @@ const SigninForm = () => {
             {isLoading ? (
               <CircularProgress color="inherit" size={33} />
             ) : (
-              "SignIn"
+              <span style={{color:'white',display:'flex',alignItems:'center'}}>SignUp <TrendingFlatIcon style={{marginLeft:'1rem',color:'white',fontSize:'40px'}}/></span>
+
             )}
           </Button>
           <NavLink to="/forgotPassword" className={classes.link}>
