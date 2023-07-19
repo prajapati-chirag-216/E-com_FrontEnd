@@ -3,6 +3,7 @@ import axios from "../axios/axios";
 import "../AxiosInterceptors/AxiosInterceptors";
 
 const AxiosInstance = async (config) => {
+  
   try {
     const response = await axios({
       method: config.method || "GET",
