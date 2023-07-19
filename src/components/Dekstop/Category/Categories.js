@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { selectIsLoading } from "../../../store/ui/ui.selector";
 import CircularProgress from "@mui/material/CircularProgress";
 import { genrateBlurImage } from "../../../utils/function";
+import { store } from "../../../store/store";
+import { setInitialLoading } from "../../../store/ui/ui.action";
 const textCss = {
   fontWeight: "bold",
   fontSize: { md: "6rem", xs: "3rem" },
@@ -76,9 +78,9 @@ export async function loader() {
   try {
     // store.dispatch(setIsLoading(true));
     response = await fetchCategories();
-
+    store.dispatch(setInitialLoading(false))
     newData = response?.map((catObj) => {
-      console.log(catObj, "ew");
+   
 
       const hashUrl = genrateBlurImage(catObj.blurhash);
 

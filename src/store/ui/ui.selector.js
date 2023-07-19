@@ -7,6 +7,10 @@ export const selectIsLoading = createSelector(
   (ui) => ui.isLoading
 );
 
+export const selectInitialLoadin = createSelector(
+  [selectUIReducer],
+  (ui) => ui.showIntialLoading
+);
 export const selectSearchField = createSelector(
   [selectUIReducer],
   (ui) => ui.searchField

@@ -10,6 +10,7 @@ const UI_INITIAL_STATE = {
   },
   modelState: false,
   isLoading:false,
+  showIntialLoading:true,
   user: null,
   success: { status: false, for: "" },
 };
@@ -23,6 +24,11 @@ export const uiReducer = (state = UI_INITIAL_STATE, action) => {
         ...state,
         isLoading: payload,
       };
+      case ui_types.SET_INITIALLOADING:
+         return{
+           ...state,
+           showIntialLoading:payload
+         }
     case ui_types.SET_SEARCHFIELD:
       return {
         ...state,

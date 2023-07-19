@@ -82,7 +82,7 @@ const Cards = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const imageElementRef = useRef(null);
   const actualImgSrc = imageElementRef.current?.getAttribute("data-src");
-  console.log(actualImgSrc);
+
 
   useEffect(() => {
     dispatch(setIsLoading(false));
@@ -139,7 +139,7 @@ const Cards = (props) => {
         {isLoading && <CircularProgress sx={{ color: "black" }} />}
         {filteredData.length !== 0 ? (
           filteredData.map((item) => {
-            console.log(item, "on");
+         
 
             return (
               <Grid

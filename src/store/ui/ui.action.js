@@ -19,3 +19,7 @@ export const setUser = (object) => {
 export const setSuccess = (string) => {
   return createAction(ui_types.SET_SUCCESS, string);
 };
+export const setInitialLoading = (boolean) => {
+  return createAction(ui_types.SET_INITIALLOADING, boolean);
+}
+

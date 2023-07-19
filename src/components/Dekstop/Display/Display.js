@@ -7,11 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { genrateBlurImage } from "../../../utils/function";
 import { red } from "@mui/material/colors";
+import { selectInitialLoadin } from "../../../store/ui/ui.selector";
+import { setInitialLoading } from "../../../store/ui/ui.action";
 const Display = () => {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState([]);
   // const isLoading = useSelector(selectIsLoading)
   const [isLoading, setIsLoading] = useState(false);
+  const showIntialLoading = useSelector(selectInitialLoadin)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,6 +22,7 @@ const Display = () => {
       try {
         setIsLoading(true);
         const res = await fetchDisplayImage();
+          dispatch(setInitialLoading(false));
         const newData = res?.data.map((imageObj) => {
           const blurUrl = genrateBlurImage(imageObj.blurhash);
 
@@ -27,7 +31,7 @@ const Display = () => {
             blurImg: blurUrl,
           };
         });
-        console.log(newData, "wuibef");
+        
         // genrateBlurImage()
         setImages(newData);
         setIsLoading(false);
@@ -86,6 +90,7 @@ export async function loader() {
   let res;
   try {
     res = await fetchDisplayImage();
+
   } catch (err) {
     throw err;
   }
